@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.101.0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,15 +15,15 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Study Verilog - Part 1" />
+    <meta property="og:title" content="Study Verilog - Part 1" />
+    <meta property="twitter:title" content="Study Verilog - Part 1" />
     
 
     
-    <meta name="description" content="My blog">
-    <meta property="og:description" content="My blog" />
-    <meta property="twitter:description" content="My blog" />
+    <meta name="description" content="Study Verilog - Part 1">
+    <meta property="og:description" content="Study Verilog - Part 1" />
+    <meta property="twitter:description" content="Study Verilog - Part 1" />
     
 
     
@@ -35,9 +34,9 @@
     <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Lap Blog | Lap Blog</title>
+    <title>Study Verilog - Part 1 | Lap Blog</title>
 
-    <link rel="canonical" href="/">
+    <link rel="canonical" href="/post/2022-09-29-verilog-part-1/">
 
     
     
@@ -157,14 +156,49 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/verilog.png')
+    }
+</style>
+
+<header class="intro-header" >
+
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Lap Blog </h1>
-                    
-		    <span class="subheading"></span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/verilog" title="Verilog">
+                            Verilog
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Study Verilog - Part 1</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    Lap Blog
+                             
+                            on 
+                            Wednesday, September 28, 2022
+                            
+                            
+                            
+                            
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,157 +207,128 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/2022-09-29-verilog-part-1/">
-        <h2 class="post-title">
-            Study Verilog - Part 1
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Study Verilog - Part 1
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap Blog on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/readme/">
-        <h2 class="post-title">
-            Setup
-        </h2>
-	
-        <h3 class="post-subtitle">
-            How write blog
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            TIPS 1. UML @startuml Alice -&gt; Bob: Authentication Request Bob --&gt; Alice: Authentication Response Alice -&gt; Bob: Another authentication Request Alice &lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
+<article>
+    <div class="container">
+        <div class="row">
 
             
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="introduction">Introduction</h2>
+<p>In the early days of integrated circuits, engineers had to sit down and physically draw transistors and their connections on paper to design them such that it can be fabricated on silicon.</p>
+<p>Bigger and complex circuits demanded more engineers, time and other resources and soon enough there was a need to have a better way of designing integrated circuits.</p>
+<p>VHDL was soon developed to enhance the design process by allowing engineers to describe functionality of the desired hardware and let automation tools convert that behavior into actual hardware elements like combinational gates and sequential logic.</p>
+<p>Verilog was developed to simplify the process and make the Hardware Description Language (HDL) more robust and flexible.</p>
+<p>Verilog creates a level of abstraction that helps hide away the details of its implementation and technology.</p>
+<p>For example, the design of a <strong>D flip-flop</strong> would require the knowledge of</p>
+<ul>
+<li>how the transistors need to be arranged to achieve a positive-edge triggered FF and</li>
+<li>what the rise, fall and clk-Q times required to latch the value onto a flop among many other technology oriented details.</li>
+<li>Power dissipation, timing and the ability to drive nets and other flops would also require a more thorough understanding of the physical characteristics of a transistor.</li>
+</ul>
+<blockquote>
+<p>Verilog helps us to focus on the behavior and leave the rest to be sorted out later.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-verilog" data-lang="verilog"><span style="display:flex;"><span><span style="color:#ff79c6">module</span> ctr (<span style="color:#ff79c6">input</span>  				up_down,
+</span></span><span style="display:flex;"><span>								clk,
+</span></span><span style="display:flex;"><span>								rstn,
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">output</span> <span style="color:#8be9fd">reg</span> [<span style="color:#bd93f9">2</span><span style="color:#ff79c6">:</span><span style="color:#bd93f9">0</span>] 	out);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">always</span> @ (<span style="color:#ff79c6">posedge</span> clk)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>rstn)
+</span></span><span style="display:flex;"><span>			out <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">else</span> <span style="color:#ff79c6">begin</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">if</span> (up_down)
+</span></span><span style="display:flex;"><span>				out <span style="color:#ff79c6">&lt;=</span> out <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>				out <span style="color:#ff79c6">&lt;=</span> out <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">endmodule</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>The code essentially makes the counter count up if the <strong>up_down</strong> signal is 1, and down if its value is 0.</p>
+</li>
+<li>
+<p>It also resets the counter if the signal <strong>rstn</strong> becomes 0 making this an active-low reset.</p>
+</li>
+</ul>
+<h1 id="sources-and-references">Sources and References</h1>
+<ul>
+<li><a href="https://www.chipverify.com/verilog/verilog-tutorial">https://www.chipverify.com/verilog/verilog-tutorial</a></li>
+</ul>
 
 
-
-       	</div>
-        
-
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-	
-    <section class="visible-md visible-lg">
-	
-        <div class="short-about">
-            
-            <a href="/about">
-               <img src="/img/Lap.jpg" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-           
-           <ul class="list-inline">
-               
-               <li>
-                   <a href="mailto:lapngodoan@gmail.com">
-                      <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                      </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-            
-            
-               
-               
-               
-               
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/readme/" data-toggle="tooltip" data-placement="top" title="Setup">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
                 </ul>
+                
+
+                
+
+
+
             </div>
-    </section>
-	
-    
-    
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>TAGS</h5>
-        <div class="tags">
+
             
             
-               
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
             
-               
+
             
-               
-            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
         </div>
-    </section>
-    
-
-    
-    
-    
-</div>
-
-	</div>
-</div>
-
+    </div>
+</article>
 
 
 
@@ -364,7 +369,7 @@
             
            
                    <li>
-                       <a href='/index.xml' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
