@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-	<meta name="generator" content="Hugo 0.101.0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,15 +15,15 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Architecture of reconfigurable systems - FPGA" />
+    <meta property="og:title" content="Architecture of reconfigurable systems - FPGA" />
+    <meta property="twitter:title" content="Architecture of reconfigurable systems - FPGA" />
     
 
     
-    <meta name="description" content="My blog">
-    <meta property="og:description" content="My blog" />
-    <meta property="twitter:description" content="My blog" />
+    <meta name="description" content="Architecture of reconfigurable systems - FPGA">
+    <meta property="og:description" content="Architecture of reconfigurable systems - FPGA" />
+    <meta property="twitter:description" content="Architecture of reconfigurable systems - FPGA" />
     
 
     
@@ -35,9 +34,9 @@
     <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Lap Blog | Lap Blog</title>
+    <title>Architecture of reconfigurable systems - FPGA | Lap Blog</title>
 
-    <link rel="canonical" href="/">
+    <link rel="canonical" href="/post/2022-09-29-fpga/">
 
     
     
@@ -157,14 +156,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/img/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>Lap Blog </h1>
-                    
-		    <span class="subheading"></span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                    </div>
+                    <h1>Architecture of reconfigurable systems - FPGA</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Wednesday, September 28, 2022
+                            
+                            
+                            
+                            
+                    </span>
                 </div>
             </div>
         </div>
@@ -173,207 +199,253 @@
 
 
 
-  
-<div class="container">
-    <div class="row">
-        
-        
-   	    <div class="
-            col-lg-8 col-lg-offset-1
-            col-md-8 col-md-offset-1
-            col-sm-12
-            col-xs-12
-            post-container
-        ">
-            
 
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/">
-        <h2 class="post-title">
-            Architecture of reconfigurable systems
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Architecture of reconfigurable systems
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="digital-hardware-design-two-approaches">Digital Hardware Design: Two approaches</h2>
+<p>
+  <img src="/img/afrs/digital-hw-design-01.png" alt="">
+
+
+
+  <img src="/img/afrs/digital-hw-design-02.png" alt="">
+
+
+
+  <img src="/img/afrs/digital-hw-design-03.png" alt="">
+
+
+
+  <img src="/img/afrs/fpga-01.png" alt="">
+
+</p>
+<h2 id="an-introduction-to-fpgas">An introduction to FPGAs</h2>
+
+<script src="/js/mindmap.min.js"></script>
+<script src="/js/kity.min.js"></script>
+<script src="/js/kityminder.core.min.js"></script>
+
+
+<link rel="stylesheet" href="/css/mindmap.css" />
+
+
+<div id="" class="mindmap mindmap-lg">
+    <ul>
+<li>FPGAs
+<ul>
+<li>Reconfigurable
+<ul>
+<li>Mean
+<ul>
+<li>not defined after manufacture,</li>
+<li>could be specified by the  programmers themselves</li>
+</ul>
+</li>
+<li>Configuration types
+<ul>
+<li>Static Reconfiguration
+<ul>
+<li>Load the whole bitstream on the FPGA</li>
+<li>Stop the execution to do the loading</li>
+</ul>
+</li>
+<li>Static Partial Reconfiguration
+<ul>
+<li>Only a portion of the bitstream is loaded on the FPGA</li>
+<li>Stop the execution to load the partial iage but the wait time is much shorter</li>
+</ul>
+</li>
+<li>Dynamic Partial Reconfiguration
+<ul>
+<li>Part of the FPGA is reconfigured while the rest is still running</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>How is ensure reconfiguration?
+<ul>
+<li>FPGA
+<ul>
+<li>array of programmable logic</li>
+</ul>
+</li>
+<li>Reconfigurable integrated circuit
+<ul>
+<li>Could be dynamically reconfigured</li>
+</ul>
+</li>
+<li>Benefit
+<ul>
+<li>Fast prototyping</li>
+<li>hardware acceleration</li>
+<li>support complex system (SoC)</li>
+<li>to be dynamically reconfigured according to application’s needs resources</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>General Architecture:
+<ul>
+<li>programmable interconnect 
+  <img src="/img/afrs/fpga-01.png" alt="">
+
+</li>
+<li>programable Logic Block</li>
+</ul>
+</li>
+<li>Major FPGA vendors
+<ul>
+<li>SRAM-based FPGA
+<ul>
+<li>Xilinx Inc</li>
+<li>Intel Altera</li>
+<li>Atmel Corp</li>
+<li>Lattice Semiconductor Corp</li>
+</ul>
+</li>
+<li>Antifuse and flash-based FPGAs
+<ul>
+<li>Microsemi Corp</li>
+<li>QuickLogic Corp</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>FPGA Technologies
+<ul>
+<li>Fuse-based -  1-time programmable, Bipolar</li>
+<li>Anti-fuse -   1-time programmable, CMOS</li>
+<li>EPROM -  UV-programmable, CMOS</li>
+<li>EEPROM reprogrammable, CMOS</li>
+<li>FLASH
+<ul>
+<li>reprogrammable, flash</li>
+<li>Better intergration than CMOS</li>
+</ul>
+</li>
+<li>SRAM
+<ul>
+<li>CMOS</li>
+<li>Volatile</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
 </div>
-<hr>
 
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/2022-09-29-fpga/">
-        <h2 class="post-title">
-            Architecture of reconfigurable systems - FPGA
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Architecture of reconfigurable systems - FPGA
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/2022-09-29-verilog-part-1/">
-        <h2 class="post-title">
-            Study Verilog - Part 1
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Study Verilog - Part 1
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/readme/">
-        <h2 class="post-title">
-            Setup
-        </h2>
-	
-        <h3 class="post-subtitle">
-            How write blog
-        </h3>
-	
-        <div class="post-content-preview">
-	
-            TIPS 1. UML @startuml Alice -&gt; Bob: Authentication Request Bob --&gt; Alice: Authentication Response Alice -&gt; Bob: Another authentication Request Alice &lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 
-       
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-
-            
+<h2 id="fpga-design-flow">FPGA Design Flow</h2>
+<p>
+  <img src="/img/afrs/fpga-03.png" alt="">
 
 
 
-       	</div>
-        
+  <img src="/img/afrs/fpga-04.png" alt="">
 
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-	
-    <section class="visible-md visible-lg">
-	
-        <div class="short-about">
-            
-            <a href="/about">
-               <img src="/img/Lap.jpg" alt="avatar" style="cursor: pointer" />
-            </a>
-            
-            
-           
-           <ul class="list-inline">
-               
-               <li>
-                   <a href="mailto:lapngodoan@gmail.com">
-                      <span class="fa-stack fa-lg">
-                          <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                      </span>
-                   </a>
-               </li>
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-            
-            
-               
-               
-               
-               
+
+
+  <img src="/img/afrs/fpga-05.png" alt="">
+
+
+
+  <img src="/img/afrs/fpga-06.png" alt="">
+
+
+
+  <img src="/img/afrs/fpga-07.png" alt="">
+
+</p>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2022-09-29-verilog-part-1/" data-toggle="tooltip" data-placement="top" title="Study Verilog - Part 1">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2022-09-29-architecture-of-reconfigurable-systems/" data-toggle="tooltip" data-placement="top" title="Architecture of reconfigurable systems">Next
+                            Post &rarr;</a>
+                    </li>
+                    
                 </ul>
+                
+
+                
+
+
+
             </div>
-    </section>
-	
-    
-    
-    
-    
-    <section>
-        <hr class="hidden-sm hidden-xs">
-        <h5>TAGS</h5>
-        <div class="tags">
+
             
             
-               
-                    <a href="/tags/fpga" title="fpga">
-                        fpga
-                    </a>
-               
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
             
-               
+
             
-               
-            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
         </div>
-    </section>
-    
-
-    
-    
-    
-</div>
-
-	</div>
-</div>
-
+    </div>
+</article>
 
 
 
@@ -414,7 +486,7 @@
             
            
                    <li>
-                       <a href='/index.xml' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

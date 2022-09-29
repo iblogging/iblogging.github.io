@@ -6,7 +6,26 @@
     <description>Recent content in FPGA on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 10:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Sep 2022 11:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Architecture of reconfigurable systems</title>
+      <link>https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/</guid>
+      <description>Introduction This is my notes on studying Architecture of reconfigurable systems from Prof Jordane Lorandel. The course includes 03 main parts:
+FPGA introduction SoC introduction Partial Reconfiguration introduction </description>
+    </item>
+    
+    <item>
+      <title>Architecture of reconfigurable systems - FPGA</title>
+      <link>https://iblogging.github.io/post/2022-09-29-fpga/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-fpga/</guid>
+      <description>Digital Hardware Design: Two approaches An introduction to FPGAs FPGAs Reconfigurable Mean not defined after manufacture, could be specified by the programmers themselves Configuration types Static Reconfiguration Load the whole bitstream on the FPGA Stop the execution to do the loading Static Partial Reconfiguration Only a portion of the bitstream is loaded on the FPGA Stop the execution to load the partial iage but the wait time is much shorter Dynamic Partial Reconfiguration Part of the FPGA is reconfigured while the rest is still running How is ensure reconfiguration?</description>
+    </item>
+    
     <item>
       <title>Study Verilog - Part 1</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-1/</link>
