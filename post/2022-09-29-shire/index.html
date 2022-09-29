@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content=" Shire, 200 Gbps middlebox framework for FPGAs" />
+    <meta property="og:title" content=" Shire, 200 Gbps middlebox framework for FPGAs" />
+    <meta property="twitter:title" content=" Shire, 200 Gbps middlebox framework for FPGAs" />
     
 
     
-    <meta name="description" content="My blog">
-    <meta property="og:description" content="My blog" />
-    <meta property="twitter:description" content="My blog" />
+    <meta name="description" content=" Shire, 200 Gbps middlebox framework for FPGAs">
+    <meta property="og:description" content=" Shire, 200 Gbps middlebox framework for FPGAs" />
+    <meta property="twitter:description" content=" Shire, 200 Gbps middlebox framework for FPGAs" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Lap Blog</title>
+    <title> Shire, 200 Gbps middlebox framework for FPGAs | Lap Blog</title>
 
-    <link rel="canonical" href="/search/placeholder/">
+    <link rel="canonical" href="/post/2022-09-29-shire/">
 
     
     
@@ -171,17 +171,25 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/risc-v" title="RISC-V">
+                            RISC-V
+                        </a>
+                        
                     </div>
-                    <h1></h1>
+                    <h1> Shire, 200 Gbps middlebox framework for FPGAs</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
                             Posted by 
                             
-                                    Lap Blog
+                                Lap
                              
                             on 
-                            Monday, January 1, 0001
+                            Wednesday, September 28, 2022
                             
                             
                             
@@ -207,8 +215,197 @@
                 post-container">
 
                 
-                
+                <h2 id="introduction">Introduction</h2>
+<p>Shire is a new approach to designing FPGA-accelerated middleboxes that</p>
+<ul>
+<li>simplifies development, debugging, and</li>
+<li>performance tuning by decoupling the tasks of
+<ul>
+<li>hardware accelerator implementation and</li>
+<li>software application programming</li>
+</ul>
+</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Vivado</li>
+<li>Intel Quartus</li>
+<li>RISC-V toolchain</li>
+<li>Partial Reconfiguration tools
+<ul>
+<li>Xilinx: <a href="https://github.com/ucsdsysnet/Shire/tree/master/host_utils/runtime/mcap">MCAP driver</a></li>
+<li>Intel Altera</li>
+</ul>
+</li>
+</ul>
+<h2 id="building-fpga-image">Building FPGA image</h2>
+<ul>
+<li>For each board: <a href="https://github.com/ucsdsysnet/Shire/tree/master/fpga_src/boards">define the number of RPU</a></li>
+<li>Current implementation
+<ul>
+<li>256 packets stored in buffer</li>
+<li>16 RPU &ndash;&gt; Slots = 256/16 = 16</li>
+<li>8 RPU &ndash;&gt; Slots = 256/8 = 32</li>
+</ul>
+</li>
+<li>Check Makefile on how to swapping PR regions with the desired accelerator</li>
+<li>For example
 
+<script src="/js/mindmap.min.js"></script>
+<script src="/js/kity.min.js"></script>
+<script src="/js/kityminder.core.min.js"></script>
+
+
+<link rel="stylesheet" href="/css/mindmap.css" />
+
+
+<div id="" class="mindmap mindmap-lg">
+    <ul>
+<li>fpga_src/boards/VCU1525_200g_8G
+<ul>
+<li>make
+<ul>
+<li>to build base image</li>
+</ul>
+</li>
+<li>make base_0
+<ul>
+<li>base_0 is the base image with static regions</li>
+</ul>
+</li>
+<li>make PIG_Hash_1
+<ul>
+<li>add Pigasus string matching accelerator to the RPUs</li>
+</ul>
+</li>
+<li>make PIG_base_2
+<ul>
+<li>only update the load balancer to be round robin without changing the RPUs from the base design</li>
+</ul>
+</li>
+<li>make PIG_RR_3
+<ul>
+<li>merge the first two, meaning taking
+<ul>
+<li>the RPUs from PIG_Hash_1 and</li>
+<li>load balancer from PIG_base_2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</li>
+</ul>
+<h2 id="adding-accelerators">Adding accelerators</h2>
+
+<script src="/js/mindmap.min.js"></script>
+<script src="/js/kity.min.js"></script>
+<script src="/js/kityminder.core.min.js"></script>
+
+
+<link rel="stylesheet" href="/css/mindmap.css" />
+
+
+<div id="" class="mindmap mindmap-lg">
+    <ul>
+<li>accelerators
+<ul>
+<li>Examples
+<ul>
+<li>pigasus_sme
+<ul>
+<li>Ported Pigasus string matcher accelerator</li>
+</ul>
+</li>
+<li>hash
+<ul>
+<li>a hash accelerator for TCP/UDP headers</li>
+</ul>
+</li>
+<li>ip_matcher
+<ul>
+<li>from-scratch firewall accelerator</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Connect accelerator to RPU
+<ul>
+<li>use the Verilog interface provided in the accelerator wrapper\</li>
+<li>fpga_src/accel/ip_matcher/rtl/accel_wrap_firewall.v</li>
+<li>instantiate your accelerators</li>
+<li>set the register MMIO</li>
+</ul>
+</li>
+<li>synthesize/place/route
+<ul>
+<li>use the tcl scripts in fpga_src/boards/*/fpga</li>
+<li>replace the accelerator files</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h2 id="changing-the-load-balancer">Changing the load balancer</h2>
+
+<script src="/js/mindmap.min.js"></script>
+<script src="/js/kity.min.js"></script>
+<script src="/js/kityminder.core.min.js"></script>
+
+
+<link rel="stylesheet" href="/css/mindmap.css" />
+
+
+<div id="" class="mindmap mindmap-lg">
+    <ul>
+<li>Load balancer
+<ul>
+<li>default load balancer
+<ul>
+<li>round robin for 16 RPU designs</li>
+<li>hash-based load balancer for 8 RPU designs</li>
+</ul>
+</li>
+<li>Change/add Load balancer
+<ul>
+<li>fpga_src/boards/VCU1525_200g_16G/rtl</li>
+<li>simply replace the load balancer Verilog file
+<ul>
+<li>in create_project.tcl</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h1 id="sources">Sources</h1>
+<ul>
+<li><a href="https://github.com/ucsdsysnet/Shire">https://github.com/ucsdsysnet/Shire</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2022-09-29-architecture-of-reconfigurable-systems/" data-toggle="tooltip" data-placement="top" title="Architecture of reconfigurable systems">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
                 
 
                 

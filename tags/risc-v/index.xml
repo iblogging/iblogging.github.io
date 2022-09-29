@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RISC-V on Lap Blog</title>
+    <link>https://iblogging.github.io/tags/risc-v/</link>
+    <description>Recent content in RISC-V on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 28 Sep 2022 11:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/risc-v/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title> Shire, 200 Gbps middlebox framework for FPGAs</title>
+      <link>https://iblogging.github.io/post/2022-09-29-shire/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-shire/</guid>
+      <description>Introduction Shire is a new approach to designing FPGA-accelerated middleboxes that
+simplifies development, debugging, and performance tuning by decoupling the tasks of hardware accelerator implementation and software application programming Prerequisites Vivado Intel Quartus RISC-V toolchain Partial Reconfiguration tools Xilinx: MCAP driver Intel Altera Building FPGA image For each board: define the number of RPU Current implementation 256 packets stored in buffer 16 RPU &amp;ndash;&amp;gt; Slots = 256/16 = 16 8 RPU &amp;ndash;&amp;gt; Slots = 256/8 = 32 Check Makefile on how to swapping PR regions with the desired accelerator For example fpga_src/boards/VCU1525_200g_8G make to build base image make base_0 base_0 is the base image with static regions make PIG_Hash_1 add Pigasus string matching accelerator to the RPUs make PIG_base_2 only update the load balancer to be round robin without changing the RPUs from the base design make PIG_RR_3 merge the first two, meaning taking the RPUs from PIG_Hash_1 and load balancer from PIG_base_2 Adding accelerators accelerators Examples pigasus_sme Ported Pigasus string matcher accelerator hash a hash accelerator for TCP/UDP headers ip_matcher from-scratch firewall accelerator Connect accelerator to RPU use the Verilog interface provided in the accelerator wrapper\ fpga_src/accel/ip_matcher/rtl/accel_wrap_firewall.</description>
+    </item>
+    
+  </channel>
+</rss>

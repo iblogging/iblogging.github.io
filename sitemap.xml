@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://iblogging.github.io/post/2022-09-29-shire/</loc>
+    <lastmod>2022-09-28T11:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/</loc>
     <lastmod>2022-09-28T11:00:00+00:00</lastmod>
   </url><url>
@@ -21,6 +24,9 @@
     <lastmod>2022-09-28T11:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/</loc>
+    <lastmod>2022-09-28T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/risc-v/</loc>
     <lastmod>2022-09-28T11:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/</loc>
