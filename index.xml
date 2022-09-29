@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lap Blog</title>
+    <link>https://iblogging.github.io/</link>
+    <description>Recent content on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 09 Jan 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setup</title>
+      <link>https://iblogging.github.io/post/readme/</link>
+      <pubDate>Wed, 09 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/readme/</guid>
+      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://iblogging.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/about/</guid>
+      <description>About Me </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://iblogging.github.io/notes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://iblogging.github.io/search/placeholder/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/search/placeholder/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Posts Archive</title>
+      <link>https://iblogging.github.io/archive/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/archive/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
