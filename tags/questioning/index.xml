@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>questioning on Lap Blog</title>
+    <link>https://iblogging.github.io/tags/questioning/</link>
+    <description>Recent content in questioning on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 28 Sep 2022 21:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/questioning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title> 5 Whys mental model</title>
+      <link>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</link>
+      <pubDate>Wed, 28 Sep 2022 21:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</guid>
+      <description>Introduction By asking why multiple times we can have a deeper understanding on the causes of the higher level problem. The goal is to land on a what or a how.
+It’s an interrogative technique that’s iterative, and is used to discover the root causes of a problem. The answer to each “why” question leads to an answer that forms the basis of the next question.
+The “five” in the name comes from the observation that it often takes about 5 iterations to get to the root cause of a problem.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -103,6 +103,10 @@
                             <a href="/categories/fpga">fpga</a>
                         </li>
                         
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
                     
                     
 		    
@@ -283,6 +287,46 @@ Alice &lt;-- Bob: Another authentication Response
 
 </div>
 
+<h2 id="table">Table</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>represents a logic zero, or a false condition</td>
+</tr>
+<tr>
+<td>1</td>
+<td>represents a logic one, or a true condition</td>
+</tr>
+<tr>
+<td>x</td>
+<td>represents an unknown logic value (can be zero or one)</td>
+</tr>
+<tr>
+<td>z</td>
+<td>represents a high-impedance state</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pdf">pdf</h2>
+<div id="adobe-dc-view" style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+</div>
+<script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
+<script type="text/javascript">
+	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+		var adobeDCView = new AdobeDC.View({clientId: "3948c8f2317143e78e00a466b99ed9a2", divId: "adobe-dc-view"});
+		adobeDCView.previewFile({
+			content:{location: {url: "https:\/\/iblogging.github.io\/pdf\/shire.pdf"}},
+			metaData:{fileName: "shire.pdf"}
+		}, {embedMode: "IN_LINE"});
+	});
+</script>
 
 
                 
@@ -336,9 +380,15 @@ Alice &lt;-- Bob: Another authentication Response
                         
                         
                         
+                        
+                        
                         <a href="/tags/fpga" title="fpga">
                             fpga
                         </a>
+                        
+                        
+                        
+                        
                         
                         
                         

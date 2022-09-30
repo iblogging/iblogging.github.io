@@ -6,7 +6,16 @@
     <description>Recent content in FPGA on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 19:45:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2022 23:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Verilog Building Blocks</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</guid>
+      <description>1. Module A module is a block of Verilog code that implements a certain functionality. Modules can be embedded within other modules and a higher level module can communicate with its lower level modules using their input and output ports. A module should be enclosed within module and endmodule keywords module &amp;lt;name&amp;gt; ([port_list]); // Contents of the module endmodule // A module can have an empty portlist module name; // Contents of the module endmodule // Module called &amp;#34;dff&amp;#34; has 3 inputs and 1 output port module dff ( input d, input clk, input rstn, output reg	q); // Contents of the module always @ (posedge clk) begin if (!</description>
+    </item>
+    
     <item>
       <title>Verilog Arrays and Memories</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-7/</link>

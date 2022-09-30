@@ -6,7 +6,27 @@
     <description>Recent content on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 28 Sep 2022 19:45:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2022 23:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Verilog Building Blocks</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</guid>
+      <description>1. Module A module is a block of Verilog code that implements a certain functionality. Modules can be embedded within other modules and a higher level module can communicate with its lower level modules using their input and output ports. A module should be enclosed within module and endmodule keywords module &amp;lt;name&amp;gt; ([port_list]); // Contents of the module endmodule // A module can have an empty portlist module name; // Contents of the module endmodule // Module called &amp;#34;dff&amp;#34; has 3 inputs and 1 output port module dff ( input d, input clk, input rstn, output reg	q); // Contents of the module always @ (posedge clk) begin if (!</description>
+    </item>
+    
+    <item>
+      <title> 5 Whys mental model</title>
+      <link>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</link>
+      <pubDate>Wed, 28 Sep 2022 21:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</guid>
+      <description>Introduction By asking why multiple times we can have a deeper understanding on the causes of the higher level problem. The goal is to land on a what or a how.
+It’s an interrogative technique that’s iterative, and is used to discover the root causes of a problem. The answer to each “why” question leads to an answer that forms the basis of the next question.
+The “five” in the name comes from the observation that it often takes about 5 iterations to get to the root cause of a problem.</description>
+    </item>
+    
     <item>
       <title>Verilog Arrays and Memories</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-7/</link>
@@ -108,7 +128,7 @@ VHDL was soon developed to enhance the design process by allowing engineers to d
       <pubDate>Wed, 28 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/readme/</guid>
-      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 </description>
+      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Table Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state pdf </description>
     </item>
     
     <item>
