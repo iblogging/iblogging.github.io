@@ -6,7 +6,19 @@
     <description>Recent content in Posts on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Sep 2022 14:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Sep 2022 16:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Read a Book</title>
+      <link>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</link>
+      <pubDate>Fri, 30 Sep 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</guid>
+      <description>Introduction Two kind of books:
+Fiction/novels books Non-fiction books textbooks manuals journal articles histories academic studies etc The purpose of reading things like Non-fiction books is to gain, and retain, information finding out what happens — as quickly and easily as possible — is your main goal
+NEVER read a non-fiction book or article from beginning to end
+Strategy should ALWAYS jump ahead skip around use every available strategy to discover, then to understand and finally to remember what the writer has to say you should be able to read a 300-page book in 06 to 08 hours</description>
+    </item>
+    
     <item>
       <title>Feedback: Key to Continuous Learning</title>
       <link>https://iblogging.github.io/post/2022-09-30-feedback/</link>
@@ -148,7 +160,7 @@ VHDL was soon developed to enhance the design process by allowing engineers to d
       <pubDate>Wed, 28 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/readme/</guid>
-      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Table Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state pdf </description>
+      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Table Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state Color Knowledge people must take responsibility for their own development and placement pdf </description>
     </item>
     
   </channel>

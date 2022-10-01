@@ -3,15 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://iblogging.github.io/categories/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/fpga/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/categories/fpga/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/risc-v/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/</loc>
+    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/critial-thinking/</loc>
     <lastmod>2022-09-30T14:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-30-feedback/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/</loc>
     <lastmod>2022-09-30T14:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/mental-models/</loc>
@@ -20,23 +38,11 @@
     <loc>https://iblogging.github.io/categories/mental-models/</loc>
     <lastmod>2022-09-30T14:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/post/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://iblogging.github.io/tags/questioning/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/</loc>
     <lastmod>2022-09-30T14:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-30-reinvent-yourself/</loc>
     <lastmod>2022-09-30T13:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/fpga/</loc>
-    <lastmod>2022-09-29T23:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/categories/fpga/</loc>
-    <lastmod>2022-09-29T23:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/rtl/</loc>
     <lastmod>2022-09-29T23:00:00+00:00</lastmod>
@@ -78,9 +84,6 @@
     <lastmod>2022-09-28T11:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-29-fpga/</loc>
-    <lastmod>2022-09-28T11:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/risc-v/</loc>
     <lastmod>2022-09-28T11:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-29-verilog-part-1/</loc>
