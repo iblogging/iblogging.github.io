@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="critial thinking" />
+    <meta property="og:title" content="critial thinking" />
+    <meta property="twitter:title" content="critial thinking" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Lap Blog</title>
+    <title>critial thinking | Lap Blog</title>
 
-    <link rel="canonical" href="/about/">
+    <link rel="canonical" href="/tags/critial-thinking/">
 
     
     
@@ -176,49 +176,54 @@
 
 
 
-
-<article>
-    <div class="container">
-        <div class="row">
-            
-            <div class="
+  
+<div class="container">
+    <div class="row">
+        
+        
+   	    <div class="
             col-lg-8 col-lg-offset-1
             col-md-8 col-md-offset-1
             col-sm-12
             col-xs-12
-            post-container">
-            
-                 
- <select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> Tiếng Việt | Vietnamese </option>
-    <option value="1"> Tiếng Anh | English </option>
-</select>
-
-                
-                <div class="vn post-container">
-                    
-                    <hr>
-<h2 id="multilingual-true">layout: page
-multilingual: true</h2>
-<h2 id="about-me">About Me</h2>
-
-                </div>
-            
-                
-                <div class="en post-container">
-                    <h2 id="about-me">About Me</h2>
-
-                </div>
-            
-             
+            post-container
+        ">
             
 
+<div class="post-preview">
+    <a href="https://iblogging.github.io/post/2022-09-30-reinvent-yourself/">
+        <h2 class="post-title">
+            Reinvent Yourself
+        </h2>
+	
+        <h3 class="post-subtitle">
+            Reinvent Yourself
+        </h3>
+	
+        <div class="post-content-preview">
+	
+             Reinvent Yourself
+        
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by Lap on Friday, September 30, 2022
+        
+        
+    
+    </p>
+
+</div>
+<hr>
 
 
             
-            </div>
-            
-            
+
+
+
+       	</div>
+        
 
 <div class="
     col-lg-3 col-lg-offset-0
@@ -326,9 +331,9 @@ multilingual: true</h2>
     
 </div>
 
-        </div>
-    </div>
-</article>
+	</div>
+</div>
+
 
 
 
@@ -369,7 +374,7 @@ multilingual: true</h2>
             
            
                    <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                       <a href='/tags/critial-thinking/index.xml' rel="alternate" type="application/rss+xml" title="Lap Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
@@ -489,57 +494,6 @@ multilingual: true</h2>
 </script>
 
 
-
-<script type="text/javascript">
-    
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    var $select = document.querySelector("select");
-
-    
-    function getLang() { return new URLSearchParams(document.location.search).get("lang") }
-
-    function setLang(newLang) {
-        var params = new URLSearchParams(document.location.search)
-        params.set("lang", newLang)
-        document.location.search = params.toString()  
-    }
-
-    
-    function _render() {
-        var lang = getLang()
-        
-        if (lang == "en") {
-            $select.selectedIndex = 1;
-            $en.style.display = "block";
-            $en.classList.add("active");
-            $zh.style.display = "none";
-            $zh.classList.remove("active");
-            
-        } else {
-            $select.selectedIndex = 0;
-            $zh.style.display = "block";
-            $zh.classList.add("active");
-            $en.style.display = "none";
-            $en.classList.remove("active");
-        }
-        
-        generateCatalog(".catalog-body");
-    }
-
-    
-    function onLanChange(index) {
-        if (index == 0) {
-            lang = "zh"
-        } else {
-            lang = "en"
-        }
-        setLang(lang)
-    }
-
-    
-    _render();
-</script>
 
 
 
