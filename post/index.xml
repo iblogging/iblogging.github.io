@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Lap Blog</title>
+    <link>https://iblogging.github.io/post/</link>
+    <description>Recent content in Posts on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Sep 2022 14:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Feedback: Key to Continuous Learning</title>
+      <link>https://iblogging.github.io/post/2022-09-30-feedback/</link>
+      <pubDate>Fri, 30 Sep 2022 14:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-30-feedback/</guid>
+      <description>Drucker on Asia - Peter Drucker Feedback: Key to Continuous Learning To know one’s strengths, to know how to improve them, and to know what one cannot do—are the keys to continuous learning. Whenever a Jesuit priest or a Calvinist pastor does anything of significance (for instance, making a key decision)
+he is expected to write down what results he anticipates. Nine months later, he then feeds back from the actual results to these anticipations.</description>
+    </item>
+    
+    <item>
+      <title>Reinvent Yourself</title>
+      <link>https://iblogging.github.io/post/2022-09-30-reinvent-yourself/</link>
+      <pubDate>Fri, 30 Sep 2022 13:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-30-reinvent-yourself/</guid>
+      <description>Drucker on Asia - Peter Drucker Knowledge people must take responsibility for their own development and placement In today’s society and organizations, people work increasingly with knowledge, rather than with skill.
+Knowledge and skill differ in a fundamental characteristic: skills change very, very slowly. Knowledge, however,changes itself. It makes itself obsolete, and very rapidly. A knowledge worker becomes obsolescent [nerver use] if he or she does not go back to school every three or four years.</description>
+    </item>
+    
+    <item>
+      <title>Verilog Building Blocks</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</guid>
+      <description>1. Module A module is a block of Verilog code that implements a certain functionality. Modules can be embedded within other modules and a higher level module can communicate with its lower level modules using their input and output ports. A module should be enclosed within module and endmodule keywords module &amp;lt;name&amp;gt; ([port_list]); // Contents of the module endmodule // A module can have an empty portlist module name; // Contents of the module endmodule // Module called &amp;#34;dff&amp;#34; has 3 inputs and 1 output port module dff ( input d, input clk, input rstn, output reg	q); // Contents of the module always @ (posedge clk) begin if (!</description>
+    </item>
+    
+    <item>
+      <title> 5 Whys mental model</title>
+      <link>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</link>
+      <pubDate>Wed, 28 Sep 2022 21:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</guid>
+      <description>Introduction By asking why multiple times we can have a deeper understanding on the causes of the higher level problem. The goal is to land on a what or a how.
+It’s an interrogative technique that’s iterative, and is used to discover the root causes of a problem. The answer to each “why” question leads to an answer that forms the basis of the next question.
+The “five” in the name comes from the observation that it often takes about 5 iterations to get to the root cause of a problem.</description>
+    </item>
+    
+    <item>
+      <title>Verilog Arrays and Memories</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-7/</link>
+      <pubDate>Wed, 28 Sep 2022 19:45:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-7/</guid>
+      <description>An array declaration of a net or variable can be either scalar or vector. multi-dimensional array address range identifier reg y1 [11:0]; // y is an scalar reg array of depth=12, each 1-bit wide wire [0:7] y2 [3:0] // y is an 8-bit vector net with a depth of 4 reg [7:0] y3 [0:1][0:3]; // y is a 2D array rows=2,cols=4 each 8-bit wide Assignment y1 = 0; // Illegal - All elements can&amp;#39;t be assigned in a single go y2[0] = 8&amp;#39;ha2; // Assign 0xa2 to index=0 y2[2] = 8&amp;#39;h1c; // Assign 0x1c to index=2 y3[1][2] = 8&amp;#39;hdd; // Assign 0xdd to rows=1 cols=2 y3[0][0] = 8&amp;#39;haa; // Assign 0xaa to rows=0 cols=0 Example</description>
+    </item>
+    
+    <item>
+      <title>Verilog scalar and vector</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-6/</link>
+      <pubDate>Wed, 28 Sep 2022 19:30:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-6/</guid>
+      <description>Scalar and Vector A net or reg declaration without a range specification is considered 1-bit wide and is a scalar. If a range is specified, then the net or reg becomes a multibit entity known as a vector. wire o_nor; // single bit scalar net wire [7:0] o_flop; // 8-bit vector net reg parity; // single bit scalar variable reg [31:0] addr; // 32 bit vector variable to store address Bit-selects Any bit in a vectored variable can be individually selected and assigned a new value reg [7:0] addr; // 8-bit reg variable [7, 6, 5, 4, 3, 2, 1, 0] addr [0] = 1; // assign 1 to bit 0 of addr addr [3] = 0; // assign 0 to bit 3 of addr addr [8] = 1; // illegal : bit8 does not exist in addr Part-selects A range of contiguous bits can be selected and is known as a part-select constant part-select indexed part-select reg [31:0] addr; addr [23:16] = 8&amp;#39;h23; // bits 23 to 16 will be replaced by the new value &amp;#39;h23 -&amp;gt; constant part-select [&amp;lt;start_bit&amp;gt; +: &amp;lt;width&amp;gt;] // part-select increments from start-bit [&amp;lt;start_bit&amp;gt; -: &amp;lt;width&amp;gt;] // part-select decrements from start-bit module des; reg [31:0] data; int i; initial begin data = 32&amp;#39;hFACE_CAFE; for (i = 0; i &amp;lt; 4; i++) begin $display (&amp;#34;data[8*%0d +: 8] = 0x%0h&amp;#34;, i, data[8*i +: 8]); end $display (&amp;#34;data[7:0] = 0x%0h&amp;#34;, data[7:0]); $display (&amp;#34;data[15:8] = 0x%0h&amp;#34;, data[15:8]); $display (&amp;#34;data[23:16] = 0x%0h&amp;#34;, data[23:16]); $display (&amp;#34;data[31:24] = 0x%0h&amp;#34;, data[31:24]); end endmodule Source https://www.</description>
+    </item>
+    
+    <item>
+      <title>Verilog Data Types</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-5/</link>
+      <pubDate>Wed, 28 Sep 2022 19:20:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-5/</guid>
+      <description>What values do variables hold ? Almost all data-types can only have one of the four different values as given below except for real and event data types.
+Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state What does the verilog value-set imply ?</description>
+    </item>
+    
+    <item>
+      <title>Verilog syntax</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-4/</link>
+      <pubDate>Wed, 28 Sep 2022 19:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-4/</guid>
+      <description>Operators Unary operators shall appear to the left of their operand Binary operators shall appear between their operands Conditional operators have two separate operators that separate three operands x = ~y; // ~ is a unary operator, and y is the operand x = y | z; // | is a binary operator, where y and z are its operands // If the expression (y &amp;gt; 5) is true, then variable x will get the value in w, else the value in z.</description>
+    </item>
+    
+    <item>
+      <title>ASIC Design Flow</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-3/</link>
+      <pubDate>Wed, 28 Sep 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-3/</guid>
+      <description>Introduction Source https://www.chipverify.com/verilog/asic-soc-chip-design-flow </description>
+    </item>
+    
+    <item>
+      <title>Introduction to Verilog</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-2/</link>
+      <pubDate>Wed, 28 Sep 2022 17:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-2/</guid>
+      <description>Introduction A digital element such as a flip-flop can be represented with combinational gates like NAND and NOR The functionality of a flip-flop is achieved by the connection of a certain set of gates in a particular manner How the gates have to be connected is usually figured out by solving K-map from the truth table The truth table is nothing but a table that tells us what inputs combine together to give what values of output Shown in the image below is an electronic circuit that represents a D-flip flop and the corresponding truth table.</description>
+    </item>
+    
+    <item>
+      <title> Shire, 200 Gbps middlebox framework for FPGAs</title>
+      <link>https://iblogging.github.io/post/2022-09-29-shire/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-shire/</guid>
+      <description>Introduction Shire is a new approach to designing FPGA-accelerated middleboxes that
+simplifies development, debugging, and performance tuning by decoupling the tasks of hardware accelerator implementation and software application programming Prerequisites Vivado Intel Quartus RISC-V toolchain Partial Reconfiguration tools Xilinx: MCAP driver Intel Altera Building FPGA image For each board: define the number of RPU Current implementation 256 packets stored in buffer 16 RPU &amp;ndash;&amp;gt; Slots = 256/16 = 16 8 RPU &amp;ndash;&amp;gt; Slots = 256/8 = 32 Check Makefile on how to swapping PR regions with the desired accelerator For example fpga_src/boards/VCU1525_200g_8G make to build base image make base_0 base_0 is the base image with static regions make PIG_Hash_1 add Pigasus string matching accelerator to the RPUs make PIG_base_2 only update the load balancer to be round robin without changing the RPUs from the base design make PIG_RR_3 merge the first two, meaning taking the RPUs from PIG_Hash_1 and load balancer from PIG_base_2 Adding accelerators accelerators Examples pigasus_sme Ported Pigasus string matcher accelerator hash a hash accelerator for TCP/UDP headers ip_matcher from-scratch firewall accelerator Connect accelerator to RPU use the Verilog interface provided in the accelerator wrapper\ fpga_src/accel/ip_matcher/rtl/accel_wrap_firewall.</description>
+    </item>
+    
+    <item>
+      <title>Architecture of reconfigurable systems</title>
+      <link>https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/</guid>
+      <description>Introduction This is my notes on studying Architecture of reconfigurable systems from Prof Jordane Lorandel. The course includes 03 main parts:
+FPGA introduction SoC introduction Partial Reconfiguration introduction </description>
+    </item>
+    
+    <item>
+      <title>Architecture of reconfigurable systems - FPGA</title>
+      <link>https://iblogging.github.io/post/2022-09-29-fpga/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-fpga/</guid>
+      <description>Digital Hardware Design: Two approaches An introduction to FPGAs FPGAs Reconfigurable Mean not defined after manufacture, could be specified by the programmers themselves Configuration types Static Reconfiguration Load the whole bitstream on the FPGA Stop the execution to do the loading Static Partial Reconfiguration Only a portion of the bitstream is loaded on the FPGA Stop the execution to load the partial iage but the wait time is much shorter Dynamic Partial Reconfiguration Part of the FPGA is reconfigured while the rest is still running How is ensure reconfiguration?</description>
+    </item>
+    
+    <item>
+      <title>Study Verilog - Part 1</title>
+      <link>https://iblogging.github.io/post/2022-09-29-verilog-part-1/</link>
+      <pubDate>Wed, 28 Sep 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-1/</guid>
+      <description>Introduction In the early days of integrated circuits, engineers had to sit down and physically draw transistors and their connections on paper to design them such that it can be fabricated on silicon.
+Bigger and complex circuits demanded more engineers, time and other resources and soon enough there was a need to have a better way of designing integrated circuits.
+VHDL was soon developed to enhance the design process by allowing engineers to describe functionality of the desired hardware and let automation tools convert that behavior into actual hardware elements like combinational gates and sequential logic.</description>
+    </item>
+    
+    <item>
+      <title>Setup</title>
+      <link>https://iblogging.github.io/post/readme/</link>
+      <pubDate>Wed, 28 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/readme/</guid>
+      <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Table Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state pdf </description>
+    </item>
+    
+  </channel>
+</rss>

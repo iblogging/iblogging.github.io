@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Verilog syntax" />
+    <meta property="og:title" content="Verilog syntax" />
+    <meta property="twitter:title" content="Verilog syntax" />
+    
+
+    
+    <meta name="description" content="Verilog syntax">
+    <meta property="og:description" content="Verilog syntax" />
+    <meta property="twitter:description" content="Verilog syntax" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Verilog syntax | Lap Blog</title>
+
+    <link rel="canonical" href="/post/2022-09-29-verilog-part-4/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Lap Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/verilog" title="Verilog">
+                            Verilog
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Verilog syntax</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Wednesday, September 28, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="operators">Operators</h2>
+<ul>
+<li>Unary operators shall appear to the left of their operand</li>
+<li>Binary operators shall appear between their operands</li>
+<li>Conditional operators have two separate operators that separate three operands</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">x</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">~</span><span style="color:#8be9fd;font-style:italic">y</span>;                <span style="color:#6272a4">// ~ is a unary operator, and y is the operand
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">x</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">y</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">z</span>;             <span style="color:#6272a4">// | is a binary operator, where y and z are its operands
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">// If the expression (y &gt; 5) is true, then variable x will get the value in w, else the value in z.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">x</span> <span style="color:#ff79c6">=</span> (<span style="color:#8be9fd;font-style:italic">y</span> &gt; <span style="color:#bd93f9">5</span>) <span style="color:#8be9fd;font-style:italic">?</span> <span style="color:#8be9fd;font-style:italic">w</span> : <span style="color:#8be9fd;font-style:italic">z</span>;   <span style="color:#6272a4">// ?: is a ternary operator, and the expression (y&gt;5), w and z are its operands
+</span></span></span></code></pre></div><h2 id="number-format">Number Format</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#bd93f9">16</span>          <span style="color:#6272a4">// Number 16 in decimal
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#bd93f9">0x10</span>        <span style="color:#6272a4">// Number 16 in hexadecimal
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#bd93f9">10000</span>       <span style="color:#6272a4">// Number 16 in binary
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#bd93f9">20</span>          <span style="color:#6272a4">// Number 16 in octal
+</span></span></span></code></pre></div><h3 id="sized">Sized</h3>
+<p>Sized numbers are represented as shown below, where size is written only in decimal to specify the number of bits in the number.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span>[<span style="color:#50fa7b">size</span>]<span style="color:#f1fa8c">&#39;[base_format][number]
+</span></span></span></code></pre></div><ul>
+<li>base_format can be either decimal (&rsquo;d or &lsquo;D), hexadecimal (&lsquo;h or &lsquo;H) and octal (&lsquo;o or &lsquo;O) and specifies what base the number part represents.</li>
+<li>number is specified as consecutive digits from 0, 1, 2 &hellip; 9 for decimal base format and 0, 1, 2 .. 9, A, B, C, D, E, F for hexadecimal.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#bd93f9">3</span><span style="color:#f1fa8c">&#39;b010;     // size is 3, base format is binary (&#39;</span><span style="color:#8be9fd;font-style:italic">b</span>), <span style="color:#8be9fd;font-style:italic">and</span> <span style="color:#8be9fd;font-style:italic">the</span> <span style="color:#8be9fd;font-style:italic">number</span> <span style="color:#ff79c6">is</span> <span style="color:#bd93f9">010</span> (<span style="color:#8be9fd;font-style:italic">indicates</span> <span style="color:#8be9fd;font-style:italic">value</span> <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">binary</span>)
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">3</span><span style="color:#f1fa8c">&#39;d2;       // size is 3, base format is decimal (&#39;</span><span style="color:#8be9fd;font-style:italic">d</span>) <span style="color:#8be9fd;font-style:italic">and</span> <span style="color:#8be9fd;font-style:italic">the</span> <span style="color:#8be9fd;font-style:italic">number</span> <span style="color:#ff79c6">is</span> <span style="color:#bd93f9">2</span> (<span style="color:#8be9fd;font-style:italic">specified</span> <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">decimals</span>)
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">8</span><span style="color:#f1fa8c">&#39;h70;      // size is 8, base format is hexadecimal (&#39;</span><span style="color:#8be9fd;font-style:italic">h</span>) <span style="color:#8be9fd;font-style:italic">and</span> <span style="color:#8be9fd;font-style:italic">the</span> <span style="color:#8be9fd;font-style:italic">number</span> <span style="color:#ff79c6">is</span> <span style="color:#bd93f9">0x70</span> (<span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">hex</span>) <span style="color:#8be9fd;font-style:italic">to</span> <span style="color:#8be9fd;font-style:italic">represent</span> <span style="color:#8be9fd;font-style:italic">decimal</span> <span style="color:#bd93f9">112</span>
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">9</span><span style="color:#f1fa8c">&#39;h1FA;     // size is 9, base format is hexadecimal (&#39;</span><span style="color:#8be9fd;font-style:italic">h</span>) <span style="color:#8be9fd;font-style:italic">and</span> <span style="color:#8be9fd;font-style:italic">the</span> <span style="color:#8be9fd;font-style:italic">number</span> <span style="color:#ff79c6">is</span> <span style="color:#bd93f9">0x1FA</span> (<span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">hex</span>) <span style="color:#8be9fd;font-style:italic">to</span> <span style="color:#8be9fd;font-style:italic">represent</span> <span style="color:#8be9fd;font-style:italic">decimal</span> <span style="color:#bd93f9">506</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;hA = 4&#39;</span><span style="color:#8be9fd;font-style:italic">d10</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;b1010 = 4&#39;</span><span style="color:#8be9fd;font-style:italic">o12</span>	<span style="color:#6272a4">// Decimal 10 can be represented in any of the four formats
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#bd93f9">8</span><span style="color:#f1fa8c">&#39;d234 = 8&#39;</span><span style="color:#50fa7b">D234</span>                 <span style="color:#6272a4">// Legal to use either lower case or upper case for base format
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#bd93f9">32</span><span style="color:#f1fa8c">&#39;hFACE_47B2;                  // Underscore (_) can be used to separate 16 bit numbers for readability
+</span></span></span></code></pre></div><h3 id="unsized">Unsized</h3>
+<ul>
+<li>Numbers without a base_format specification are decimal numbers by default.</li>
+<li>Numbers without a size specification have a default number of bits <strong>depending on the type of simulator and machine</strong>.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">integer</span> <span style="color:#8be9fd;font-style:italic">a</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5423</span>;       <span style="color:#6272a4">// base format is not specified, a gets a decimal value of 5423
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">integer</span> <span style="color:#8be9fd;font-style:italic">a</span> <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;h1AD7;     // size is not specified, because a is int (32 bits) value stored in a = 32&#39;</span><span style="color:#8be9fd;font-style:italic">h0000_1AD7</span>
+</span></span></code></pre></div><h3 id="negative">Negative</h3>
+<p>Negative numbers are specified by placing a minus <code>-</code> sign before the size of a number.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#ff79c6">-</span><span style="color:#bd93f9">6</span><span style="color:#f1fa8c">&#39;d3;            // 8-bit negative number stored as two&#39;</span><span style="color:#8be9fd;font-style:italic">s</span> <span style="color:#8be9fd;font-style:italic">complement</span> <span style="color:#8be9fd;font-style:italic">of</span> <span style="color:#bd93f9">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">-</span><span style="color:#bd93f9">6</span><span style="color:#f1fa8c">&#39;sd9;           // For signed maths
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">8&#39;</span><span style="color:#8be9fd;font-style:italic">d</span><span style="color:#ff79c6">-</span><span style="color:#bd93f9">4</span>;            <span style="color:#6272a4">// Illegal
+</span></span></span></code></pre></div><h2 id="source">Source</h2>
+<ul>
+<li><a href="https://www.chipverify.com/verilog/verilog-syntax">https://www.chipverify.com/verilog/verilog-syntax</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/2022-09-29-verilog-part-3/" data-toggle="tooltip" data-placement="top" title="ASIC Design Flow">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/2022-09-29-verilog-part-5/" data-toggle="tooltip" data-placement="top" title="Verilog Data Types">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/critial-thinking" title="critial-thinking">
+                            critial-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+</body>
+</html>

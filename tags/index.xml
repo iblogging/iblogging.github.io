@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Lap Blog</title>
+    <link>https://iblogging.github.io/tags/</link>
+    <description>Recent content in Tags on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Sep 2022 14:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>critial thinking</title>
+      <link>https://iblogging.github.io/tags/critial-thinking/</link>
+      <pubDate>Fri, 30 Sep 2022 14:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/critial-thinking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mental models</title>
+      <link>https://iblogging.github.io/tags/mental-models/</link>
+      <pubDate>Fri, 30 Sep 2022 14:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/mental-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>questioning</title>
+      <link>https://iblogging.github.io/tags/questioning/</link>
+      <pubDate>Fri, 30 Sep 2022 14:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/questioning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>FPGA</title>
+      <link>https://iblogging.github.io/tags/fpga/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/fpga/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RTL</title>
+      <link>https://iblogging.github.io/tags/rtl/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/rtl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Verilog</title>
+      <link>https://iblogging.github.io/tags/verilog/</link>
+      <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/verilog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>critical thinking</title>
+      <link>https://iblogging.github.io/tags/critical-thinking/</link>
+      <pubDate>Wed, 28 Sep 2022 21:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/critical-thinking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RISC-V</title>
+      <link>https://iblogging.github.io/tags/risc-v/</link>
+      <pubDate>Wed, 28 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/risc-v/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
