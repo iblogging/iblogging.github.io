@@ -6,7 +6,38 @@
     <description>Recent content in Posts on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Sep 2022 16:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Oct 2022 16:30:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Spirit of Critical Thinking</title>
+      <link>https://iblogging.github.io/post/books/2022-10-01-the-spirit-of-critial-thinking/</link>
+      <pubDate>Sat, 01 Oct 2022 16:30:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/books/2022-10-01-the-spirit-of-critial-thinking/</guid>
+      <description>The Spirit of Critical Thinking Template for Analyzing the Logic of an Article Use this template to deconstruct any article, essay, or chapter of a textbook.
+The Logic of “(name of the article)” 1. The main purpose of this article is ________________________________. State as accurately as possible the author’s purpose for writing the article. 2. The key question that the author is addressing is ____________________. Figure out the key question in the mind of the author when s/he wrote the article.</description>
+    </item>
+    
+    <item>
+      <title>The Elements of Thought</title>
+      <link>https://iblogging.github.io/post/books/2022-10-01-critical-thinking/</link>
+      <pubDate>Sat, 01 Oct 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/books/2022-10-01-critical-thinking/</guid>
+      <description>Element of thoughts Whenever we think, we think for
+a purpose within a point of view based on assumptions that lead to implications and consequences. We use
+concepts, ideas, and theories to interpret data, facts, and experiences in order to
+answer questions, solve problems, and resolve issues. Questions Using the Elements of Thoughts Purpose What am I trying to accomplish? What is my central aim? My purpose? Questions What question am I raising?</description>
+    </item>
+    
+    <item>
+      <title>Book list</title>
+      <link>https://iblogging.github.io/post/books/2022-10-01-boolist/</link>
+      <pubDate>Fri, 30 Sep 2022 17:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/books/2022-10-01-boolist/</guid>
+      <description> Book Summary 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state </description>
+    </item>
+    
     <item>
       <title>How to Read a Book</title>
       <link>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</link>
@@ -40,12 +71,32 @@ Knowledge and skill differ in a fundamental characteristic: skills change very, 
     </item>
     
     <item>
+      <title>The Benefit and Manner of Asking the Right</title>
+      <link>https://iblogging.github.io/post/2022-09-30-asking-the-right-questions-c1/</link>
+      <pubDate>Fri, 30 Sep 2022 12:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-30-asking-the-right-questions-c1/</guid>
+      <description>Chapter 1 Objective Contrast a world where no critical thinking is needed with the world we live in. Understand the role of experts in forming our beliefs and conclusions. Clarify the meaning of critical thinking. Distinguish between weak-sense and strong-sense critical thinking. Integrate the role of values with critical thinking. Identify techniques for using critical thinking as a conversation stimulus. This is a colour shortcode &amp;lt;span style=&amp;quot; background-color: red; -webkit-background-clip: text; -moz-background-clip: text; background-clip: text; color: transparent; &amp;quot; .</description>
+    </item>
+    
+    <item>
       <title>Verilog Building Blocks</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>
       <pubDate>Thu, 29 Sep 2022 23:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</guid>
       <description>1. Module A module is a block of Verilog code that implements a certain functionality. Modules can be embedded within other modules and a higher level module can communicate with its lower level modules using their input and output ports. A module should be enclosed within module and endmodule keywords module &amp;lt;name&amp;gt; ([port_list]); // Contents of the module endmodule // A module can have an empty portlist module name; // Contents of the module endmodule // Module called &amp;#34;dff&amp;#34; has 3 inputs and 1 output port module dff ( input d, input clk, input rstn, output reg	q); // Contents of the module always @ (posedge clk) begin if (!</description>
+    </item>
+    
+    <item>
+      <title> Understand shire</title>
+      <link>https://iblogging.github.io/post/2022-09-29-understand-shire-source-code/</link>
+      <pubDate>Thu, 29 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-understand-shire-source-code/</guid>
+      <description>Introduction Shire is a new approach to designing FPGA-accelerated middleboxes that
+simplifies development, debugging, and performance tuning by decoupling the tasks of hardware accelerator implementation and software application programming Architecture Shire includes 04 main components
+IO ports for packet input/output. 100Gbps Ethernet ports to transmit packets to the network 100Gbps PCIe port to transmit packets and control message with host Packet scheduler Distribute packets to Packet processing units IO ports Packet switch As a queue to deliver packets between Packet Processor and Packet Scheduler Packet processor RISC-V core Accelerator Hybrid memory subsystem IO Ports 100Gbps Ethernet 100Gps PCIe Packet scheduler (PS) Externally, the PS module need to comminicate with 03 other modules</description>
     </item>
     
     <item>
@@ -161,6 +212,15 @@ VHDL was soon developed to enhance the design process by allowing engineers to d
       
       <guid>https://iblogging.github.io/post/readme/</guid>
       <description>TIPS 1. UML @startuml Alice -&amp;gt; Bob: Authentication Request Bob --&amp;gt; Alice: Authentication Response Alice -&amp;gt; Bob: Another authentication Request Alice &amp;lt;-- Bob: Another authentication Response @enduml 2. Mindmap Root Level 1 Level 2 Level 2 Level 3 Level 3 Level 4 Level 5 Level 6 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Level 1 Level 2 Level 2 Table Type Meaning 0 represents a logic zero, or a false condition 1 represents a logic one, or a true condition x represents an unknown logic value (can be zero or one) z represents a high-impedance state Color Knowledge people must take responsibility for their own development and placement pdf </description>
+    </item>
+    
+    <item>
+      <title>FPGA designs with Verilog</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-01-fpga-designs-with-verilog/</link>
+      <pubDate>Thu, 01 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-01-fpga-designs-with-verilog/</guid>
+      <description></description>
     </item>
     
   </channel>

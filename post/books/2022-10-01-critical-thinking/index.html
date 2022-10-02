@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="The Elements of Thought" />
+    <meta property="og:title" content="The Elements of Thought" />
+    <meta property="twitter:title" content="The Elements of Thought" />
+    
+
+    
+    <meta name="description" content="The Elements of Thought">
+    <meta property="og:description" content="The Elements of Thought" />
+    <meta property="twitter:description" content="The Elements of Thought" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>The Elements of Thought | Lap Blog</title>
+
+    <link rel="canonical" href="/post/books/2022-10-01-critical-thinking/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Lap Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/mental-models" title="mental models">
+                            mental models
+                        </a>
+                        
+                        <a class="tag" href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        <a class="tag" href="/tags/critical-thinking" title="critical thinking">
+                            critical thinking
+                        </a>
+                        
+                    </div>
+                    <h1>The Elements of Thought</h1>
+                    <h2 class="subheading">Critical Thinking</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Saturday, October 1, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="element-of-thoughts">Element of thoughts</h2>
+<p>
+  <img src="/img/eot-01.png" alt="">
+
+
+Whenever we think, we think for</p>
+<ul>
+<li>a purpose</li>
+<li>within a point of view</li>
+<li>based on assumptions that lead to</li>
+<li>implications and consequences.</li>
+</ul>
+<p>We use</p>
+<ul>
+<li>concepts, ideas, and theories to</li>
+<li>interpret data, facts, and experiences</li>
+</ul>
+<p>in order to</p>
+<ul>
+<li>answer questions,</li>
+<li>solve problems, and</li>
+<li>resolve issues.</li>
+</ul>
+<h2 id="questions-using-the-elements-of-thoughts">Questions Using the Elements of Thoughts</h2>
+<h3 id="purpose">Purpose</h3>
+<ul>
+<li>What am I trying to accomplish?</li>
+<li>What is my central aim? My purpose?</li>
+</ul>
+<h3 id="questions">Questions</h3>
+<ul>
+<li>What question am I raising?</li>
+<li>What questions should we be addressing?</li>
+<li>Am I considering the complexities in the question?</li>
+</ul>
+<h3 id="points-of-view">Points of View</h3>
+<ul>
+<li>From what point of view am I looking at this issue?</li>
+<li>Is there another point of view I should consider?</li>
+</ul>
+<h3 id="assumptions">Assumptions</h3>
+<ul>
+<li>What am I taking for granted?</li>
+<li>What assumption has led me to this conclusion?</li>
+</ul>
+<h3 id="implicationsconsequences">Implications/Consequences</h3>
+<ul>
+<li>If someone accepted my position, what would be some of the important implications?</li>
+<li>In other words, what might follow?</li>
+<li>What am I implying?</li>
+</ul>
+<h3 id="concepts">Concepts</h3>
+<ul>
+<li>What is the main idea here?</li>
+<li>Can I explain this idea?</li>
+</ul>
+<h3 id="information">Information</h3>
+<ul>
+<li>What information am I using in coming to this conclusion?</li>
+<li>What information do I need to settle the question?</li>
+<li>How do I know the information is true?</li>
+</ul>
+<h2 id="a-checklist-for-reasoning">A Checklist for Reasoning</h2>
+<h3 id="1-all-reasoning-has-a-purpose">1. All reasoning has a PURPOSE.</h3>
+<ul>
+<li>Can you state your purpose clearly?</li>
+<li>What is the objective of your reasoning?</li>
+<li>Does your reasoning stay focused throughout on your goal?</li>
+<li>Is your purpose fair in context, considering all relevant persons or other species?</li>
+<li>Is your goal realistic?</li>
+</ul>
+<h3 id="2-all-reasoning-is-an-attempt-to-figure-something-out-to-settle-some-question-or-to-solve-some-problem">2. All reasoning is an attempt to figure something out, to settle some QUESTION, or to solve some PROBLEM</h3>
+<ul>
+<li>What main question are you trying to answer?</li>
+<li>Are there other ways to think about the question?</li>
+<li>Can you divide the question into sub-questions?</li>
+<li>What questions would you need to ask and answer before you could answer the main question?</li>
+<li>Is this a question that has one right answer or can there be more than one reasonable answer?</li>
+<li>Does this question require judgment rather than facts alone?</li>
+</ul>
+<h3 id="3-all-reasoning-is-based-on-assumptions">3. All reasoning is based on ASSUMPTIONS.</h3>
+<ul>
+<li>What assumptions are you making? Are they justified?</li>
+<li>How are your assumptions shaping your point of view?</li>
+<li>Which of your assumptions might reasonably be questioned?</li>
+</ul>
+<h3 id="4-all-reasoning-is-done-from-some-point-of-view">4. All reasoning is done from some POINT OF VIEW.</h3>
+<ul>
+<li>What is your point of view? What insights is it based on? What are its weaknesses?</li>
+<li>What other points of view should be considered in reasoning through this problem?
+<ul>
+<li>What are the strengths and weaknesses of these viewpoints?</li>
+<li>Are you fairmindedly considering the insights behind these viewpoints?</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-all-reasoning-is-based-on-data-information-and-evidence">5. All reasoning is based on DATA, INFORMATION, and EVIDENCE.</h3>
+<ul>
+<li>To what extent is your reasoning supported by relevant data?</li>
+<li>How can you make sure your reasoning is based on information that is accurate or true?</li>
+<li>How do you know you are not distorting information to fit your selfish or vested interests?</li>
+<li>Do the data suggest explanations that differ from those you have given?</li>
+<li>How clear, accurate, and relevant are the data to the question at issue?</li>
+<li>Have you gathered sufficient data to reach a reasonable conclusion?</li>
+</ul>
+<h3 id="6-all-reasoning-is-expressed-through-and-shaped-by-concepts-and-theories">6. All reasoning is expressed through, and shaped by, CONCEPTS and THEORIES.</h3>
+<ul>
+<li>What key ideas and theories are guiding your reasoning?</li>
+<li>What alternative explanations might be possible, given these concepts and theories?</li>
+<li>Do you deliberately take command of the ideas that guide your reasoning and control the quality of your life?</li>
+<li>Are you distorting ideas to fit your agenda?</li>
+</ul>
+<h3 id="7-all-reasoning-contains-inferences-or-interpretations-by-which-we-draw-conclusions-and-give-meaning-to-data">7. All reasoning contains INFERENCES or INTERPRETATIONS by which we draw CONCLUSIONS and give meaning to data</h3>
+<ul>
+<li>To what extent do the data support your conclusions?</li>
+<li>Are your inferences consistent with each other?</li>
+<li>Are there other reasonable inferences that should be considered?</li>
+<li>Are you able to consider alternative possibilities when coming to conclusions, or do you lock yourself into one way of interpreting situations?</li>
+</ul>
+<h3 id="8-all-reasoning-leads-somewhere-and-has-implications-and-consequences">8. All reasoning leads somewhere and has IMPLICATIONS and CONSEQUENCES.</h3>
+<ul>
+<li>What implications and consequences follow from your reasoning?</li>
+<li>If we accept your line of reasoning, what implications or consequences are likely?</li>
+<li>If you decide to do X, what might immediately follow from your decision?</li>
+<li>What might follow from acting upon that decision in the long run as the implications and conseuences spiral out?</li>
+</ul>
+<p>
+  <img src="/img/figuring-mind.png" alt="">
+
+</p>
+<h2 id="some-essential-intellectual-standards-for-all-human-thought">Some Essential Intellectual Standards for All Human Thought</h2>
+<p>
+  <img src="/img/Intellectual-Standards.png" alt="">
+
+</p>
+<h2 id="source">Source</h2>
+<ul>
+<li><a href="https://www.criticalthinking.org/files/Concepts_Tools.pdf">The Miniature Guide to Critical Thinking</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/books/2022-10-01-boolist/" data-toggle="tooltip" data-placement="top" title="Book list">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/books/2022-10-01-the-spirit-of-critial-thinking/" data-toggle="tooltip" data-placement="top" title="The Spirit of Critical Thinking">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+</body>
+</html>

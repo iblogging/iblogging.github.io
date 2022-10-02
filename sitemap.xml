@@ -2,40 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://iblogging.github.io/tags/book/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
     <loc>https://iblogging.github.io/categories/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/tags/fpga/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+    <loc>https://iblogging.github.io/tags/critical-thinking/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/categories/fpga/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
+    <loc>https://iblogging.github.io/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/mental-models/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/categories/mental-models/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/books/2022-10-01-the-spirit-of-critial-thinking/</loc>
+    <lastmod>2022-10-01T16:30:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/books/2022-10-01-critical-thinking/</loc>
+    <lastmod>2022-10-01T16:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/books/2022-10-01-boolist/</loc>
+    <lastmod>2022-09-30T17:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</loc>
     <lastmod>2022-09-30T16:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/post/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/risc-v/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/</loc>
-    <lastmod>2022-09-30T16:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/critial-thinking/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://iblogging.github.io/post/2022-09-30-feedback/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/mental-models/</loc>
-    <lastmod>2022-09-30T14:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/categories/mental-models/</loc>
     <lastmod>2022-09-30T14:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/questioning/</loc>
@@ -43,6 +46,15 @@
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-30-reinvent-yourself/</loc>
     <lastmod>2022-09-30T13:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/2022-09-30-asking-the-right-questions-c1/</loc>
+    <lastmod>2022-09-30T12:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/fpga/</loc>
+    <lastmod>2022-09-29T23:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/categories/fpga/</loc>
+    <lastmod>2022-09-29T23:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/rtl/</loc>
     <lastmod>2022-09-29T23:00:00+00:00</lastmod>
@@ -53,10 +65,13 @@
     <loc>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</loc>
     <lastmod>2022-09-29T23:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</loc>
-    <lastmod>2022-09-28T21:00:00+00:00</lastmod>
+    <loc>https://iblogging.github.io/post/2022-09-29-understand-shire-source-code/</loc>
+    <lastmod>2022-09-29T11:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/tags/critical-thinking/</loc>
+    <loc>https://iblogging.github.io/tags/risc-v/</loc>
+    <lastmod>2022-09-29T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/mental-models/2022-09-29-5-whys/</loc>
     <lastmod>2022-09-28T21:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-29-verilog-part-7/</loc>
@@ -91,6 +106,9 @@
   </url><url>
     <loc>https://iblogging.github.io/post/readme/</loc>
     <lastmod>2022-09-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/fpga/2022-10-01-fpga-designs-with-verilog/</loc>
+    <lastmod>2022-09-01T11:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/about/</loc>
   </url><url>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="The Spirit of Critical Thinking" />
+    <meta property="og:title" content="The Spirit of Critical Thinking" />
+    <meta property="twitter:title" content="The Spirit of Critical Thinking" />
+    
+
+    
+    <meta name="description" content="The Spirit of Critical Thinking">
+    <meta property="og:description" content="The Spirit of Critical Thinking" />
+    <meta property="twitter:description" content="The Spirit of Critical Thinking" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>The Spirit of Critical Thinking | Lap Blog</title>
+
+    <link rel="canonical" href="/post/books/2022-10-01-the-spirit-of-critial-thinking/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Lap Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/mental-models" title="mental models">
+                            mental models
+                        </a>
+                        
+                        <a class="tag" href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        <a class="tag" href="/tags/critical-thinking" title="critical thinking">
+                            critical thinking
+                        </a>
+                        
+                    </div>
+                    <h1>The Spirit of Critical Thinking</h1>
+                    <h2 class="subheading">Critical Thinking</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Saturday, October 1, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="the-spirit-of-critical-thinking">The Spirit of Critical Thinking</h2>
+<p>
+  <img src="/img/spirit-of-critical-thinking.png" alt="">
+
+</p>
+<h2 id="template-for-analyzing-the-logic-of-an-article">Template for Analyzing the Logic of an Article</h2>
+<p>Use this template to deconstruct any article, essay, or chapter of a textbook.</p>
+<h3 id="the-logic-of-name-of-the-article">The Logic of “(name of the article)”</h3>
+<h3 id="1-the-main-purpose-of-this-article-is-________________________________">1. The main purpose of this article is ________________________________.</h3>
+<pre><code>State as accurately as possible the author’s purpose for writing the article.
+</code></pre>
+<h3 id="2-the-key-question-that-the-author-is-addressing-is-____________________">2. The key question that the author is addressing is ____________________.</h3>
+<pre><code>Figure out the key question in the mind of the author when s/he wrote the article.
+</code></pre>
+<h3 id="3-the-most-important-information-in-this-article-is-___________________">3. The most important information in this article is ___________________.</h3>
+<pre><code>Figure out the facts, experiences, and data the author is using to support her/his conclusions.
+</code></pre>
+<h3 id="4-the-main-inferencesconclusions-in-this-article-are-__________________">4. The main inferences/conclusions in this article are __________________.</h3>
+<pre><code>Identify the key conclusions the author comes to and presents in the article.
+</code></pre>
+<h3 id="5-the-key-concepts-we-need-to-understand-in-this-article-is-are-____________-by-these-concepts-the-author-means-___________________">5. The key concept(s) we need to understand in this article is (are) ____________. By these concepts, the author means ___________________.</h3>
+<pre><code>Figure out the most important ideas you would have to understand in order to understand the author’s line of reasoning.
+</code></pre>
+<h3 id="6-the-main-assumptions-underlying-the-authors-thinking-is-are-___________">6. The main assumption(s) underlying the author’s thinking is (are) ___________.</h3>
+<pre><code>Figure out what the author is taking for granted [that might be questioned].
+</code></pre>
+<h3 id="7-if-we-take-this-line-of-reasoning-seriously-the-implications-are-______________">7. If we take this line of reasoning seriously, the implications are ______________.</h3>
+<pre><code>What consequences are likely to follow if people take the author’s line of reasoning seriously?
+</code></pre>
+<h3 id="7-if-we-fail-to-take-this-line-of-reasoning-seriously-the-implications-are-__________">7. If we fail to take this line of reasoning seriously, the implications are __________.</h3>
+<pre><code>What consequences are likely to follow if people ignore the author’s reasoning?
+</code></pre>
+<h3 id="8-the-main-points-of-view-presented-in-this-article-is-are_________________">8. The main point(s) of view presented in this article is (are)_________________.</h3>
+<pre><code>What is the author looking at, and how is s/he seeing it?
+</code></pre>
+<h2 id="criteria-for-evaluating-reasoning">Criteria for Evaluating Reasoning</h2>
+<h3 id="1-purpose">1) Purpose</h3>
+<ul>
+<li>What is the purpose of the reasoner?</li>
+<li>Is the purpose clearly stated or clearly implied?</li>
+<li>Is it justifiable?</li>
+</ul>
+<h3 id="2-question">2) Question</h3>
+<ul>
+<li>Is the question at issue well stated?</li>
+<li>Is it clear and unbiased?</li>
+<li>Does the expression of the question do justice to the complexity of the matter at
+issue?</li>
+<li>Are the question and purpose directly relevant to each other?</li>
+</ul>
+<h3 id="3-information">3) Information</h3>
+<ul>
+<li>Does the writer cite relevant evidence, experiences, and/or information essential to the issue?</li>
+<li>Is the information accurate?</li>
+<li>Does the writer address the complexities of the issue?</li>
+<li>Does the writer distort any information or use false information to serve a given interest?</li>
+</ul>
+<h3 id="4-concepts">4) Concepts</h3>
+<ul>
+<li>Does the writer clarify key concepts when necessary?</li>
+<li>Are the concepts used justifiably?</li>
+<li>Is the writer aware of the concepts that s/he is using in reasoning through the issue?</li>
+</ul>
+<h3 id="5-assumptions">5) Assumptions</h3>
+<ul>
+<li>Does the writer show a sensitivity to what s/he is taking for granted or assuming (insofar as those assumptions might reasonably be
+questioned)?</li>
+<li>Does the writer use questionable assumptions without addressing problems that might be inherent in those assumptions?</li>
+</ul>
+<h3 id="6-inferences">6) Inferences</h3>
+<ul>
+<li>Does the writer develop a logical line of reasoning, detailing how s/he arrived at the main conclusions?</li>
+</ul>
+<h3 id="7-point-of-view">7) Point of View</h3>
+<ul>
+<li>Does the writer show sensitivity to alternative relevant points of view or lines of reasoning?</li>
+<li>Does s/he consider and respond to objections framed from other relevant points of view?</li>
+</ul>
+<h3 id="8-implications">8) Implications</h3>
+<ul>
+<li>Does the writer show a sensitivity to the implications and consequences of the position s/he is taking?</li>
+</ul>
+<h2 id="source">Source</h2>
+<ul>
+<li><a href="https://www.criticalthinking.org/files/Concepts_Tools.pdf">The Miniature Guide to Critical Thinking</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/books/2022-10-01-critical-thinking/" data-toggle="tooltip" data-placement="top" title="The Elements of Thought">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+</body>
+</html>

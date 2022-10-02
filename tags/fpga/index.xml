@@ -6,19 +6,7 @@
     <description>Recent content in FPGA on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 Sep 2022 16:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/fpga/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>How to Read a Book</title>
-      <link>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</link>
-      <pubDate>Fri, 30 Sep 2022 16:00:00 +0000</pubDate>
-      
-      <guid>https://iblogging.github.io/post/books/2022-10-01-how-to-read-a-book/</guid>
-      <description>Introduction Two kind of books:
-Fiction/novels books Non-fiction books textbooks manuals journal articles histories academic studies etc The purpose of reading things like Non-fiction books is to gain, and retain, information finding out what happens — as quickly and easily as possible — is your main goal
-NEVER read a non-fiction book or article from beginning to end
-Strategy should ALWAYS jump ahead skip around use every available strategy to discover, then to understand and finally to remember what the writer has to say you should be able to read a 300-page book in 06 to 08 hours</description>
-    </item>
-    
+    <lastBuildDate>Thu, 29 Sep 2022 23:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/fpga/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Verilog Building Blocks</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>
@@ -26,6 +14,17 @@ Strategy should ALWAYS jump ahead skip around use every available strategy to di
       
       <guid>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</guid>
       <description>1. Module A module is a block of Verilog code that implements a certain functionality. Modules can be embedded within other modules and a higher level module can communicate with its lower level modules using their input and output ports. A module should be enclosed within module and endmodule keywords module &amp;lt;name&amp;gt; ([port_list]); // Contents of the module endmodule // A module can have an empty portlist module name; // Contents of the module endmodule // Module called &amp;#34;dff&amp;#34; has 3 inputs and 1 output port module dff ( input d, input clk, input rstn, output reg	q); // Contents of the module always @ (posedge clk) begin if (!</description>
+    </item>
+    
+    <item>
+      <title> Understand shire</title>
+      <link>https://iblogging.github.io/post/2022-09-29-understand-shire-source-code/</link>
+      <pubDate>Thu, 29 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/2022-09-29-understand-shire-source-code/</guid>
+      <description>Introduction Shire is a new approach to designing FPGA-accelerated middleboxes that
+simplifies development, debugging, and performance tuning by decoupling the tasks of hardware accelerator implementation and software application programming Architecture Shire includes 04 main components
+IO ports for packet input/output. 100Gbps Ethernet ports to transmit packets to the network 100Gbps PCIe port to transmit packets and control message with host Packet scheduler Distribute packets to Packet processing units IO ports Packet switch As a queue to deliver packets between Packet Processor and Packet Scheduler Packet processor RISC-V core Accelerator Hybrid memory subsystem IO Ports 100Gbps Ethernet 100Gps PCIe Packet scheduler (PS) Externally, the PS module need to comminicate with 03 other modules</description>
     </item>
     
     <item>
@@ -121,6 +120,15 @@ FPGA introduction SoC introduction Partial Reconfiguration introduction </descri
       <description>Introduction In the early days of integrated circuits, engineers had to sit down and physically draw transistors and their connections on paper to design them such that it can be fabricated on silicon.
 Bigger and complex circuits demanded more engineers, time and other resources and soon enough there was a need to have a better way of designing integrated circuits.
 VHDL was soon developed to enhance the design process by allowing engineers to describe functionality of the desired hardware and let automation tools convert that behavior into actual hardware elements like combinational gates and sequential logic.</description>
+    </item>
+    
+    <item>
+      <title>FPGA designs with Verilog</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-01-fpga-designs-with-verilog/</link>
+      <pubDate>Thu, 01 Sep 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-01-fpga-designs-with-verilog/</guid>
+      <description></description>
     </item>
     
   </channel>
