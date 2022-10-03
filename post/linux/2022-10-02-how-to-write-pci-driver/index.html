@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="How To Write Linux PCI Drivers" />
+    <meta property="og:title" content="How To Write Linux PCI Drivers" />
+    <meta property="twitter:title" content="How To Write Linux PCI Drivers" />
+    
+
+    
+    <meta name="description" content="How To Write Linux PCI Drivers">
+    <meta property="og:description" content="How To Write Linux PCI Drivers" />
+    <meta property="twitter:description" content="How To Write Linux PCI Drivers" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>How To Write Linux PCI Drivers | Lap Blog</title>
+
+    <link rel="canonical" href="/post/linux/2022-10-02-how-to-write-pci-driver/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Lap Blog</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/linux" title="Linux">
+                            Linux
+                        </a>
+                        
+                        <a class="tag" href="/tags/embedded" title="Embedded">
+                            Embedded
+                        </a>
+                        
+                    </div>
+                    <h1>How To Write Linux PCI Drivers</h1>
+                    <h2 class="subheading">Linux</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Sunday, October 2, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <p>
+  <img src="/img/pci.png" alt="">
+
+</p>
+<p>The PCI bus is the most popular way to connect high-speed peripheral inside a modern computer system:</p>
+<ul>
+<li>a video and network adapters,</li>
+<li>sound cards,</li>
+<li>storage devices, etc.</li>
+</ul>
+<p>Some custom and special devices, some acquisition boards with ADC, or any other interface might be custom and special devices. Even your modern laptop uses this bus to connect internal devices to the CPU, even without actual physical connectors.
+This bus is widely available on a different platforms, like x86, arm, mips, riscv. These days, it’s quite common to use a PCI bus to connect a high-performance wireless chip to the SoC inside WiFi routers.</p>
+<h2 id="pci-and-pci-express">PCI and PCI Express</h2>
+<ul>
+<li>The original PCI bus was parallel with a lot of contacts and is currently obsolete.
+<ul>
+<li>PCI uses a shared parallel bus architecture.</li>
+</ul>
+</li>
+<li>Modern and faster <code>PCIe</code> bus uses single or multiple (1-16) pairs of differential wires (lanes, one pair for TX, and one for RX):
+<ul>
+<li>x1, x4, and x16.</li>
+<li>More lanes give a bigger throughput.</li>
+<li>based on
+<ul>
+<li>point-to-point topology,</li>
+<li>with separate serial links connecting every device to the root complex controller that can be integrated into the CPU</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="linux-pci-subsystem">Linux PCI subsystem</h2>
+<p>
+  <img src="/img/lspci.png" alt="">
+
+</p>
+<ul>
+<li>
+<p>The operating system PCI subsystem reflects the actual hardware configuration and interconnections.</p>
+</li>
+<li>
+<p>There might be multiple PCI buses and multiple devices on those buses.</p>
+<ul>
+<li><strong>Every bus and device is assigned a unique number</strong>, which allows identifying each module</li>
+<li>A PCI device might have different “functions” or “endpoints.”
+<ul>
+<li>All those endpoints are also numbered.</li>
+</ul>
+</li>
+<li>The full system path to the device might look like this: <code>&lt;bus id&gt;:&lt;device id&gt;:&lt;function id&gt;</code></li>
+<li>Every PCI device contains factory-programmed <code>Vendor and Device IDs</code>
+<ul>
+<li>The Linux kernel can properly identify a device and load the proper driver using these IDs</li>
+<li>Every driver should have ID verification routines.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>The Linux kernel assigns special memory regions, <code>“Base Address Registers” (BARs)</code>, to communicate with the hardware.</p>
+<ul>
+<li>These memory addresses (and region length) are written to the PCI controller hardware during the system boot.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 0.959296<span style="color:#ff79c6">]</span> pci_bus 0001:00: root bus resource <span style="color:#ff79c6">[</span>bus 00-ff<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 0.964853<span style="color:#ff79c6">]</span> pci_bus 0001:00: root bus resource <span style="color:#ff79c6">[</span>io 0x10000-0x1ffff<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">(</span>bus address <span style="color:#ff79c6">[</span>0x0000-0xffff<span style="color:#ff79c6">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 0.973943<span style="color:#ff79c6">]</span> pci_bus 0001:00: root bus resource <span style="color:#ff79c6">[</span>mem 0x4840000000-0x487fffffff<span style="color:#ff79c6">]</span> <span style="color:#ff79c6">(</span>bus address <span style="color:#ff79c6">[</span>0x40000000-0x7fffffff<span style="color:#ff79c6">])</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 0.999755<span style="color:#ff79c6">]</span> pci 0001:00:00.0: BAR 14: assigned <span style="color:#ff79c6">[</span>mem 0x4840000000-0x48402fffff<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 1.007107<span style="color:#ff79c6">]</span> pci 0001:00:00.0: BAR 6: assigned <span style="color:#ff79c6">[</span>mem 0x4840300000-0x48403007ff pref<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 1.014769<span style="color:#ff79c6">]</span> pci 0001:01:00.0: BAR 0: assigned <span style="color:#ff79c6">[</span>mem 0x4840000000-0x48401fffff 64bit<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 1.022579<span style="color:#ff79c6">]</span> pci 0001:01:00.0: BAR 6: assigned <span style="color:#ff79c6">[</span>mem 0x4840200000-0x484020ffff pref<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 1.030265<span style="color:#ff79c6">]</span> pci 0001:00:00.0: PCI bridge to <span style="color:#ff79c6">[</span>bus 01-ff<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span> 1.035563<span style="color:#ff79c6">]</span> pci 0001:00:00.0: bridge window <span style="color:#ff79c6">[</span>mem 0x4840000000-0x48402fffff<span style="color:#ff79c6">]</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>Bus enumeration is performed by attempting to <code>read the vendor ID and device ID (VID/DID) register</code> for each combination of the bus number and device number at the device’s function #0.</p>
+</li>
+<li>
+<p>The kernel can call the corresponding driver during the enumeration stage with a compatible VID/PID pair.</p>
+</li>
+<li>
+<p>Every PCI compliant device should implement a basic set of register – <code>configuration registers</code>.</p>
+<ul>
+<li>The Linux kernel attempts to read these registers to identify and properly configure the device</li>
+<li>All these registers are mapped to the memory and available for the driver developer for reading and writing.</li>
+</ul>
+</li>
+<li>
+<p>The <code>first 64 bytes</code> of the registers are mandatory and should be implemented (by the hardware vendor) in any case.
+
+  <img src="/img/pci-register.png" alt="">
+
+</p>
+</li>
+<li>
+<p><code>Vendor ID and Device ID</code> are already well known and should contain valid identifiers of the hardware vendor.</p>
+</li>
+<li>
+<p><code>Command</code> registers define some capabilities. <code>The operating system initializes these bits</code>.
+
+  <img src="/img/pci_command.webp" alt="">
+
+</p>
+</li>
+<li>
+<p><code>Status</code> register holds different events of the PCI bus and is <code>filled by the hardware</code>.
+
+  <img src="/img/pci_status.webp" alt="">
+
+</p>
+</li>
+<li>
+<p><code>Base Address Registers – “BAR”</code> registers</p>
+<ul>
+<li><code>filled by the Linux kernel</code> and</li>
+<li>used for the IO operations.</li>
+</ul>
+</li>
+<li>
+<p><code>Subsystem Vendor ID and Subsystem Device ID</code> – helps to differentiate specific board/device model.</p>
+</li>
+</ul>
+<h2 id="structure-of-pci-drivers">Structure of PCI drivers</h2>
+<ul>
+<li>
+<p>PCI drivers “discover” PCI devices in a system via <code>pci_register_driver()</code>. When the PCI generic code discovers a new device, the driver with a matching “description” will be notified.</p>
+</li>
+<li>
+<p>Once the driver knows about a PCI device and takes ownership, the driver generally needs to perform the following initialization:</p>
+<ul>
+<li>
+<p>Enable the device</p>
+</li>
+<li>
+<p>Request MMIO/IOP resources</p>
+</li>
+<li>
+<p>Set the DMA mask size (for both coherent and streaming DMA)</p>
+</li>
+<li>
+<p>Allocate and initialize shared control data (pci_allocate_coherent())</p>
+</li>
+<li>
+<p>Access device configuration space (if needed)</p>
+</li>
+<li>
+<p>Register IRQ handler (request_irq())</p>
+</li>
+<li>
+<p>Initialize non-PCI (i.e. LAN/SCSI/etc parts of the chip)</p>
+</li>
+<li>
+<p>Enable DMA/processing engines</p>
+</li>
+</ul>
+</li>
+<li>
+<p>When done using the device, and perhaps the module needs to be unloaded, the driver needs to take the follow steps:</p>
+<ul>
+<li>
+<p>Disable the device from generating IRQs</p>
+</li>
+<li>
+<p>Release the IRQ (free_irq())</p>
+</li>
+<li>
+<p>Stop all DMA activity</p>
+</li>
+<li>
+<p>Release DMA buffers (both streaming and coherent)</p>
+</li>
+<li>
+<p>Unregister from other subsystems (e.g. scsi or netdev)</p>
+</li>
+<li>
+<p>Release MMIO/IOP resources</p>
+</li>
+<li>
+<p>Disable the device</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-pci_register_driver">1. pci_register_driver()</h3>
+<ul>
+<li>PCI device drivers call <code>pci_register_driver()</code> during their initialization with a pointer to a structure describing the driver (struct <code>pci_driver</code>)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> pci_driver {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">struct</span> list_head        node;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> <span style="color:#8be9fd">char</span>              <span style="color:#ff79c6">*</span>name;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_device_id <span style="color:#ff79c6">*</span>id_table;
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">int</span> (<span style="color:#ff79c6">*</span>probe)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_device_id <span style="color:#ff79c6">*</span>id);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">void</span> (<span style="color:#ff79c6">*</span>remove)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">int</span> (<span style="color:#ff79c6">*</span>suspend)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, pm_message_t state);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">int</span> (<span style="color:#ff79c6">*</span>resume)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">void</span> (<span style="color:#ff79c6">*</span>shutdown)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">int</span> (<span style="color:#ff79c6">*</span>sriov_configure)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> num_vfs);
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">int</span> (<span style="color:#ff79c6">*</span>sriov_set_msix_vec_count)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>vf, <span style="color:#8be9fd">int</span> msix_vec_count);
+</span></span><span style="display:flex;"><span>  u32 (<span style="color:#ff79c6">*</span>sriov_get_vf_total_msix)(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pf);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_error_handlers <span style="color:#ff79c6">*</span>err_handler;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> attribute_group <span style="color:#ff79c6">**</span>groups;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> attribute_group <span style="color:#ff79c6">**</span>dev_groups;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">struct</span> device_driver    driver;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">struct</span> pci_dynids       dynids;
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd">bool</span> driver_managed_dma;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><ul>
+<li>The ID table is an array of struct pci_device_id entries ending with an all-zero entry. Definitions with static const are generally preferred.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> pci_device_id {
+</span></span><span style="display:flex;"><span>  __u32 vendor, device;
+</span></span><span style="display:flex;"><span>  __u32 subvendor, subdevice;
+</span></span><span style="display:flex;"><span>  __u32 class, class_mask;
+</span></span><span style="display:flex;"><span>  kernel_ulong_t driver_data;
+</span></span><span style="display:flex;"><span>  __u32 override_only;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><ul>
+<li>The structure field “id_table” should be initialized with the IDs array.
+<ul>
+<li>Those IDs define compatible Vendor and Product IDs for devices.</li>
+<li>You can set here multiple pairs of VID/PID if your driver supports multiple devices. For example, declare support of VID = 0F1F + PID = 0F0E, and VID = 0F2F + PID = 0F0D:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#ff79c6">struct</span> pci_device_id my_driver_id_table[] <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>    { PCI_DEVICE(<span style="color:#bd93f9">0x0F1F</span>, <span style="color:#bd93f9">0x0F0E</span>) },
+</span></span><span style="display:flex;"><span>    { PCI_DEVICE(<span style="color:#bd93f9">0x0F2F</span>, <span style="color:#bd93f9">0x0F0D</span>) },
+</span></span><span style="display:flex;"><span>    {<span style="color:#bd93f9">0</span>,}
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><blockquote>
+<p>It’s important to end this array with a single zero value.</p>
+</blockquote>
+<ul>
+<li>
+<p>Most drivers should export this table using MODULE_DEVICE_TABLE(pci, &hellip;).</p>
+<ul>
+<li>If your driver is built-in and compiled with the kernel, then the driver information (device IDs table) will be statically integrated into the global devices table. This allows the kernel to run your driver automatically when compatible hardware is found.</li>
+<li>If your driver is built as a separate module, then the device table can be extracted with <code>depmod</code> utility. This information is added to a cache and automatically loads your driver kernel object when compatible hardware is found.</li>
+</ul>
+</li>
+<li>
+<p>Other important fields of the <code>struct pci_driver</code> are:</p>
+<ul>
+<li><code>.name </code>– unique driver name, this string will be displayed in <code>/sys/bus/pci/drivers</code></li>
+<li><code>.probe</code> – A callback function called by the kernel after the driver registration.</li>
+<li><code>.remove</code> – A callback function called by the kernel during the driver unloading.</li>
+<li><code>.suspend</code> – A callback function called by kernel when the system is going to suspend mode.</li>
+<li><code>.resume</code> – A callback function called when the system resumes after the suspend mode.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-device-access">2. Device access</h3>
+<p>To access PCI configuration registers kernel provides a set of functions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_read_config_byte</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u8 <span style="color:#ff79c6">*</span>val);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_read_config_word</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u16 <span style="color:#ff79c6">*</span>val);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_read_config_dword</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u32 <span style="color:#ff79c6">*</span>val);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_write_config_byte</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u8 val);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_write_config_word</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u16 val);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">pci_write_config_dword</span>(<span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev, <span style="color:#8be9fd">int</span> where, u32 val);
+</span></span></code></pre></div><ul>
+<li>
+<p>You can read and write 8, 16, and 32-bit data.</p>
+</li>
+<li>
+<p>The argument <code>“where”</code> specifies the actual register offset</p>
+</li>
+<li>
+<p>For example, read PCI device Vendor ID and Product ID:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;linux/pci.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
+</span></span><span style="display:flex;"><span>u16 vendor, device, revision;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pci_read_config_word(dev, PCI_VENDOR_ID, <span style="color:#ff79c6">&amp;</span>vendor);
+</span></span><span style="display:flex;"><span>pci_read_config_word(dev, PCI_DEVICE_ID, <span style="color:#ff79c6">&amp;</span>device);
+</span></span></code></pre></div><ul>
+<li>Read the “Interrupt state” of the Status register:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;linux/pci.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
+</span></span><span style="display:flex;"><span>u16 status_reg;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pci_read_config_word(dev, PCI_STATUS, <span style="color:#ff79c6">&amp;</span>status_reg);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Check the bit 3 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> ((status_reg <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">3</span>) <span style="color:#ff79c6">&amp;</span> <span style="color:#bd93f9">0x1</span>) {
+</span></span><span style="display:flex;"><span>    printk(<span style="color:#f1fa8c">&#34;Interrupt bit is set</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
+</span></span><span style="display:flex;"><span>} <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>    printk(<span style="color:#f1fa8c">&#34;Interrupt bit is not set</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Actual device control and data communication is made through the mapped memory (BARs):
+<ul>
+<li>It’s just a memory region(s). What to read and write is depends on the actual hardware.</li>
+<li>It’s required to get actual offsets, data types, and “magic” numbers somewhere.</li>
+</ul>
+</li>
+<li>To access the device memory, we need to request the memory region, start and stop offsets and map this memory region to some local pointer.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>include <span style="color:#ff79c6">&lt;</span>linux<span style="color:#ff79c6">/</span>pci.h<span style="color:#ff79c6">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> bar;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">long</span> mmio_start, mmio_len;
+</span></span><span style="display:flex;"><span>u8 __iomem <span style="color:#ff79c6">*</span>hwmem; <span style="color:#6272a4">/* Memory pointer for the I/O operations */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev; <span style="color:#6272a4">/* Initialized pci_dev */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Request the I/O resource */</span>
+</span></span><span style="display:flex;"><span>bar <span style="color:#ff79c6">=</span> pci_select_bars(pdev, IORESOURCE_MEM);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* &#34;enable&#34; device memory */</span>
+</span></span><span style="display:flex;"><span>pci_enable_device_mem(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Request the memory region */</span>
+</span></span><span style="display:flex;"><span>pci_request_region(pdev, bar, <span style="color:#f1fa8c">&#34;My PCI driver&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Get the start and stop memory positions */</span>
+</span></span><span style="display:flex;"><span>mmio_start <span style="color:#ff79c6">=</span> pci_resource_start(pdev, <span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>mmio_len <span style="color:#ff79c6">=</span> pci_resource_len(pdev, <span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* map provided resource to the local memory pointer */</span>
+</span></span><span style="display:flex;"><span>hwmem <span style="color:#ff79c6">=</span> ioremap(mmio_start, mmio_len);
+</span></span></code></pre></div><ul>
+<li>Now it’s possible to use <code>hwmem</code> to read and write from/to the device.
+<ul>
+<li>The only correct way is to use special kernel routines. The data can be read and written in the 8, 16, and 32-bit chunks.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">iowrite8</span>(u8 b, <span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">iowrite16</span>(u16 b, <span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">iowrite32</span>(u16 b, <span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">ioread8</span>(<span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">ioread16</span>(<span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">ioread32</span>(<span style="color:#8be9fd">void</span> __iomem <span style="color:#ff79c6">*</span>addr);
+</span></span></code></pre></div><h3 id="4-pci-dma">4. PCI DMA</h3>
+<p>The high-performance device supports <code>Direct Memory Access</code>.</p>
+<ul>
+<li>This is implemented with bus mastering.</li>
+<li>Bus mastering is the capability of devices on the PCI bus to take control of the bus and perform transfers to the mapped memory directly.</li>
+<li>Bus mastering (if supported) can be enabled and disabled with the following functions:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">pci_set_master</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev);
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">pci_clear_master</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>dev);
+</span></span></code></pre></div><h2 id="pci-driver-skeleton">PCI driver skeleton</h2>
+<p>This is an example of the PCI device driver. This driver can load and register for specified VID/PID pairs. Some basic operations (config registers read, memory read/write) are performed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#6272a4">/* Sample Linux PCI device driver */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;linux/init.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;linux/module.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;linux/pci.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">#define MY_DRIVER &#34;my_pci_driver&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* This sample driver supports device with VID = 0x010F, and PID = 0x0F0E*/</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#ff79c6">struct</span> pci_device_id my_driver_id_table[] <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>    { PCI_DEVICE(<span style="color:#bd93f9">0x010F</span>, <span style="color:#bd93f9">0x0F0E</span>) },
+</span></span><span style="display:flex;"><span>    {<span style="color:#bd93f9">0</span>,}
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MODULE_DEVICE_TABLE(pci, my_driver_id_table);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">my_driver_probe</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev, <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_device_id <span style="color:#ff79c6">*</span>ent);
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">my_driver_remove</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Driver registration structure */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#ff79c6">struct</span> pci_driver my_driver <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>    .name <span style="color:#ff79c6">=</span> MY_DRIVER,
+</span></span><span style="display:flex;"><span>    .id_table <span style="color:#ff79c6">=</span> my_driver_id_table,
+</span></span><span style="display:flex;"><span>    .probe <span style="color:#ff79c6">=</span> my_driver_probe,
+</span></span><span style="display:flex;"><span>    .remove <span style="color:#ff79c6">=</span> my_driver_remove
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* This is a &#34;private&#34; data structure */</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* You can store there any data that should be passed between driver&#39;s functions */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">struct</span> my_driver_priv {
+</span></span><span style="display:flex;"><span>    u8 __iomem <span style="color:#ff79c6">*</span>hwmem;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">int</span> __init <span style="color:#50fa7b">mypci_driver_init</span>(<span style="color:#8be9fd">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Register new PCI driver */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> pci_register_driver(<span style="color:#ff79c6">&amp;</span>my_driver);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">void</span> __exit <span style="color:#50fa7b">mypci_driver_exit</span>(<span style="color:#8be9fd">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Unregister */</span>
+</span></span><span style="display:flex;"><span>    pci_unregister_driver(<span style="color:#ff79c6">&amp;</span>my_driver);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">release_device</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Disable IRQ #42*/</span>
+</span></span><span style="display:flex;"><span>    free_irq(<span style="color:#bd93f9">42</span>, pdev);
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Free memory region */</span>
+</span></span><span style="display:flex;"><span>    pci_release_region(pdev, pci_select_bars(pdev, IORESOURCE_MEM));
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* And disable device */</span>
+</span></span><span style="display:flex;"><span>    pci_disable_device(pdev);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> irqreturn_t <span style="color:#50fa7b">irq_handler</span>(<span style="color:#8be9fd">int</span> irq, <span style="color:#8be9fd">void</span> <span style="color:#ff79c6">*</span>cookie)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>   (<span style="color:#8be9fd">void</span>) cookie;
+</span></span><span style="display:flex;"><span>   printk(<span style="color:#f1fa8c">&#34;Handle IRQ #%d</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, irq);
+</span></span><span style="display:flex;"><span>   <span style="color:#ff79c6">return</span> IRQ_HANDLED;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Reqest interrupt and setup handler */</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">set_interrupts</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* We want MSI interrupt, 3 lines (just an example) */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">int</span> ret <span style="color:#ff79c6">=</span> pci_alloc_irq_vectors(pdev, <span style="color:#bd93f9">3</span>, <span style="color:#bd93f9">3</span>, PCI_IRQ_MSI);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (ret <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> ret;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Request IRQ #42 */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> request_threaded_irq(<span style="color:#bd93f9">42</span>, irq_handler, <span style="color:#8be9fd;font-style:italic">NULL</span>, <span style="color:#bd93f9">0</span>, <span style="color:#f1fa8c">&#34;TEST IRQ&#34;</span>, pdev);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Write some data to the device */</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">void</span> <span style="color:#50fa7b">write_sample_data</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">int</span> data_to_write <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0xDEADBEEF</span>; <span style="color:#6272a4">/* Just a random trash */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">struct</span> my_driver_priv <span style="color:#ff79c6">*</span>drv_priv <span style="color:#ff79c6">=</span> (<span style="color:#ff79c6">struct</span> my_driver_priv <span style="color:#ff79c6">*</span>) pci_get_drvdata(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>drv_priv) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Write 32-bit data to the device memory */</span>
+</span></span><span style="display:flex;"><span>    iowrite32(data_to_write, drv_priv<span style="color:#ff79c6">-&gt;</span>hwmem);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* This function is called by the kernel */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">int</span> <span style="color:#50fa7b">my_driver_probe</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev, <span style="color:#ff79c6">const</span> <span style="color:#ff79c6">struct</span> pci_device_id <span style="color:#ff79c6">*</span>ent)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">int</span> bar, err;
+</span></span><span style="display:flex;"><span>    u16 vendor, device;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd">unsigned</span> <span style="color:#8be9fd">long</span> mmio_start,mmio_len;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">struct</span> my_driver_priv <span style="color:#ff79c6">*</span>drv_priv;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Let&#39;s read data from the PCI device configuration registers */</span>
+</span></span><span style="display:flex;"><span>    pci_read_config_word(pdev, PCI_VENDOR_ID, <span style="color:#ff79c6">&amp;</span>vendor);
+</span></span><span style="display:flex;"><span>    pci_read_config_word(pdev, PCI_DEVICE_ID, <span style="color:#ff79c6">&amp;</span>device);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    printk(KERN_INFO <span style="color:#f1fa8c">&#34;Device vid: 0x%X pid: 0x%X</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, vendor, device);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Request IO BAR */</span>
+</span></span><span style="display:flex;"><span>    bar <span style="color:#ff79c6">=</span> pci_select_bars(pdev, IORESOURCE_MEM);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Enable device memory */</span>
+</span></span><span style="display:flex;"><span>    err <span style="color:#ff79c6">=</span> pci_enable_device_mem(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (err) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> err;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Request memory region for the BAR */</span>
+</span></span><span style="display:flex;"><span>    err <span style="color:#ff79c6">=</span> pci_request_region(pdev, bar, MY_DRIVER);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (err) {
+</span></span><span style="display:flex;"><span>        pci_disable_device(pdev);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> err;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Get start and stop memory offsets */</span>
+</span></span><span style="display:flex;"><span>    mmio_start <span style="color:#ff79c6">=</span> pci_resource_start(pdev, <span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>    mmio_len <span style="color:#ff79c6">=</span> pci_resource_len(pdev, <span style="color:#bd93f9">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Allocate memory for the driver private data */</span>
+</span></span><span style="display:flex;"><span>    drv_priv <span style="color:#ff79c6">=</span> kzalloc(<span style="color:#ff79c6">sizeof</span>(<span style="color:#ff79c6">struct</span> my_driver_priv), GFP_KERNEL);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>drv_priv) {
+</span></span><span style="display:flex;"><span>        release_device(pdev);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>ENOMEM;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Remap BAR to the local pointer */</span>
+</span></span><span style="display:flex;"><span>    drv_priv<span style="color:#ff79c6">-&gt;</span>hwmem <span style="color:#ff79c6">=</span> ioremap(mmio_start, mmio_len);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span>drv_priv<span style="color:#ff79c6">-&gt;</span>hwmem) {
+</span></span><span style="display:flex;"><span>       release_device(pdev);
+</span></span><span style="display:flex;"><span>       <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">-</span>EIO;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Set driver private data */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">/* Now we can access mapped &#34;hwmem&#34; from the any driver&#39;s function */</span>
+</span></span><span style="display:flex;"><span>    pci_set_drvdata(pdev, drv_priv);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    write_sample_data(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> set_interrupts(pdev);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/* Clean up */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">static</span> <span style="color:#8be9fd">void</span> <span style="color:#50fa7b">my_driver_remove</span>(<span style="color:#ff79c6">struct</span> pci_dev <span style="color:#ff79c6">*</span>pdev)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">struct</span> my_driver_priv <span style="color:#ff79c6">*</span>drv_priv <span style="color:#ff79c6">=</span> pci_get_drvdata(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (drv_priv) {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> (drv_priv<span style="color:#ff79c6">-&gt;</span>hwmem) {
+</span></span><span style="display:flex;"><span>            iounmap(drv_priv<span style="color:#ff79c6">-&gt;</span>hwmem);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        pci_free_irq_vectors(pdev);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        kfree(drv_priv);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    release_device(pdev);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MODULE_LICENSE(<span style="color:#f1fa8c">&#34;GPL&#34;</span>);
+</span></span><span style="display:flex;"><span>MODULE_AUTHOR(<span style="color:#f1fa8c">&#34;Oleg Kutkov &lt;contact@olegkutkov.me&gt;&#34;</span>);
+</span></span><span style="display:flex;"><span>MODULE_DESCRIPTION(<span style="color:#f1fa8c">&#34;Test PCI driver&#34;</span>);
+</span></span><span style="display:flex;"><span>MODULE_VERSION(<span style="color:#f1fa8c">&#34;0.1&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>module_init(mypci_driver_init);
+</span></span><span style="display:flex;"><span>module_exit(mypci_driver_exit);
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">BINARY</span>     <span style="color:#ff79c6">:=</span> test_pci_module
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">KERNEL</span>      <span style="color:#ff79c6">:=</span> /lib/modules/<span style="color:#ff79c6">$(</span>shell uname -r<span style="color:#ff79c6">)</span>/build
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">ARCH</span>        <span style="color:#ff79c6">:=</span> x86
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">C_FLAGS</span>     <span style="color:#ff79c6">:=</span> -Wall
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">KMOD_DIR</span>    <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">$(</span>shell <span style="color:#8be9fd;font-style:italic">pwd</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">OBJECTS</span> <span style="color:#ff79c6">:=</span> test_pci.o
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">ccflags-y</span> <span style="color:#ff79c6">+=</span> <span style="color:#ff79c6">$(</span>C_FLAGS<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">obj-m</span> <span style="color:#ff79c6">+=</span> <span style="color:#ff79c6">$(</span>BINARY<span style="color:#ff79c6">)</span>.o
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">$(BINARY)-y</span> <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">$(</span>OBJECTS<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">$(BINARY).ko</span><span style="color:#ff79c6">:</span>
+</span></span><span style="display:flex;"><span>    make -C <span style="color:#ff79c6">$(</span>KERNEL<span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">M</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>KMOD_DIR<span style="color:#ff79c6">)</span> modules
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#50fa7b">clean</span><span style="color:#ff79c6">:</span>
+</span></span><span style="display:flex;"><span>    rm -f <span style="color:#ff79c6">$(</span>BINARY<span style="color:#ff79c6">)</span>.ko
+</span></span></code></pre></div><h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://docs.kernel.org/PCI/pci.html">https://docs.kernel.org/PCI/pci.html</a></li>
+<li><a href="https://olegkutkov.me/2021/01/07/writing-a-pci-device-driver-for-linux/">https://olegkutkov.me/2021/01/07/writing-a-pci-device-driver-for-linux/</a></li>
+<li><a href="https://resources.infosecinstitute.com/topic/system-address-map-initialization-x86x64-architecture-part-2-pci-express-based-systems/">https://resources.infosecinstitute.com/topic/system-address-map-initialization-x86x64-architecture-part-2-pci-express-based-systems/</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/books/2022-10-01-fact-over-fake/" data-toggle="tooltip" data-placement="top" title="Fact over fake">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+</body>
+</html>

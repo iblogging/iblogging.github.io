@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Lap Blog</title>
+    <link>https://iblogging.github.io/tags/linux/</link>
+    <description>Recent content in Linux on Lap Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Oct 2022 11:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How To Write Linux PCI Drivers</title>
+      <link>https://iblogging.github.io/post/linux/2022-10-02-how-to-write-pci-driver/</link>
+      <pubDate>Sun, 02 Oct 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/linux/2022-10-02-how-to-write-pci-driver/</guid>
+      <description>The PCI bus is the most popular way to connect high-speed peripheral inside a modern computer system:
+a video and network adapters, sound cards, storage devices, etc. Some custom and special devices, some acquisition boards with ADC, or any other interface might be custom and special devices. Even your modern laptop uses this bus to connect internal devices to the CPU, even without actual physical connectors. This bus is widely available on a different platforms, like x86, arm, mips, riscv.</description>
+    </item>
+    
+  </channel>
+</rss>

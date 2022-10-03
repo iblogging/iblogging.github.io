@@ -2,10 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://iblogging.github.io/tags/book/</loc>
-    <lastmod>2022-10-01T17:30:00+00:00</lastmod>
-  </url><url>
     <loc>https://iblogging.github.io/categories/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/embedded/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/fpga/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/linux/2022-10-02-how-to-write-pci-driver/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/linux/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/categories/linux/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/post/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/</loc>
+    <lastmod>2022-10-02T11:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://iblogging.github.io/tags/book/</loc>
     <lastmod>2022-10-01T17:30:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/tags/critical-thinking/</loc>
@@ -14,19 +38,10 @@
     <loc>https://iblogging.github.io/post/books/2022-10-01-fact-over-fake/</loc>
     <lastmod>2022-10-01T17:30:00+00:00</lastmod>
   </url><url>
-    <loc>https://iblogging.github.io/</loc>
-    <lastmod>2022-10-01T17:30:00+00:00</lastmod>
-  </url><url>
     <loc>https://iblogging.github.io/tags/mental-models/</loc>
     <lastmod>2022-10-01T17:30:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/categories/mental-models/</loc>
-    <lastmod>2022-10-01T17:30:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/post/</loc>
-    <lastmod>2022-10-01T17:30:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/</loc>
     <lastmod>2022-10-01T17:30:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/post/books/2022-10-01-the-spirit-of-critial-thinking/</loc>
@@ -52,9 +67,6 @@
   </url><url>
     <loc>https://iblogging.github.io/post/2022-09-30-asking-the-right-questions-c1/</loc>
     <lastmod>2022-09-30T12:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://iblogging.github.io/tags/fpga/</loc>
-    <lastmod>2022-09-29T23:00:00+00:00</lastmod>
   </url><url>
     <loc>https://iblogging.github.io/categories/fpga/</loc>
     <lastmod>2022-09-29T23:00:00+00:00</lastmod>
