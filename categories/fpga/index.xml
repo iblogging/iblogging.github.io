@@ -6,7 +6,17 @@
     <description>Recent content in FPGA on Lap Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Sep 2022 23:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Oct 2022 14:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Longest Prefix Matching in Networking Chips</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-longest-prefix-matching-in-networking-chips/</link>
+      <pubDate>Mon, 03 Oct 2022 14:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-longest-prefix-matching-in-networking-chips/</guid>
+      <description>Attribute Detail Subject Longest Prefix Matching in Networking Chips Source Longest Prefix Matching in Networking Chips Author Sharada Yeluri Basics Two planes Control plane
+determine how the packets should be processed and forwarded. executes these tasks in the background populates the tables in the data plane maintains Routing Information Database (RIB) routes direct routes static routes dynamic routes Control plane software optimizes and compresses the information in the RIB before installing the routes into the tables inside networking chips ( called Forwarding Information Databases (FIB) ) Forwarding Information Databases (FIB) stored in on-chip or off-chip memories (SRAM, HBM/DRAM, or TCAM) contains just enough information to forward the packets to their next destination or nexthop updated by the control plane software Contents contains the IP address subnet mask (or IP prefix), and the nexthop could directly indicate the physical interface Or it can point to an entry in yet another table Simplest model Data plane or forwarding plane</description>
+    </item>
+    
     <item>
       <title>Verilog Building Blocks</title>
       <link>https://iblogging.github.io/post/2022-09-29-verilog-part-8/</link>

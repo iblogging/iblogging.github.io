@@ -69,17 +69,6 @@
 
     
     
-
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-RNGWSCFDTD');
-    </script>
-
 </head>
 
 
@@ -202,7 +191,167 @@
             col-xs-12
             post-container">
             
-                
+                <h1 id="tips">TIPS</h1>
+<h2 id="1-uml">1. UML</h2>
+<pre tabindex="0"><code class="language-plantuml" data-lang="plantuml">@startuml
+Alice -&gt; Bob: Authentication Request
+Bob --&gt; Alice: Authentication Response
+
+Alice -&gt; Bob: Another authentication Request
+Alice &lt;-- Bob: Another authentication Response
+@enduml
+</code></pre><h2 id="2-mindmap">2. Mindmap</h2>
+
+<script src="/js/mindmap.min.js"></script>
+<script src="/js/kity.min.js"></script>
+<script src="/js/kityminder.core.min.js"></script>
+
+
+<link rel="stylesheet" href="/css/mindmap.css" />
+
+
+<div id="" class="mindmap mindmap-lg">
+    <ul>
+<li>Root
+<ul>
+<li>Level 1
+<ul>
+<li>Level 2</li>
+<li>Level 2
+<ul>
+<li>Level 3</li>
+<li>Level 3
+<ul>
+<li>Level 4
+<ul>
+<li>Level 5
+<ul>
+<li>Level 6</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Level 1
+<ul>
+<li>Level 2</li>
+<li>Level 2</li>
+</ul>
+</li>
+<li>Level 1
+<ul>
+<li>Level 2</li>
+<li>Level 2</li>
+</ul>
+</li>
+<li>Level 1
+<ul>
+<li>Level 2</li>
+<li>Level 2</li>
+</ul>
+</li>
+<li>Level 1
+<ul>
+<li>Level 2</li>
+<li>Level 2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+<h2 id="table">Table</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>represents a logic zero, or a false condition</td>
+</tr>
+<tr>
+<td>1</td>
+<td>represents a logic one, or a true condition</td>
+</tr>
+<tr>
+<td>x</td>
+<td>represents an unknown logic value (can be zero or one)</td>
+</tr>
+<tr>
+<td>z</td>
+<td>represents a high-impedance state</td>
+</tr>
+</tbody>
+</table>
+<h2 id="color">Color</h2>
+
+<span 
+style="
+background-color: green;
+      -webkit-background-clip: text;
+      -moz-background-clip: text;
+      background-clip: text;
+      color: transparent;
+"
+> Knowledge people must take responsibility for their own development and placement </span>
+<h2 id="add-comments">Add comments</h2>
+<p><a href="https://www.pugillum.com/posts/2021_11_28_github_issues_as_comments/">https://www.pugillum.com/posts/2021_11_28_github_issues_as_comments/</a></p>
+<h2 id="markmap">Markmap</h2>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap"># markmap
+
+## Links
+
+- &lt;https://markmap.js.org/&gt;
+- [GitHub](https://github.com/gera2ld/markmap)
+
+## Related
+
+- [coc-markmap](https://github.com/gera2ld/coc-markmap)
+- [gatsby-remark-markmap](https://github.com/gera2ld/gatsby-remark-markmap)
+
+## Features
+
+- links
+- **inline** ~~text~~ *styles*
+- multiline
+  text
+- `inline code`
+-
+    ```js
+    console.log(&#39;code block&#39;);
+    ```
+- Katex - $x = {-b \pm \sqrt{b^2-4ac} \over 2a}$
+
+## Image
+- ![with image](/img/routes.jpg)
+</code></pre><h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.zhaohuabing.com/post/2020-04-02-istio-mindmap/">https://www.zhaohuabing.com/post/2020-04-02-istio-mindmap/</a></li>
+</ul>
+<h2 id="pdf">pdf</h2>
+<div id="adobe-dc-view" style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+</div>
+<script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
+<script type="text/javascript">
+	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+		var adobeDCView = new AdobeDC.View({clientId: "3948c8f2317143e78e00a466b99ed9a2", divId: "adobe-dc-view"});
+		adobeDCView.previewFile({
+			content:{location: {url: "https:\/\/iblogging.github.io\/pdf\/shire.pdf"}},
+			metaData:{fileName: "shire.pdf"}
+		}, {embedMode: "IN_LINE"});
+	});
+</script>
             
              
             
@@ -526,6 +675,49 @@
 })();
 </script>
 
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
 
 </body>
 </html>

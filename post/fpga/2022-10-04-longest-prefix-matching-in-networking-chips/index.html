@@ -15,15 +15,15 @@
     
 
     
-    <meta name="title" content="ASIC Design Flow" />
-    <meta property="og:title" content="ASIC Design Flow" />
-    <meta property="twitter:title" content="ASIC Design Flow" />
+    <meta name="title" content="Longest Prefix Matching in Networking Chips" />
+    <meta property="og:title" content="Longest Prefix Matching in Networking Chips" />
+    <meta property="twitter:title" content="Longest Prefix Matching in Networking Chips" />
     
 
     
-    <meta name="description" content="ASIC Design Flow">
-    <meta property="og:description" content="ASIC Design Flow" />
-    <meta property="twitter:description" content="ASIC Design Flow" />
+    <meta name="description" content="Longest Prefix Matching in Networking Chips">
+    <meta property="og:description" content="Longest Prefix Matching in Networking Chips" />
+    <meta property="twitter:description" content="Longest Prefix Matching in Networking Chips" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
     <link rel="shortcut icon" href="/img/favicon.png">
 
-    <title>ASIC Design Flow | Lap Blog</title>
+    <title>Longest Prefix Matching in Networking Chips | Lap Blog</title>
 
-    <link rel="canonical" href="/post/2022-09-29-verilog-part-3/">
+    <link rel="canonical" href="/post/fpga/2022-10-04-longest-prefix-matching-in-networking-chips/">
 
     
     
@@ -182,16 +182,8 @@
                             FPGA
                         </a>
                         
-                        <a class="tag" href="/tags/verilog" title="Verilog">
-                            Verilog
-                        </a>
-                        
-                        <a class="tag" href="/tags/rtl" title="RTL">
-                            RTL
-                        </a>
-                        
                     </div>
-                    <h1>ASIC Design Flow</h1>
+                    <h1>Longest Prefix Matching in Networking Chips</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         
@@ -200,7 +192,7 @@
                                 Lap
                              
                             on 
-                            Wednesday, September 28, 2022
+                            Monday, October 3, 2022
                             
                             
                             
@@ -226,15 +218,174 @@
                 post-container">
 
                 
-                <h2 id="introduction">Introduction</h2>
+                <table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Longest Prefix Matching in Networking Chips</td>
+</tr>
+<tr>
+<td>Source</td>
+<td><a href="https://www.linkedin.com/pulse/longest-prefix-matching-networking-chips-sharada-yeluri/?trackingId=CLCMWlxMzLdwGgt9Z0vRfw%3D%3D">Longest Prefix Matching in Networking Chips</a></td>
+</tr>
+<tr>
+<td>Author</td>
+<td><a href="https://www.linkedin.com/in/sharada-yeluri/">Sharada Yeluri</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="basics">Basics</h2>
+<ul>
+<li>Two planes
+<ul>
+<li>
+<p>Control plane</p>
+<ul>
+<li>determine how the packets should be processed and forwarded.
+<ul>
+<li>executes these tasks in the background</li>
+<li>populates the tables in the data plane</li>
+</ul>
+</li>
+<li>maintains Routing Information Database (RIB)
+
+  <img src="/img/routes.jpg" alt="">
+
+</li>
+<li>routes
+<ul>
+<li>direct routes</li>
+<li>static routes</li>
+<li>dynamic routes</li>
+</ul>
+</li>
+<li>Control plane software
+<ul>
+<li>optimizes and</li>
+<li>compresses the information in the RIB</li>
+<li>before installing the routes into the tables inside networking chips ( called Forwarding Information Databases (FIB) )</li>
+</ul>
+</li>
+<li>Forwarding Information Databases (FIB)
+
+  <img src="/img/fib-1.jpg" alt="">
+
+
+<ul>
+<li>stored in on-chip or off-chip memories (SRAM, HBM/DRAM, or TCAM)</li>
+<li>contains just enough information to forward the packets to their next destination or nexthop</li>
+<li>updated by the control plane software</li>
+<li>Contents
+<ul>
+<li>contains the IP address</li>
+<li>subnet mask (or IP prefix), and</li>
+<li>the nexthop
+<ul>
+<li>could directly indicate the physical interface</li>
+<li>Or it can point to an entry in yet another table</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Simplest model
+
+  <img src="/img/fib2.png" alt="">
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Data plane or forwarding plane</p>
+<ul>
+<li>receives network traffic</li>
+<li>inspects some or all of the L2/L3/L4 protocol headers</li>
+<li>takes action
+<ul>
+<li>can be determining the physical interface through which the packet must leave the router
+<ul>
+<li>using the routing tables populated by the control plane</li>
+<li>queuing and scheduling to go out from that interface</li>
+<li>or dropping the packet if it violates traffic rules/security checks,</li>
+<li>or sending the packet to the control plane for further inspection and so on.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-is-longest-prefix-match">What is Longest Prefix Match?</h2>
+<p>What is an IP prefix?</p>
+<ul>
+<li>IP prefix is a prefix of IP address. All computers on one network have the same IP prefix.</li>
+<li>For example, in <code>192.24.0.0/18</code>
+<ul>
+<li>18 is the length of the prefix and</li>
+<li>prefix is the <code>first 18 bits of the address</code>.</li>
+</ul>
+</li>
+</ul>
+<p>Sample FIB table:</p>
 <p>
-  <img src="/img/design_flow.png" alt="">
+  <img src="/img/fib2.png" alt="">
 
 </p>
-<h2 id="source">Source</h2>
 <ul>
-<li><a href="https://www.chipverify.com/verilog/asic-soc-chip-design-flow">https://www.chipverify.com/verilog/asic-soc-chip-design-flow</a></li>
+<li>destination IP address: <code>192.168.1.108</code></li>
+<li>matched entries: 1, 2, 3 and 6</li>
+<li>the match with the longest prefix is entry <code>6</code>
+<ul>
+<li>the most precise way to get to the nexthop, and the hardware should select this entry.</li>
 </ul>
+</li>
+</ul>
+<blockquote>
+<p>The most specific of all the entries that match - the one with the longest prefix length - is called the longest prefix match (LPM).</p>
+</blockquote>
+<h2 id="lpm-architectures">LPM Architectures</h2>
+<ul>
+<li>Requirements:
+<ul>
+<li>high processing rates</li>
+<li>minimize the overall area and the power consumed</li>
+<li>faster route table insertions and deletions from the control plane software</li>
+</ul>
+</li>
+<li>Approaches:
+<ul>
+<li>Tree/trie-based structures</li>
+<li>TCAMs</li>
+<li>Hybrid (TCAMs/Tries)</li>
+<li>Bloom filters and Hash Tables</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-treetrie-structures">1. Tree/trie Structures</h3>
+<p>
+  <img src="/img/tree.png" alt="">
+
+</p>
+<ul>
+<li>An uncompressed binary tree
+<ul>
+<li>each node tests one bit of the lookup key ()</li>
+<li>The root node contains the default route</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-tcams">2. TCAMs</h3>
+<h3 id="3-hybrid-tcamstries">3. Hybrid (TCAMs/Tries)</h3>
+<h3 id="4-bloom-filters-and-hash-tables">4. Bloom filters and Hash Tables</h3>
 
 
                 
@@ -242,15 +393,10 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/post/2022-09-29-verilog-part-2/" data-toggle="tooltip" data-placement="top" title="Introduction to Verilog">&larr;
+                        <a href="/post/linux/2022-10-02-how-to-write-pci-driver/" data-toggle="tooltip" data-placement="top" title="How To Write Linux PCI Drivers">&larr;
                             Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/post/2022-09-29-verilog-part-4/" data-toggle="tooltip" data-placement="top" title="Verilog syntax">Next
-                            Post &rarr;</a>
-                    </li>
                     
                 </ul>
                 

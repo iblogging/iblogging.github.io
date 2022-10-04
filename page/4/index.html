@@ -70,17 +70,6 @@
 
     
     
-
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-RNGWSCFDTD');
-    </script>
-
 </head>
 
 
@@ -206,6 +195,29 @@
             
 
 <div class="post-preview">
+    <a href="https://iblogging.github.io/post/2022-09-29-verilog-part-5/">
+        <h2 class="post-title">
+            Verilog Data Types
+        </h2>
+	
+        <div class="post-content-preview">
+	
+            Verilog Data Types
+        
+        </div>
+    </a>
+    <p class="post-meta">
+    
+        Posted by Lap on Wednesday, September 28, 2022
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="https://iblogging.github.io/post/2022-09-29-verilog-part-4/">
         <h2 class="post-title">
             Verilog syntax
@@ -283,29 +295,6 @@
         <div class="post-content-preview">
 	
              Shire, 200 Gbps middlebox framework for FPGAs
-        
-        </div>
-    </a>
-    <p class="post-meta">
-    
-        Posted by Lap on Wednesday, September 28, 2022
-        
-        
-    
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="https://iblogging.github.io/post/2022-09-29-architecture-of-reconfigurable-systems/">
-        <h2 class="post-title">
-            Architecture of reconfigurable systems
-        </h2>
-	
-        <div class="post-content-preview">
-	
-            Architecture of reconfigurable systems
         
         </div>
     </a>
@@ -644,6 +633,49 @@
 })();
 </script>
 
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
 
 </body>
 </html>
