@@ -1,19 +1,105 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>FPGA on Lap Blog</title>
+    <title>FPGA on My second brain</title>
     <link>https://iblogging.github.io/categories/fpga/</link>
-    <description>Recent content in FPGA on Lap Blog</description>
+    <description>Recent content in FPGA on My second brain</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Oct 2022 14:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 04 Oct 2022 19:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/categories/fpga/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Verilog, Formal Verification and Verilator Beginner Tutorial</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-verilog-formal-verification-and-verilator-beginner-tutorial/</link>
+      <pubDate>Tue, 04 Oct 2022 19:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-verilog-formal-verification-and-verilator-beginner-tutorial/</guid>
+      <description>Learning sources Attribute Detail Subject Verilog, Formal Verification and Verilator Beginner Tutorial Main Source Verilog, Formal Verification and Verilator Beginner Tutorial Author Zip CPU 1. Wires, and combinatorial logic First design module thruwire ( i_sw , o_led ) ; input wire i_sw ; output wire o_led ; assign o_led = i_sw ; endmodule This module declares two ports,
+i_sw and o_led Our one piece of logic sets o_led to be the same as i_sw</description>
+    </item>
+    
+    <item>
+      <title>Dan Gisselquist&#39;s FPGA debugging philosophy</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-dan-gisselquist-debug/</link>
+      <pubDate>Tue, 04 Oct 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-dan-gisselquist-debug/</guid>
+      <description>Learning sources Attribute Detail Subject Dan Gisselquist&amp;rsquo;s FPGA debugging philosophy Main Source Dan Gisselquist&amp;rsquo;s FPGA debugging philosophy Author Zip CPU 1. Simulation Ability to simulate all of the external components on the design 2. Hardware testing component testing Issuing individual commands to them, and verifying that individual interactions work Then issuing more complex strings of commands integrated design testing How to Debug an FPGA Start with blinky. Use blinky to debug FPGA Learn to use simulation A Vision for controlling (and debugging) an FPGA Getting that first UART working Debugging by simple bus address, Building a debug control interface How to place a logic analyzer within your design, and to get the most use out of it Getting rid of the umbilical: moving your debugging channel to TCP/IP </description>
+    </item>
+    
+    <item>
+      <title>The Actual FPGA Design Process</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-the-actual-fpga-design-process/</link>
+      <pubDate>Tue, 04 Oct 2022 17:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-the-actual-fpga-design-process/</guid>
+      <description>Learning sources Attribute Detail Subject The Actual FPGA Design Process Main Source The Actual FPGA Design Process Author Zip CPU The Student’s FPGA Design Process The student builds his design in Verilog He then implements it on an FPGA, adjusting his design as necessary to meet timing and build requirements The design is then placed onto the FPGA for a test, and … The student can’t figure out why it isn’t working.</description>
+    </item>
+    
+    <item>
+      <title>Building a simple bus</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-building-simple-bus/</link>
+      <pubDate>Tue, 04 Oct 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-building-simple-bus/</guid>
+      <description>Learning sources Attribute Detail Subject Building a simple bus Main Source Building a simple bus Author Zip CPU Bus ### Bues - Masters + issue a command which addresses need to be + read from or + written to - Slaves + respond to the requests of the bus master(s) Simple bus Three things can only ever happen on this bus on any given clock cycle.
+The vast majority of the time, the bus will be idle You might write to the bus or you might read from the bus Signals i_wr: True any time a write is requested.</description>
+    </item>
+    
+    <item>
+      <title>A Vision for Controlling FPGA Logic</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-a-vision-for-controlling-fpga-logic/</link>
+      <pubDate>Tue, 04 Oct 2022 15:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-a-vision-for-controlling-fpga-logic/</guid>
+      <description>Learning sources Attribute Detail Subject A Vision for Controlling FPGA Logic Main Source A Vision for Controlling FPGA Logic Author Zip CPU Memory Mapped I/O # Memory Mapped I/O - Peripherals can be connected to a bus + they can be accessed like memory + may have many addresses + may take different amounts of time to access. - Bus controller + type + CPU + [DMA peripheral](https://github.com/ZipCPU/zipcpu/blob/master/rtl/peripherals/wbdmac.v) + write to the peripheral + read from it - Register + a single address + within a peripheral.</description>
+    </item>
+    
+    <item>
+      <title>FPGA Hell</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-fpga-hell/</link>
+      <pubDate>Tue, 04 Oct 2022 15:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-fpga-hell/</guid>
+      <description>Learning sources Attribute Detail Subject FPGA Hell Main Source FPGA Hell Author Zip CPU FPGA Hell: load the design onto device, it doesn’t work, and you don’t know why.
+## The solution - Level 1: Simulation + Simulate everything + Run on similation first. + use the simulation to debug + If the issue can not be resolve, use `scope` - Level 2: Scope + Measure what’s really going on + Watch your code interact with the real hardware, and + use what you learn to `find where reality and your simulation disconnect`.</description>
+    </item>
+    
+    <item>
+      <title>AXI Interconnects Tutorial: Multiple AXI Masters and Slaves in Digital Logic</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-axi-interconnects-tutorial-02/</link>
+      <pubDate>Tue, 04 Oct 2022 11:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-axi-interconnects-tutorial-02/</guid>
+      <description>Learning sources Attribute Detail Subject AXI Interconnects Tutorial: Multiple AXI Masters and Slaves in Digital Logic Main Source AXI Interconnects Tutorial: Multiple AXI Masters and Slaves in Digital Logic Author Stephen St. Michael The ready/valid hardware data transfer protocol is simple and ingenious, providing flow control with only two control signals. The rules are straightforward: data transfer only happens when both ready and valid are &amp;lsquo;1&amp;rsquo; during the same clock cycle.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to the Advanced Extensible Interface (AXI)</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-axi-interconnects-tutorial-01/</link>
+      <pubDate>Tue, 04 Oct 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-axi-interconnects-tutorial-01/</guid>
+      <description>Learning sources Attribute Detail Subject Introduction to the Advanced Extensible Interface (AXI) Main Source Introduction to the Advanced Extensible Interface (AXI) Author Stephen St. Michael The AXI Architecture AXI Channels - AXI Channels - Read address channel - Read data channel - Write address channel - Write data channel - Write response channel The address channels are used to send
+address and control information while performing a basic handshake between master and slave.</description>
+    </item>
+    
+    <item>
+      <title>HOW THE AXI-STYLE READY/VALID HANDSHAKE WORKS</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-how-axi-style-ready-valid-handshake-work/</link>
+      <pubDate>Tue, 04 Oct 2022 08:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-how-axi-style-ready-valid-handshake-work/</guid>
+      <description>Learning sources Attribute Detail Subject HOW THE AXI-STYLE READY/VALID HANDSHAKE WORKS Main Source HOW THE AXI-STYLE READY/VALID HANDSHAKE WORKS Author JONAS JULIAN JENSEN The ready/valid hardware data transfer protocol is simple and ingenious, providing flow control with only two control signals. The rules are straightforward: data transfer only happens when both ready and valid are &amp;lsquo;1&amp;rsquo; during the same clock cycle.
+USING THE READY/VALID HANDSHAKE RECEIVER AND SENDER INTERFAC CONNECTING TWO MODULES Examples SENDING AND RECEIVING AT FULL SPEED SLOW WRITER AND FAST READER In this example, the ready signal is always &amp;lsquo;1&amp;rsquo; while the sender asserts valid occasionally.</description>
+    </item>
+    
     <item>
       <title>Longest Prefix Matching in Networking Chips</title>
       <link>https://iblogging.github.io/post/fpga/2022-10-04-longest-prefix-matching-in-networking-chips/</link>
       <pubDate>Mon, 03 Oct 2022 14:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/fpga/2022-10-04-longest-prefix-matching-in-networking-chips/</guid>
-      <description>Attribute Detail Subject Longest Prefix Matching in Networking Chips Source Longest Prefix Matching in Networking Chips Author Sharada Yeluri Basics Two planes Control plane
+      <description>Attribute Detail Subject Longest Prefix Matching in Networking Chips Source Longest Prefix Matching in Networking Chips Source Longest Prefix Match with Trie Tree Author Sharada Yeluri Basics Two planes Control plane
 determine how the packets should be processed and forwarded. executes these tasks in the background populates the tables in the data plane maintains Routing Information Database (RIB) routes direct routes static routes dynamic routes Control plane software optimizes and compresses the information in the RIB before installing the routes into the tables inside networking chips ( called Forwarding Information Databases (FIB) ) Forwarding Information Databases (FIB) stored in on-chip or off-chip memories (SRAM, HBM/DRAM, or TCAM) contains just enough information to forward the packets to their next destination or nexthop updated by the control plane software Contents contains the IP address subnet mask (or IP prefix), and the nexthop could directly indicate the physical interface Or it can point to an entry in yet another table Simplest model Data plane or forwarding plane</description>
     </item>
     

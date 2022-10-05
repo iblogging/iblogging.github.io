@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
-    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:site_name" content="My second brain">
     <meta property="og:type" content="article">
 
     
@@ -85,7 +85,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Lap Blog</a>
+            <a class="navbar-brand" href="/">My second brain</a>
         </div>
 
         
@@ -235,6 +235,10 @@
 <td><a href="https://www.linkedin.com/pulse/longest-prefix-matching-networking-chips-sharada-yeluri/?trackingId=CLCMWlxMzLdwGgt9Z0vRfw%3D%3D">Longest Prefix Matching in Networking Chips</a></td>
 </tr>
 <tr>
+<td>Source</td>
+<td><a href="https://www.lewuathe.com/longest-prefix-match-with-trie-tree.html">Longest Prefix Match with Trie Tree</a></td>
+</tr>
+<tr>
 <td>Author</td>
 <td><a href="https://www.linkedin.com/in/sharada-yeluri/">Sharada Yeluri</a></td>
 </tr>
@@ -352,6 +356,62 @@
 <blockquote>
 <p>The most specific of all the entries that match - the one with the longest prefix length - is called the longest prefix match (LPM).</p>
 </blockquote>
+<p><strong>Longest prefix match is an algorithm to lookup the IP prefix which will be the destination of the next hop from the router</strong></p>
+<ul>
+<li>find the prefix matching the given IP address and</li>
+<li>returns the corresponding router node</li>
+</ul>
+<p>Another example</p>
+<table>
+<thead>
+<tr>
+<th>IP Prefix</th>
+<th>Router</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.20.16/28</td>
+<td>A</td>
+</tr>
+<tr>
+<td>192.168.0.0/16</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<p>Question:</p>
+<ul>
+<li>IP address = 192.168.20.19</li>
+<li>Which router will be selected</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Hex Format</th>
+<th>Binary Format</th>
+<th>Node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.20.191</td>
+<td><strong>11000000.10101000.00010100</strong>.10111111</td>
+<td>&quot;&quot;</td>
+</tr>
+<tr>
+<td>192.168.20.16/28</td>
+<td><strong>11000000.10101000.00010100</strong>.00010000</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td>192.168.0.0/16</td>
+<td><strong>11000000.10101000.000</strong>00000.00000000</td>
+<td>B</td>
+</tr>
+</tbody>
+</table>
+<p>node A will be chosen: it has a longer subnet mask</p>
 <h2 id="lpm-architectures">LPM Architectures</h2>
 <ul>
 <li>Requirements:
@@ -376,14 +436,67 @@
 
 </p>
 <ul>
-<li>An uncompressed binary tree
+<li>
+<p>The left table represents the routing table.</p>
 <ul>
-<li>each node tests one bit of the lookup key ()</li>
-<li>The root node contains the default route</li>
+<li>described as the right trie tree</li>
+</ul>
+</li>
+<li>
+<p>Input: 1011</p>
+<ul>
+<li>It will be traversed as follows then find the node C as the next destination.
+
+  <img src="/img/traverse-trie.png" alt="">
+
+</li>
+</ul>
+</li>
+<li>
+<p>If 1000 comes</p>
+<ul>
+<li>B will be picked up as the next destination because the node is <strong>the last node in the traversed route</strong>
+
+  <img src="/img/traverse-trie2.png" alt="">
+
+</li>
 </ul>
 </li>
 </ul>
-<h3 id="2-tcams">2. TCAMs</h3>
+<blockquote>
+<p>this kind of trie is still inefficient when it comes the number of memory access. It needs to visit up to 32 nodes for each IP address as IPv4 address has 32 bits.</p>
+</blockquote>
+<h4 id="optimized-trie">Optimized trie</h4>
+<p>An example:
+
+  <img src="/img/tree2a.png" alt="">
+
+</p>
+<h5 id="optimization-strategy-01">Optimization strategy 01</h5>
+<ul>
+<li>unused nodes are pruned out</li>
+<li>the nodes are compressed</li>
+</ul>
+<p><strong>the number of nodes well as the number of memory accesses needed is drastically reduced.</strong></p>
+<p>
+  <img src="/img/tree2.png" alt="">
+
+</p>
+<h5 id="optimization-strategy-02">Optimization strategy 02</h5>
+<ul>
+<li>the parent nodes with only one child node are merged together (modified Patricia trie, Juniper Networks patent)</li>
+<li>part of the key value to be stored in each node that is merged.
+
+  <img src="/img/optimize-tree.png" alt="">
+
+</li>
+</ul>
+<p>Futher optimization could be applied. But this data structure does not scale well. Most high-bandwidth networking chips have moved away from purely trie implementations.</p>
+<h3 id="2-ternary-content-addressable-memory---tcams">2. Ternary content-addressable memory - TCAMs</h3>
+<ul>
+<li>a specialized high-speed memory that can search all its contents in a single cycle</li>
+<li>indicates the memory&rsquo;s ability to store and query data using three different inputs (0, 1, or x-don&rsquo;t care)</li>
+</ul>
 <h3 id="3-hybrid-tcamstries">3. Hybrid (TCAMs/Tries)</h3>
 <h3 id="4-bloom-filters-and-hash-tables">4. Bloom filters and Hash Tables</h3>
 
@@ -397,6 +510,11 @@
                             Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-04-how-axi-style-ready-valid-handshake-work/" data-toggle="tooltip" data-placement="top" title="HOW THE AXI-STYLE READY/VALID HANDSHAKE WORKS">Next
+                            Post &rarr;</a>
+                    </li>
                     
                 </ul>
                 
@@ -549,7 +667,7 @@
             
            
                    <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

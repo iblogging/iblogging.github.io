@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Building a simple bus" />
+    <meta property="og:title" content="Building a simple bus" />
+    <meta property="twitter:title" content="Building a simple bus" />
+    
+
+    
+    <meta name="description" content="Building a simple bus">
+    <meta property="og:description" content="Building a simple bus" />
+    <meta property="twitter:description" content="Building a simple bus" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>Building a simple bus | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-04-building-simple-bus/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Building a simple bus</h1>
+                    <h2 class="subheading">RTL</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Tuesday, October 4, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Building a simple bus</td>
+</tr>
+<tr>
+<td>Main Source</td>
+<td><a href="https://zipcpu.com/zipcpu/2017/05/23/simplebus.html">Building a simple bus</a></td>
+</tr>
+<tr>
+<td>Author</td>
+<td><a href="https://twitter.com/zipcpu">Zip CPU</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="bus">Bus</h2>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">### Bues
+- Masters
+    + issue a command which addresses need to be 
+        + read from or 
+        + written to
+- Slaves
+    + respond to the requests of the bus master(s)
+</code></pre><h2 id="simple-bus">Simple bus</h2>
+<p>Three things can only ever happen on this bus on any given clock cycle.</p>
+<ul>
+<li>The vast majority of the time, the bus will be idle</li>
+<li>You might write to the bus or</li>
+<li>you might read from the bus</li>
+</ul>
+<h3 id="signals">Signals</h3>
+<ul>
+<li><code>i_wr</code>: True any time a write is requested.
+<ul>
+<li>If <code>true</code> for two clocks in a row, then two writes should take place in a row.</li>
+</ul>
+</li>
+<li><code>i_rd</code>: True any time a read is requested</li>
+<li><code>i_addr</code>: The address of the value to read/write</li>
+<li><code>i_data</code>: The data to be written on any write access</li>
+<li><code>o_data</code>: The data to be returned on any read access</li>
+</ul>
+<h3 id="a-simple-write-cycle">A Simple Write Cycle</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span>(<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">i_wr</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">memory</span>[<span style="color:#8be9fd;font-style:italic">i_addr</span>] <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">i_data</span>;
+</span></span></code></pre></div><p>Writing to an arbitrary peripheral has much the same logic, but what it does is a little bit different:</p>
+<ul>
+<li>writing to <code>address zero</code> simply sets a configuration register.</li>
+<li>Writes to addresses one and two are ignored: these addresses reference read only registers.</li>
+<li>address three sets a strobe value indicating that some action is to take place</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span>(<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> (<span style="color:#8be9fd;font-style:italic">i_wr</span>) <span style="color:#50fa7b">case</span>(<span style="color:#8be9fd;font-style:italic">i_addr</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;h0: config &lt;= i_data;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	4&#39;</span><span style="color:#8be9fd;font-style:italic">h1</span>: <span style="color:#8be9fd;font-style:italic">begin</span> <span style="color:#8be9fd;font-style:italic">end</span> <span style="color:#6272a4">// A read only address
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;h2: begin end // A read only address
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	4&#39;</span><span style="color:#8be9fd;font-style:italic">h3</span>: <span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">transmitter_data</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">i_data</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">transmitter_stb</span>  <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">&#39;b1;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">		end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	default: begin end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	endcase else
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">		transmitter_stb &lt;= 1&#39;</span><span style="color:#8be9fd;font-style:italic">b0</span>;
+</span></span></code></pre></div><h3 id="a-simple-read-cycle">A Simple Read Cycle</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span>(<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">o_data</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">memory</span>[<span style="color:#8be9fd;font-style:italic">i_addr</span>];
+</span></span></code></pre></div><p>Within a more generic peripheral, where reads might have side-effects, the read logic might look instead like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span>(<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#50fa7b">case</span>(<span style="color:#8be9fd;font-style:italic">i_addr</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;h0: o_data &lt;= config;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	4&#39;</span><span style="color:#8be9fd;font-style:italic">h1</span>: <span style="color:#8be9fd;font-style:italic">begin</span> <span style="color:#8be9fd;font-style:italic">o_data</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">w_internal_values</span>; <span style="color:#8be9fd;font-style:italic">advance_data_stb</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">i_rd</span>; <span style="color:#8be9fd;font-style:italic">end</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#bd93f9">4</span><span style="color:#f1fa8c">&#39;h2: o_data &lt;= w_other_internal_values;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">	// 4&#39;</span><span style="color:#8be9fd;font-style:italic">h3</span>: <span style="color:#6272a4">// A write only address
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#8be9fd;font-style:italic">default</span>: <span style="color:#8be9fd;font-style:italic">o_data</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">endcase</span> <span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">advance_data_stb</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">&#39;b0;
+</span></span></span></code></pre></div>
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-04-a-vision-for-controlling-fpga-logic/" data-toggle="tooltip" data-placement="top" title="A Vision for Controlling FPGA Logic">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-04-the-actual-fpga-design-process/" data-toggle="tooltip" data-placement="top" title="The Actual FPGA Design Process">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>

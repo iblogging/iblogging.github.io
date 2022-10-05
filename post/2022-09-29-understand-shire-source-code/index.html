@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     
-    <meta property="og:site_name" content="Lap Blog">
+    <meta property="og:site_name" content="My second brain">
     <meta property="og:type" content="article">
 
     
@@ -85,7 +85,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Lap Blog</a>
+            <a class="navbar-brand" href="/">My second brain</a>
         </div>
 
         
@@ -313,95 +313,34 @@
 </p>
 <h1 id="customization">Customization</h1>
 <h2 id="adding-accelerators">Adding accelerators</h2>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">- accelerators
+    - Examples
+        - pigasus_sme
+            - Ported Pigasus string matcher accelerator
+        - hash
+            - a hash accelerator for TCP/UDP headers
+        - ip_matcher
+            - from-scratch firewall accelerator
+    - Connect accelerator to RPU
+        - use the Verilog interface provided in the accelerator wrapper\
+        - fpga_src/accel/ip_matcher/rtl/accel_wrap_firewall.v
+        - instantiate your accelerators
+        - set the register MMIO
+    - synthesize/place/route
+        - use the tcl scripts in fpga_src/boards/*/fpga
+        - replace the accelerator files
+</code></pre><h2 id="changing-the-load-balancer">Changing the load balancer</h2>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">
 
-<script src="/js/mindmap.min.js"></script>
-<script src="/js/kity.min.js"></script>
-<script src="/js/kityminder.core.min.js"></script>
-
-
-<link rel="stylesheet" href="/css/mindmap.css" />
-
-
-<div id="" class="mindmap mindmap-lg">
-    <ul>
-<li>accelerators
-<ul>
-<li>Examples
-<ul>
-<li>pigasus_sme
-<ul>
-<li>Ported Pigasus string matcher accelerator</li>
-</ul>
-</li>
-<li>hash
-<ul>
-<li>a hash accelerator for TCP/UDP headers</li>
-</ul>
-</li>
-<li>ip_matcher
-<ul>
-<li>from-scratch firewall accelerator</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Connect accelerator to RPU
-<ul>
-<li>use the Verilog interface provided in the accelerator wrapper\</li>
-<li>fpga_src/accel/ip_matcher/rtl/accel_wrap_firewall.v</li>
-<li>instantiate your accelerators</li>
-<li>set the register MMIO</li>
-</ul>
-</li>
-<li>synthesize/place/route
-<ul>
-<li>use the tcl scripts in fpga_src/boards/*/fpga</li>
-<li>replace the accelerator files</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-</div>
-
-<h2 id="changing-the-load-balancer">Changing the load balancer</h2>
-
-<script src="/js/mindmap.min.js"></script>
-<script src="/js/kity.min.js"></script>
-<script src="/js/kityminder.core.min.js"></script>
-
-
-<link rel="stylesheet" href="/css/mindmap.css" />
-
-
-<div id="" class="mindmap mindmap-lg">
-    <ul>
-<li>Load balancer
-<ul>
-<li>default load balancer
-<ul>
-<li>round robin for 16 RPU designs</li>
-<li>hash-based load balancer for 8 RPU designs</li>
-</ul>
-</li>
-<li>Change/add Load balancer
-<ul>
-<li>fpga_src/boards/VCU1525_200g_16G/rtl</li>
-<li>simply replace the load balancer Verilog file
-<ul>
-<li>in create_project.tcl</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-</div>
-
-<h1 id="sources">Sources</h1>
+- Load balancer
+    - default load balancer
+        - round robin for 16 RPU designs
+        - hash-based load balancer for 8 RPU designs
+    - Change/add Load balancer
+        - fpga_src/boards/VCU1525_200g_16G/rtl
+        - simply replace the load balancer Verilog file
+            - in create_project.tcl
+</code></pre><h1 id="sources">Sources</h1>
 <ul>
 <li><a href="https://github.com/ucsdsysnet/Shire">https://github.com/ucsdsysnet/Shire</a></li>
 <li><a href="https://arxiv.org/pdf/2201.08978.pdf">https://arxiv.org/pdf/2201.08978.pdf</a></li>
@@ -586,7 +525,7 @@
             
            
                    <li>
-                       <a href='' rel="alternate" type="application/rss+xml" title="Lap Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

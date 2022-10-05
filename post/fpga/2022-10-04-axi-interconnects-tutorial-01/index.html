@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Introduction to the Advanced Extensible Interface (AXI)" />
+    <meta property="og:title" content="Introduction to the Advanced Extensible Interface (AXI)" />
+    <meta property="twitter:title" content="Introduction to the Advanced Extensible Interface (AXI)" />
+    
+
+    
+    <meta name="description" content="Introduction to the Advanced Extensible Interface (AXI)">
+    <meta property="og:description" content="Introduction to the Advanced Extensible Interface (AXI)" />
+    <meta property="twitter:description" content="Introduction to the Advanced Extensible Interface (AXI)" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>Introduction to the Advanced Extensible Interface (AXI) | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-04-axi-interconnects-tutorial-01/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Introduction to the Advanced Extensible Interface (AXI)</h1>
+                    <h2 class="subheading">RTL</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Tuesday, October 4, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Introduction to the Advanced Extensible Interface (AXI)</td>
+</tr>
+<tr>
+<td>Main Source</td>
+<td><a href="https://www.allaboutcircuits.com/technical-articles/introduction-to-the-advanced-extensible-interface-axi/">Introduction to the Advanced Extensible Interface (AXI)</a></td>
+</tr>
+<tr>
+<td>Author</td>
+<td><a href="https://www.allaboutcircuits.com/author/stephen-st.-michael">Stephen St. Michael</a></td>
+</tr>
+</tbody>
+</table>
+<p>
+  <img src="/img/Introduction_to_AMBA_fig06.webp" alt="">
+
+</p>
+<h2 id="the-axi-architecture">The AXI Architecture</h2>
+<h3 id="axi-channels">AXI Channels</h3>
+<p>
+  <img src="/img/AXI-Channels-Master-Slave.png" alt="">
+
+</p>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">- AXI Channels
+    - Read address channel
+    - Read data channel
+    - Write address channel 
+    - Write data channel
+    - Write response channel
+</code></pre><p>
+  <img src="/img/Intro_to_AXI_AXI_channels.webp" alt="">
+
+</p>
+<ul>
+<li>
+<p>The address channels are used to send</p>
+<ul>
+<li>address and</li>
+<li>control information while</li>
+<li>performing a basic handshake between master and slave.</li>
+</ul>
+</li>
+<li>
+<p>The data channels are where the information to be exchanged is placed.</p>
+</li>
+<li>
+<p>A master reads data from and writes data to a slave.</p>
+<ul>
+<li>Read response information is placed on the read data channel,</li>
+<li>Write response information has a dedicated channel.
+<ul>
+<li>the master can verify a write transaction has been completed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Every exchange of data is called a transaction</strong></p>
+<h3 id="axi-signals">AXI Signals</h3>
+<p>
+  <img src="/img/AXI-Signals-Page-1.png" alt="">
+
+</p>
+<p>
+  <img src="/img/axi4-singals.svg" alt="">
+
+</p>
+<ul>
+<li>Each of the AXI channels has a number of signals associated with it</li>
+<li>two global signals referred to as ACLK and ARESETn
+<ul>
+<li>the system&rsquo;s global clock and reset signal</li>
+<li>The <code>n</code> suffix on ARESET<code>n</code> means this <code>signal is active low</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="read-channel">Read channel</h4>
+<p>
+  <img src="/img/Intro_to_AXI_Read_address_read_data_global_signals_2.webp" alt="">
+
+</p>
+<ul>
+<li>Every channel has an <code>ID tag</code> used for <code>out-of-order transactions</code>.
+<ul>
+<li>Any transaction with the same ID must remain in order</li>
+<li>transactions with different IDs may be completed in any order</li>
+</ul>
+</li>
+<li>Bus widths are implementation-specific, but these signals are shown with a 32-bit bus width.</li>
+<li>The <code>RLAST signal is used by the slave</code> to signal to the master that the last data item is being transferred.</li>
+<li>The <code>VALID and READY</code> signals are used for handshaking between master and slave</li>
+<li>The <code>cache, lock, and protection</code> signals are used for caching, exclusive access (atomic operations), and illegal access protection, respectively.</li>
+</ul>
+<h4 id="write-channel">Write channel</h4>
+<p>
+  <img src="/img/Intro_to_AXI_Write_address_data_response_signals_2.webp" alt="">
+
+</p>
+<ul>
+<li><code>WLAST</code> signals to the slave that the last data item is being sent</li>
+</ul>
+<h3 id="axi-transactions">AXI Transactions</h3>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">- Transaction
+    - reads or writes and 
+    - include address/control information, 
+        -  handshake at the beginning of a transaction using
+            + READY
+            + VALID
+    - data, and 
+        - sent in the form of bursts
+            - include multiple data items called beats
+    - a response
+</code></pre><h4 id="channel-handshake">Channel Handshake</h4>
+<ul>
+<li>the <code>source</code>, or <code>sender</code>, <code>uses the VALID</code> signal to indicate that either data or control information is <code>available</code>
+<ul>
+<li>Data is valid and ready to send</li>
+</ul>
+</li>
+<li>The destination, or receiver, signals <code>READY</code> when it is actually able to consume that information
+<ul>
+<li>I&rsquo;m ready to recevie data</li>
+</ul>
+</li>
+</ul>
+<h4 id="write-strobe-signal">Write Strobe signal</h4>
+<ul>
+<li>The <code>AXI write strobe signal</code> is used to indicate <code>which bytes of the write data bus</code> are valid for each transfer of data. By using them you can perform sparse data transfers.</li>
+<li>For example; when performing <code>a write transaction on a 32 bit data bus</code>, you will have a <code>WSTRB signal that's 4 bits wide</code>
+<ul>
+<li><code>Each bit of this WSTRB signal</code> indicates
+<ul>
+<li>whether or not the corresponding byte of the WDATA signal contains valid data that</li>
+<li>should be updated in memory for this transfer.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-04-how-axi-style-ready-valid-handshake-work/" data-toggle="tooltip" data-placement="top" title="HOW THE AXI-STYLE READY/VALID HANDSHAKE WORKS">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-04-axi-interconnects-tutorial-02/" data-toggle="tooltip" data-placement="top" title="AXI Interconnects Tutorial: Multiple AXI Masters and Slaves in Digital Logic">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>
