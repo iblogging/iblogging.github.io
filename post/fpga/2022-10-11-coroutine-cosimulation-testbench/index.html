@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Coroutine Cosimulation Testbench" />
+    <meta property="og:title" content="Coroutine Cosimulation Testbench" />
+    <meta property="twitter:title" content="Coroutine Cosimulation Testbench" />
+    
+
+    
+    <meta name="description" content="Coroutine Cosimulation Testbench">
+    <meta property="og:description" content="Coroutine Cosimulation Testbench" />
+    <meta property="twitter:description" content="Coroutine Cosimulation Testbench" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>Coroutine Cosimulation Testbench | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-11-coroutine-cosimulation-testbench/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                        <a class="tag" href="/tags/cocotb" title="Cocotb">
+                            Cocotb
+                        </a>
+                        
+                        <a class="tag" href="/tags/simulation" title="Simulation">
+                            Simulation
+                        </a>
+                        
+                    </div>
+                    <h1>Coroutine Cosimulation Testbench</h1>
+                    <h2 class="subheading">Simulation</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Monday, October 10, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Coroutine Cosimulation Testbench</td>
+</tr>
+<tr>
+<td>Sources</td>
+<td><a href="https://thedatabus.io/cocotb-introductionr">Coroutine Cosimulation Testbench</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="introduction">Introduction</h2>
+<p>Cocotb which is essentially a python framework that</p>
+<ul>
+<li>automatically interfaces with several HDL simulators
+<ul>
+<li>Icarus</li>
+<li>Modelsim</li>
+<li>Questasim</li>
+<li>etc</li>
+</ul>
+</li>
+<li>allows you to drive the signals in your design directly from python itself.</li>
+<li>Entire testbench can be written in python and
+<ul>
+<li>automation and randomization can be easily</li>
+</ul>
+</li>
+<li><strong>allow manipulating the signals inside your module from a &rsquo;normal&rsquo; language aka a Non-HDL</strong></li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p>
+  <img src="/img/cocotb_overview.svg" alt="">
+
+</p>
+<h2 id="terminology">Terminology</h2>
+<ul>
+<li><strong>coroutines</strong>
+<ul>
+<li>cooperative multitasking where processes can voluntarily yield (give away) control periodically (or when idle) in order to allow other processes to run.</li>
+<li>declared using the <code>async def</code> keywords
+<ul>
+<li>tell the interpreter that it is an <code>asynchronous</code> function.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>async functions</strong>
+<ul>
+<li>eg. <code>await Timer(10,'ns')</code> means to pause the current coroutine and let the simulator time (being accessed via Timer coroutine here) move forward by 10ns. Once that is done, the current coroutine resumes execution.</li>
+</ul>
+</li>
+<li><strong>decorators</strong>
+<ul>
+<li>function that
+<ul>
+<li>takes another function as an argument</li>
+<li>adds some kind of functionality</li>
+<li>returns another function</li>
+</ul>
+</li>
+<li>An example</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span>@decorator_function
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">def</span> <span style="color:#50fa7b">my_dumb_function</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">...........</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">...........</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4"># The above code is equivalent to:</span>
+</span></span><span style="display:flex;"><span>my_dumb_function <span style="color:#ff79c6">=</span> decorator_function(my_dumb_function)
+</span></span></code></pre></div><ul>
+<li>Some commonly used decorators in cocotb are
+<ul>
+<li><code>@cocotb.test</code>
+<ul>
+<li>marks the coroutine as a cocotb test to be run</li>
+<li>adds additional functionality like reporting, logging , timeout , expected fail flags etc to the coroutine despite the user not writing any of these features explicitly</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>generators</strong>
+<ul>
+<li>A type of python function that executes in steps as and when it is called instead of processing an entire set of data at once</li>
+</ul>
+</li>
+</ul>
+<h3 id="some-cocotb-specific-keywords">Some cocotb specific keywords</h3>
+<ul>
+<li><strong>dut</strong>:  a default object pointing to the top level module instance built-into cocotb.</li>
+<li><strong>trigger</strong>: omething that can be used to indicate a condition and take action, the simulator usually paused or started based on triggers. eg. Timer, RisingEdge</li>
+<li><strong>result</strong>: porting mechanism eg. TestFailure, assertion etc</li>
+<li><strong>Scoreboard</strong>: used to compare the actual outputs to expected outputs
+<ul>
+<li>Monitors are added to the scoreboard for the actual outputs, and the expected outputs can be either a simple list, or a function that provides a transaction.</li>
+</ul>
+</li>
+<li><strong>drivers</strong>: Input generating functions that can continuously create input stimulus in the required format.</li>
+<li><strong>monitors</strong>: can observe the a certain signals of a particular interface and enable scoreboarding, logging and other features on those signals.</li>
+</ul>
+<h2 id="example">Example</h2>
+<p>Elements required for a cocotb testbench:</p>
+<ul>
+<li>The Makefile</li>
+<li>The test module (python file)</li>
+<li>The HDL files</li>
+</ul>
+<p>An example</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>mac_manual
+</span></span><span style="display:flex;"><span>└───hdl
+</span></span><span style="display:flex;"><span>│   │   mac_manual.v
+</span></span><span style="display:flex;"><span>│   │   qadd.v
+</span></span><span style="display:flex;"><span>|   |   qmult.v
+</span></span><span style="display:flex;"><span>│   
+</span></span><span style="display:flex;"><span>└───tests
+</span></span><span style="display:flex;"><span>    │   Makefile
+</span></span><span style="display:flex;"><span>    |   test_mac_manual.py
+</span></span><span style="display:flex;"><span>    |   results.xml
+</span></span><span style="display:flex;"><span>    |   mac_manual_cocotb.vcd
+</span></span></code></pre></div><h3 id="hdl">HDL</h3>
+<p>A fixed point MAC (Multiply and Accumulate) unitfrom <a href="https://thedatabus.io/cocotb-introductionr">https://thedatabus.io/cocotb-introductionr</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#6272a4">//file: mac_manual.v
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">module</span> <span style="color:#8be9fd;font-style:italic">mac_manual</span> <span style="color:#ff79c6">#</span>(<span style="color:#8be9fd;font-style:italic">parameter</span> <span style="color:#50fa7b">N</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">16</span>,<span style="color:#8be9fd;font-style:italic">parameter</span> <span style="color:#50fa7b">Q</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">12</span>)(
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> <span style="color:#8be9fd;font-style:italic">clk</span>,<span style="color:#8be9fd;font-style:italic">sclr</span>,<span style="color:#8be9fd;font-style:italic">ce</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> [<span style="color:#50fa7b">N</span>-<span style="color:#50fa7b">1</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">a</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> [<span style="color:#50fa7b">N</span>-<span style="color:#50fa7b">1</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">b</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> [<span style="color:#50fa7b">N</span>-<span style="color:#50fa7b">1</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">c</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">output</span> [<span style="color:#50fa7b">N</span>-<span style="color:#50fa7b">1</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">p</span>
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f1fa8c">`ifdef FIXED_POINT
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    wire [N-1:0] mult,add;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    reg [N-1:0] tmp;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    wire ovr;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    qmult #(N,Q) mul (            //fixed point multiplier
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .clk(clk),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .rst(sclr),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .a(a),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .b(b),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .q_result(mult),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .overflow(ovr)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                );
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    qadd #(N,Q) add1 (            //fixed point adder
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .a(mult),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .b(c),
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                .c(add)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                );
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">     
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    always@(posedge clk,posedge sclr)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">           begin
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               if(sclr)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               begin
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                   tmp &lt;= 0;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               else if(ce)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               begin
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">                   tmp &lt;= add;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">               end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">           end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">           assign p = tmp;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">`</span><span style="color:#ff79c6">else</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">reg</span> [<span style="color:#50fa7b">N</span>-<span style="color:#50fa7b">1</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">temp</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">always</span><span style="color:#ff79c6">@</span>(<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">clk</span>,<span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">sclr</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span>(<span style="color:#8be9fd;font-style:italic">sclr</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">temp</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">end</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span>(<span style="color:#8be9fd;font-style:italic">ce</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd;font-style:italic">temp</span> <span style="color:#ff79c6">&lt;=</span> (<span style="color:#8be9fd;font-style:italic">a</span><span style="color:#ff79c6">*</span><span style="color:#8be9fd;font-style:italic">b</span><span style="color:#ff79c6">+</span><span style="color:#8be9fd;font-style:italic">c</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">p</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">temp</span>;
+</span></span><span style="display:flex;"><span> <span style="color:#f1fa8c">`endif 
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">initial begin
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  $dumpfile(&#34;mac_manual_cocotb.vcd&#34;);   //waveform dumps for visualization
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  $dumpvars(0,mac_manual);
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">endmodule
+</span></span></span></code></pre></div><h3 id="makefile">Makefile</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Makefile" data-lang="Makefile"><span style="display:flex;"><span><span style="color:#6272a4">#file: Makefile
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span><span style="color:#8be9fd;font-style:italic">CWD</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>shell <span style="color:#8be9fd;font-style:italic">pwd</span><span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">TOPLEVEL_LANG</span> <span style="color:#ff79c6">?=</span>verilog
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">SIM</span> <span style="color:#ff79c6">?=</span> icarus
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#Paths to HDL source files
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>ifeq (<span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">TOPLEVEL_LANG</span><span style="color:#ff79c6">)</span>,verilog)
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">VERILOG_SOURCES</span> <span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>CWD<span style="color:#ff79c6">)</span>/../hdl/mac_manual.v
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">VERILOG_SOURCES</span> <span style="color:#ff79c6">+=</span><span style="color:#ff79c6">$(</span>CWD<span style="color:#ff79c6">)</span>/../hdl/qmult.v
+</span></span><span style="display:flex;"><span>  <span style="color:#8be9fd;font-style:italic">VERILOG_SOURCES</span> <span style="color:#ff79c6">+=</span><span style="color:#ff79c6">$(</span>CWD<span style="color:#ff79c6">)</span>/../hdl/qadd.v
+</span></span><span style="display:flex;"><span>else
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">error</span> &#34;<span style="color:#8be9fd;font-style:italic">A</span> <span style="color:#8be9fd;font-style:italic">valid</span> <span style="color:#8be9fd;font-style:italic">value</span> <span style="color:#ff79c6">(</span><span style="color:#8be9fd;font-style:italic">verilog</span><span style="color:#ff79c6">)</span> <span style="color:#8be9fd;font-style:italic">was</span> <span style="color:#8be9fd;font-style:italic">not</span> <span style="color:#8be9fd;font-style:italic">provided</span> <span style="color:#8be9fd;font-style:italic">for</span> <span style="color:#8be9fd;font-style:italic">TOPLEVEL_LANG</span>=<span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">TOPLEVEL_LANG</span><span style="color:#ff79c6">)</span>&#34;<span style="color:#ff79c6">)</span>
+</span></span><span style="display:flex;"><span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">DUT</span>      <span style="color:#ff79c6">=</span> mac_manual         <span style="color:#6272a4">#module under test</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">TOPLEVEL</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">$(</span>DUT<span style="color:#ff79c6">)</span>             <span style="color:#6272a4">#top module</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">MODULE</span> <span style="color:#ff79c6">:=</span> my_example_cocotb   <span style="color:#6272a4">#python testbench file</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">COCOTB_HDL_TIMEUNIT</span><span style="color:#ff79c6">=</span>1us        
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">COCOTB_HDL_TIMEPRECISION</span><span style="color:#ff79c6">=</span>1us
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CUSTOM_SIM_DEPS</span><span style="color:#ff79c6">=</span><span style="color:#ff79c6">$(</span>CWD<span style="color:#ff79c6">)</span>/Makefile
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ifeq (<span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">SIM</span><span style="color:#ff79c6">)</span>,questa)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">SIM_ARGS</span><span style="color:#ff79c6">=</span>-t 1ps
+</span></span><span style="display:flex;"><span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ifeq (<span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">SIM</span><span style="color:#ff79c6">)</span>,icarus)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">COMPILE_ARGS</span> <span style="color:#ff79c6">+=</span> -DFIXED_POINT  <span style="color:#6272a4">#Any extra arguments to the iverilog </span>
+</span></span><span style="display:flex;"><span>								<span style="color:#6272a4">#command can be placed here. Any parameters</span>
+</span></span><span style="display:flex;"><span>								<span style="color:#6272a4">#in the verilog module can be overriden from </span>
+</span></span><span style="display:flex;"><span>                                   <span style="color:#6272a4">#here as well. However, they cannot be change</span>
+</span></span><span style="display:flex;"><span>                                   <span style="color:#6272a4">#during runtime.</span>
+</span></span><span style="display:flex;"><span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ifneq (<span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">filter</span> <span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">SIM</span><span style="color:#ff79c6">)</span>,<span style="color:#8be9fd;font-style:italic">ius</span> <span style="color:#8be9fd;font-style:italic">xcelium</span><span style="color:#ff79c6">)</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">SIM_ARGS</span> <span style="color:#ff79c6">+=</span> -v93
+</span></span><span style="display:flex;"><span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>include <span style="color:#ff79c6">$(</span><span style="color:#8be9fd;font-style:italic">shell</span> <span style="color:#8be9fd;font-style:italic">cocotb</span>-<span style="color:#8be9fd;font-style:italic">config</span> --<span style="color:#8be9fd;font-style:italic">makefiles</span><span style="color:#ff79c6">)</span>/Makefile.sim
+</span></span></code></pre></div><h3 id="the-cocotb-testbench">The COCOTB testbench</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#6272a4">#file:test_mac_manual.py</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#cocotb related imports</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> cocotb
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> cocotb.clock <span style="color:#ff79c6">import</span> Clock
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> cocotb.triggers <span style="color:#ff79c6">import</span> RisingEdge, Timer
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">from</span> cocotb.regression <span style="color:#ff79c6">import</span> TestFactory
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> logging
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> random
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#imports needed for our functions</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> numpy <span style="color:#ff79c6">as</span> np 
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> math
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#We create this TB object in every test so that all the required functions can be accessed</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#from within this class. </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">TB</span>(<span style="color:#8be9fd;font-style:italic">object</span>):
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#The init method of this class can be used to do some setup like logging etc, start the </span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#toggling of the clock and also initialize the internal to their pre-reset vlaue.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> __init__(self, dut):
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dut <span style="color:#ff79c6">=</span> dut
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>log <span style="color:#ff79c6">=</span> logging<span style="color:#ff79c6">.</span>getLogger(<span style="color:#f1fa8c">&#39;cocotb_tb&#39;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>log<span style="color:#ff79c6">.</span>setLevel(logging<span style="color:#ff79c6">.</span>DEBUG)
+</span></span><span style="display:flex;"><span>				
+</span></span><span style="display:flex;"><span>				<span style="color:#6272a4">#start the clock as a parallel process.</span>
+</span></span><span style="display:flex;"><span>        cocotb<span style="color:#ff79c6">.</span>fork(Clock(dut<span style="color:#ff79c6">.</span>clk, <span style="color:#bd93f9">10</span>, units<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;us&#34;</span>)<span style="color:#ff79c6">.</span>start())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#Some function definitions for format conversions. Same as the ones in the previous article</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">#NOTE: every supporting function you define inside the TB class should have &#39;self&#39; as an input parameter, otherwise you&#39;ll get an number of parameters error.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">fp_to_float</span>(self, s, integer_precision, fraction_precision):  <span style="color:#6272a4"># s = input binary string</span>
+</span></span><span style="display:flex;"><span>        number <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.0</span>
+</span></span><span style="display:flex;"><span>        i <span style="color:#ff79c6">=</span> integer_precision <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>        j <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span>(s[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;1&#39;</span>):
+</span></span><span style="display:flex;"><span>            s_complemented <span style="color:#ff79c6">=</span> self<span style="color:#ff79c6">.</span>twos_comp(
+</span></span><span style="display:flex;"><span>                (s[<span style="color:#bd93f9">1</span>:]), integer_precision, fraction_precision)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span>:
+</span></span><span style="display:flex;"><span>            s_complemented <span style="color:#ff79c6">=</span> s[<span style="color:#bd93f9">1</span>:]
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">while</span>(j <span style="color:#ff79c6">!=</span> integer_precision <span style="color:#ff79c6">+</span> fraction_precision <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>):
+</span></span><span style="display:flex;"><span>            number <span style="color:#ff79c6">+=</span> <span style="color:#8be9fd;font-style:italic">int</span>(s_complemented[j]) <span style="color:#ff79c6">*</span> (<span style="color:#bd93f9">2</span><span style="color:#ff79c6">**</span>i)
+</span></span><span style="display:flex;"><span>            i <span style="color:#ff79c6">-=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>            j <span style="color:#ff79c6">+=</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span>(s[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#39;1&#39;</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> (<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>) <span style="color:#ff79c6">*</span> number
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> number
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">float_to_fp</span> (self, num, integer_precision, fraction_precision):
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span>(num <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">0</span>):
+</span></span><span style="display:flex;"><span>            sign_bit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>  <span style="color:#6272a4"># sign bit is 1 for negative numbers in 2&#39;s complement representation</span>
+</span></span><span style="display:flex;"><span>            num <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span> <span style="color:#ff79c6">*</span> num
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span>:
+</span></span><span style="display:flex;"><span>            sign_bit <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>        precision <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;0&#39;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">str</span>(integer_precision) <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;b&#39;</span>
+</span></span><span style="display:flex;"><span>        integral_part <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">format</span>(<span style="color:#8be9fd;font-style:italic">int</span>(num), precision)
+</span></span><span style="display:flex;"><span>        fractional_part_f <span style="color:#ff79c6">=</span> num <span style="color:#ff79c6">-</span> <span style="color:#8be9fd;font-style:italic">int</span>(num)
+</span></span><span style="display:flex;"><span>        fractional_part <span style="color:#ff79c6">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">in</span> <span style="color:#8be9fd;font-style:italic">range</span>(fraction_precision):
+</span></span><span style="display:flex;"><span>            d <span style="color:#ff79c6">=</span> fractional_part_f <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>            fractional_part_f <span style="color:#ff79c6">=</span> d <span style="color:#ff79c6">-</span> <span style="color:#8be9fd;font-style:italic">int</span>(d)
+</span></span><span style="display:flex;"><span>            fractional_part<span style="color:#ff79c6">.</span>append(<span style="color:#8be9fd;font-style:italic">int</span>(d))
+</span></span><span style="display:flex;"><span>        fraction_string <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;&#39;</span><span style="color:#ff79c6">.</span>join(<span style="color:#8be9fd;font-style:italic">str</span>(e) <span style="color:#ff79c6">for</span> e <span style="color:#ff79c6">in</span> fractional_part)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span>(sign_bit <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span>):
+</span></span><span style="display:flex;"><span>            binary <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">str</span>(sign_bit) <span style="color:#ff79c6">+</span> self<span style="color:#ff79c6">.</span>twos_comp(integral_part <span style="color:#ff79c6">+</span>
+</span></span><span style="display:flex;"><span>                                               fraction_string, integer_precision, fraction_precision)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">else</span>:
+</span></span><span style="display:flex;"><span>            binary <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">str</span>(sign_bit) <span style="color:#ff79c6">+</span> integral_part <span style="color:#ff79c6">+</span> fraction_string
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#8be9fd;font-style:italic">str</span>(binary)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">twos_comp</span>(self, val, integer_precision, fraction_precision):
+</span></span><span style="display:flex;"><span>        flipped <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;&#39;</span><span style="color:#ff79c6">.</span>join(<span style="color:#8be9fd;font-style:italic">str</span>(<span style="color:#bd93f9">1</span> <span style="color:#ff79c6">-</span> <span style="color:#8be9fd;font-style:italic">int</span>(x))<span style="color:#ff79c6">for</span> x <span style="color:#ff79c6">in</span> val)
+</span></span><span style="display:flex;"><span>        length <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#39;0&#39;</span> <span style="color:#ff79c6">+</span> <span style="color:#8be9fd;font-style:italic">str</span>(integer_precision <span style="color:#ff79c6">+</span> fraction_precision) <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#39;b&#39;</span>
+</span></span><span style="display:flex;"><span>        bin_literal <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">format</span>((<span style="color:#8be9fd;font-style:italic">int</span>(flipped, <span style="color:#bd93f9">2</span>) <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>), length)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> bin_literal
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">truncate</span>(self, number, digits) <span style="color:#ff79c6">-&gt;</span> <span style="color:#8be9fd;font-style:italic">float</span>:
+</span></span><span style="display:flex;"><span>        stepper <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">10.0</span> <span style="color:#ff79c6">**</span> digits
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> math<span style="color:#ff79c6">.</span>trunc(stepper <span style="color:#ff79c6">*</span> number) <span style="color:#ff79c6">/</span> stepper
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	  <span style="color:#6272a4">#Note the &#39;async def&#39; keyword here. It means that this is a coroutine that needs to </span>
+</span></span><span style="display:flex;"><span>	  <span style="color:#6272a4">#be awaited.</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">async</span> <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">cycle_reset</span>(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>sclr<span style="color:#ff79c6">.</span>setimmediatevalue(<span style="color:#bd93f9">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>sclr <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">1</span>                 <span style="color:#6272a4">#This is how cocotb lets you control the value of any </span>
+</span></span><span style="display:flex;"><span>        								<span style="color:#6272a4">#signal inside the design</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>        self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>sclr <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">await</span> RisingEdge(self<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>@cocotb<span style="color:#ff79c6">.</span>test()        <span style="color:#6272a4">#decorator indicates that this is a test that needs to be run by cocotb.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">async</span> <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">test1</span>(dut): <span style="color:#6272a4">#dut is a pointer to the top module. This is built in</span>
+</span></span><span style="display:flex;"><span>    tb <span style="color:#ff79c6">=</span> TB(dut)      <span style="color:#6272a4">#creating a testbench object for this dut. __init__ function is run automatically</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">await</span> Timer(<span style="color:#bd93f9">1</span>)    <span style="color:#6272a4">#pauses current function and lets the simulator run for 1 time step.</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#6272a4">#duration of each timestep is determined by the parameter                                             #COCOTB_HDL_TIMEPRECISION in the makefile</span>
+</span></span><span style="display:flex;"><span>    N <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(os<span style="color:#ff79c6">.</span>environ<span style="color:#ff79c6">.</span>get(<span style="color:#f1fa8c">&#39;PARAM_N&#39;</span>,<span style="color:#f1fa8c">&#39;16&#39;</span>)) <span style="color:#6272a4">#here &#39;16 is the default value of N parameter&#39;</span>
+</span></span><span style="display:flex;"><span>    Q <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(os<span style="color:#ff79c6">.</span>environ<span style="color:#ff79c6">.</span>get(<span style="color:#f1fa8c">&#39;PARAM_Q&#39;</span>,<span style="color:#f1fa8c">&#39;12&#39;</span>)) <span style="color:#6272a4">#default value of Q = 12</span>
+</span></span><span style="display:flex;"><span>    I <span style="color:#ff79c6">=</span> N <span style="color:#ff79c6">-</span> Q <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>_log<span style="color:#ff79c6">.</span>info(<span style="color:#f1fa8c">&#39;resetting the module&#39;</span>) <span style="color:#6272a4">#logging helpful messages</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">await</span> tb<span style="color:#ff79c6">.</span>cycle_reset() <span style="color:#6272a4">#running the cycle_reset corouting defined above</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>	tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>_log<span style="color:#ff79c6">.</span>info(<span style="color:#f1fa8c">&#39;out of reset&#39;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    a <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>uniform(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>    b <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>uniform(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>    c <span style="color:#ff79c6">=</span> np<span style="color:#ff79c6">.</span>random<span style="color:#ff79c6">.</span>uniform(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">0.5</span>, <span style="color:#bd93f9">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    p_golden <span style="color:#ff79c6">=</span> a[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">*</span> b[<span style="color:#bd93f9">0</span>] <span style="color:#ff79c6">+</span> c[<span style="color:#bd93f9">0</span>]
+</span></span><span style="display:flex;"><span>    p_golden_trunc <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>truncate(p_golden, <span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    a_fp <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>float_to_fp(a[<span style="color:#bd93f9">0</span>], I, Q)
+</span></span><span style="display:flex;"><span>    b_fp <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>float_to_fp(b[<span style="color:#bd93f9">0</span>], I, Q)
+</span></span><span style="display:flex;"><span>    c_fp <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>float_to_fp(c[<span style="color:#bd93f9">0</span>], I, Q)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">await</span> RisingEdge(dut<span style="color:#ff79c6">.</span>clk)           <span style="color:#6272a4">#waiting a clock cycle RisingEdge(dut.clk) is equivalent </span>
+</span></span><span style="display:flex;"><span>                                        <span style="color:#6272a4">#to &#39;@posedge&#39; clk in verilog</span>
+</span></span><span style="display:flex;"><span>    tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>a<span style="color:#ff79c6">.</span>value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(a_fp,<span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>    tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>b<span style="color:#ff79c6">.</span>value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(b_fp,<span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>    tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>c<span style="color:#ff79c6">.</span>value <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">int</span>(c_fp,<span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>ce<span style="color:#ff79c6">.</span>value <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">1</span>                    <span style="color:#6272a4">#setting clock enable to 1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">await</span> RisingEdge(dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">await</span> RisingEdge(dut<span style="color:#ff79c6">.</span>clk)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    practical_op <span style="color:#ff79c6">=</span> tb<span style="color:#ff79c6">.</span>truncate(tb<span style="color:#ff79c6">.</span>fp_to_float(<span style="color:#8be9fd;font-style:italic">str</span>(tb<span style="color:#ff79c6">.</span>dut<span style="color:#ff79c6">.</span>p<span style="color:#ff79c6">.</span>value),I,Q),<span style="color:#bd93f9">2</span>)
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	  <span style="color:#6272a4">#this assert statement checks the module&#39;s output against the golden value and </span>
+</span></span><span style="display:flex;"><span>	  <span style="color:#6272a4">#raises a test failure exception if the don&#39;t match</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">assert</span> practical_op <span style="color:#ff79c6">==</span> p_golden_trunc, <span style="color:#f1fa8c">&#34;Adder result is incorrect: </span><span style="color:#f1fa8c">{}</span><span style="color:#f1fa8c"> != </span><span style="color:#f1fa8c">{}</span><span style="color:#f1fa8c">&#34;</span><span style="color:#ff79c6">.</span>format(practical_op, p_golden)
+</span></span></code></pre></div><h2 id="advanced-usage">Advanced usage</h2>
+<ul>
+<li><a href="https://www.elphel.com/blog/2016/07/i-will-not-have-to-learn-systemverilog/">https://www.elphel.com/blog/2016/07/i-will-not-have-to-learn-systemverilog/</a></li>
+<li>Old flow
+<ul>
+<li>Creating RTL design code</li>
+<li>Writing Verilog tests</li>
+<li>Running simulations</li>
+<li>Synthesizing and creating bitfile</li>
+<li>Re-writing test code to run on the target system in Python</li>
+<li>Developing kernel drivers to support the FPGA functionality</li>
+<li>Developing applications that access FPGA functionality through the kernel drivers</li>
+</ul>
+</li>
+<li>New flow
+<ul>
+<li>Use Cocotb
+<ul>
+<li>Whole FPGA will be coniser as a server which is simulated using cocotb</li>
+<li>A new adaper on host will be added to communicate with simulator server
+<ul>
+<li>replaces/simulate memory accesses
+<ul>
+<li>sends the request parameters over the socket connection, and</li>
+<li>waits for the response from the server.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>
+  <img src="/img/advanced-usecase-cocotb.png" alt="https://www.elphel.com/blog/2016/07/i-will-not-have-to-learn-systemverilog/">
+
+</p>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/" data-toggle="tooltip" data-placement="top" title="Intro to Vivado for Software Engineers">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cocotb on My second brain</title>
+    <link>https://iblogging.github.io/tags/cocotb/</link>
+    <description>Recent content in Cocotb on My second brain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Oct 2022 18:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/cocotb/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coroutine Cosimulation Testbench</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-11-coroutine-cosimulation-testbench/</link>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-11-coroutine-cosimulation-testbench/</guid>
+      <description>Learning sources Attribute Detail Subject Coroutine Cosimulation Testbench Sources Coroutine Cosimulation Testbench Introduction Cocotb which is essentially a python framework that
+automatically interfaces with several HDL simulators Icarus Modelsim Questasim etc allows you to drive the signals in your design directly from python itself. Entire testbench can be written in python and automation and randomization can be easily allow manipulating the signals inside your module from a &amp;rsquo;normal&amp;rsquo; language aka a Non-HDL Architecture Terminology coroutines cooperative multitasking where processes can voluntarily yield (give away) control periodically (or when idle) in order to allow other processes to run.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,11 +6,21 @@
     <description>Recent content in RTL on My second brain</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Oct 2022 09:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/rtl/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2022 18:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/rtl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Coroutine Cosimulation Testbench</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-11-coroutine-cosimulation-testbench/</link>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-11-coroutine-cosimulation-testbench/</guid>
+      <description>Learning sources Attribute Detail Subject Coroutine Cosimulation Testbench Sources Coroutine Cosimulation Testbench Introduction Cocotb which is essentially a python framework that
+automatically interfaces with several HDL simulators Icarus Modelsim Questasim etc allows you to drive the signals in your design directly from python itself. Entire testbench can be written in python and automation and randomization can be easily allow manipulating the signals inside your module from a &amp;rsquo;normal&amp;rsquo; language aka a Non-HDL Architecture Terminology coroutines cooperative multitasking where processes can voluntarily yield (give away) control periodically (or when idle) in order to allow other processes to run.</description>
+    </item>
+    
     <item>
       <title>Intro to Vivado for Software Engineers</title>
       <link>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</link>
-      <pubDate>Mon, 10 Oct 2022 09:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Oct 2022 16:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</guid>
       <description>Learning sources Attribute Detail Subject Intro to Vivado for Software Engineers Main Source Intro to Vivado for Software Engineers Author Neil Turley Other references:

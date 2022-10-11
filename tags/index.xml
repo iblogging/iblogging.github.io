@@ -6,11 +6,20 @@
     <description>Recent content in Tags on My second brain</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Oct 2022 09:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2022 18:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cocotb</title>
+      <link>https://iblogging.github.io/tags/cocotb/</link>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/cocotb/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>FPGA</title>
       <link>https://iblogging.github.io/tags/fpga/</link>
-      <pubDate>Mon, 10 Oct 2022 09:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/tags/fpga/</guid>
       <description></description>
@@ -19,9 +28,27 @@
     <item>
       <title>RTL</title>
       <link>https://iblogging.github.io/tags/rtl/</link>
-      <pubDate>Mon, 10 Oct 2022 09:00:00 +0000</pubDate>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/tags/rtl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Simulation</title>
+      <link>https://iblogging.github.io/tags/simulation/</link>
+      <pubDate>Mon, 10 Oct 2022 18:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/simulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vivado</title>
+      <link>https://iblogging.github.io/tags/vivado/</link>
+      <pubDate>Mon, 10 Oct 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/tags/vivado/</guid>
       <description></description>
     </item>
     

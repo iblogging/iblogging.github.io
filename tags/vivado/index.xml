@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vivado on My second brain</title>
+    <link>https://iblogging.github.io/tags/vivado/</link>
+    <description>Recent content in Vivado on My second brain</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 10 Oct 2022 16:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/tags/vivado/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Vivado for Software Engineers</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</link>
+      <pubDate>Mon, 10 Oct 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</guid>
+      <description>Learning sources Attribute Detail Subject Intro to Vivado for Software Engineers Main Source Intro to Vivado for Software Engineers Author Neil Turley Other references:
+https://digilent.com/reference/programmable-logic/guides/vivado-xdc-file Source Files two types of source files:
+HDL: defines the logic constraints: pin locations provided by board provider as xdc file Tips: Search for xdc file Intel FPGA: qsf file Contrains xdc example: top.xdc set_property -dict { PACKAGE_PIN E3 IOSTANDARD LVCMOS33 } [get_ports { clk100mhz }]; create_clock -add -name sys_clk_pin -period 10.</description>
+    </item>
+    
+  </channel>
+</rss>
