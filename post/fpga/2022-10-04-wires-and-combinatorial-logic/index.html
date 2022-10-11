@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Wires, and combinatorial logic" />
+    <meta property="og:title" content="Wires, and combinatorial logic" />
+    <meta property="twitter:title" content="Wires, and combinatorial logic" />
+    
+
+    
+    <meta name="description" content="Wires, and combinatorial logic">
+    <meta property="og:description" content="Wires, and combinatorial logic" />
+    <meta property="twitter:description" content="Wires, and combinatorial logic" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>Wires, and combinatorial logic | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-04-wires-and-combinatorial-logic/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Wires, and combinatorial logic</h1>
+                    <h2 class="subheading">Verilog, Formal Verification and Verilator Beginner Tutorial</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Tuesday, October 4, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Wires, and combinatorial logic</td>
+</tr>
+<tr>
+<td>Main Source</td>
+<td><a href="https://zipcpu.com/tutorial/lsn-01-wires.pdf">Wires, and combinatorial logic</a></td>
+</tr>
+<tr>
+<td>Author</td>
+<td><a href="https://twitter.com/zipcpu">Daniel E. Gisselquist</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="first-design">First design</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#ff79c6">module</span> <span style="color:#8be9fd;font-style:italic">thruwire</span> ( <span style="color:#8be9fd;font-style:italic">i_sw</span> , <span style="color:#8be9fd;font-style:italic">o_led</span> ) ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">output</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">o_led</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">endmodule</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>This module declares two ports,</p>
+<ul>
+<li>i_sw and</li>
+<li>o_led</li>
+</ul>
+</li>
+<li>
+<p>Our one piece of logic sets <code>o_led</code> to be the same as <code>i_sw</code></p>
+</li>
+</ul>
+<h3 id="schematic">Schematic</h3>
+<p>
+  <img src="/img/schematic-simple-design.png" alt="">
+
+</p>
+<ul>
+<li>
+<p>A very similar design would make a good first serial port test
+
+  <img src="/img/loop-back.png" alt="">
+
+</p>
+</li>
+<li>
+<p>Your circuit board should pass this test before you try to implement your own serial port within it</p>
+</li>
+<li>
+<p>For many boards, this may look more familiar
+
+  <img src="/img/fpga-uart.png" alt="">
+
+</p>
+<ul>
+<li>FTDI FT2232H provides access to both
+<ul>
+<li>UART (i.e. serial port), and</li>
+<li>JTAG, to load your design into the FPGA in the first place</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="constraints">Constraints</h3>
+<ul>
+<li>Constraint File: maps your ports to the pins</li>
+</ul>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">- Constraint File
+    + PCF
+        + Arachne-PNR
+        + NextPNR
+    + UCF
+        + ISE
+    + XDC
+        + Vivado for newer Xilinx designs
+    + QSF
+        + Quartus for Intel Altera chips
+</code></pre><ul>
+<li>Todo
+<ul>
+<li>Comment-out pins you aren’t using</li>
+<li>Rename pins to match your Verilog</li>
+</ul>
+</li>
+</ul>
+<h3 id="build-design">Build design</h3>
+<h3 id="simulation">Simulation</h3>
+<p>Simulation is an important part of design</p>
+<table>
+<thead>
+<tr>
+<th>Simulation</th>
+<th>Hardware</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can trace all signals</td>
+<td>Can only see some signals</td>
+</tr>
+<tr>
+<td>Extended tests cost GB</td>
+<td>Extended tests are simple</td>
+</tr>
+<tr>
+<td>Easy to debug</td>
+<td>Very hard to debug</td>
+</tr>
+</tbody>
+</table>
+<p>Because hardware is so hard to debug, simulation is vital:</p>
+<ul>
+<li>A successful complex project &hellip;requires simulation!</li>
+</ul>
+<h3 id="verilator">Verilator</h3>
+<ul>
+<li>Build design using Verilator
+<ul>
+<li>Verilator compiles <strong>Verilog into C++</strong> placed into obj_dir/</li>
+<li>The make command then builds this <strong>converted C++ file</strong> into a <strong>shared object file</strong> we can now use</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt install verilator -y
+</span></span><span style="display:flex;"><span>verilator - Wall - cc thruwire . v
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">cd</span> obj_dir /
+</span></span><span style="display:flex;"><span>make -f Vthruwire . mk
+</span></span></code></pre></div><h3 id="verilator-driver">Verilator Driver</h3>
+<p>You’ll need a main simulation driver too.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdio.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdlib.h&gt;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&#34;Vthruwire.h&#34;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&#34;verilated.h&#34;</span><span style="color:#ff79c6">
+</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">main</span>(<span style="color:#8be9fd">int</span> argc, <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">**</span>argv) {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Call commandArgs first!
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Verilated<span style="color:#ff79c6">::</span>commandArgs(argc, argv);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Instantiate our design
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Vthruwire <span style="color:#ff79c6">*</span>tb <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Vthruwire;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Now run the design thru 20 timesteps
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	tb<span style="color:#ff79c6">-&gt;</span>i_sw <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span>(<span style="color:#8be9fd">int</span> k<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>; k<span style="color:#ff79c6">&lt;</span><span style="color:#bd93f9">20</span>; k<span style="color:#ff79c6">++</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#6272a4">// We&#39;ll set the switch input
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		<span style="color:#6272a4">// to the LSB of our counter
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		tb<span style="color:#ff79c6">-&gt;</span>i_sw <span style="color:#ff79c6">=</span> k<span style="color:#ff79c6">&amp;</span><span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		tb<span style="color:#ff79c6">-&gt;</span>eval();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#6272a4">// Now let&#39;s print our results
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		printf(<span style="color:#f1fa8c">&#34;k = %2d, &#34;</span>, k);
+</span></span><span style="display:flex;"><span>		printf(<span style="color:#f1fa8c">&#34;sw = %d, &#34;</span>, tb<span style="color:#ff79c6">-&gt;</span>i_sw);
+</span></span><span style="display:flex;"><span>		printf(<span style="color:#f1fa8c">&#34;led = %d</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, tb<span style="color:#ff79c6">-&gt;</span>o_led);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>Build all</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>make
+</span></span></code></pre></div><ul>
+<li>Run simulation</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>./thruwire
+</span></span></code></pre></div><h3 id="good-habits">Good habits</h3>
+<pre tabindex="0"><code class="language-markmap" data-lang="markmap">#### Good habits
+- Make `default nettype none` the first line of your Verilog file
+    + Otherwise mis-spelled identifiers will be quietly turned into wires
+- Fix any errors when you verilator `-Wall` your design
+-  Run your design in a simulator
+    + Attempt to recreate any hardware bugs . . . in the simulator
+</code></pre><h3 id="bus-signals">Bus Signals</h3>
+<ul>
+<li>We can also declare values consisting of many bits.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">input</span>	<span style="color:#8be9fd;font-style:italic">wire</span>	[<span style="color:#50fa7b">8</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">i_sw</span>;
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">output</span>	<span style="color:#8be9fd;font-style:italic">wire</span>	[<span style="color:#50fa7b">8</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">o_led</span>;
+</span></span></code></pre></div><ul>
+<li>This defines:
+<ul>
+<li>i_sw to be 9-input wires, and</li>
+<li>o_led to be 9-output wires</li>
+</ul>
+</li>
+</ul>
+<h3 id="bit-select">Bit Select</h3>
+<ul>
+<li>Select bits of interest from a bus</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">7</span> ] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">0</span> ] ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">6</span> : <span style="color:#bd93f9">5</span> ] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">5</span> : <span style="color:#bd93f9">4</span> ] ;
+</span></span></code></pre></div><ul>
+<li>Bit <code>7 of o_led</code> is set to bit <code>0 of i_sw</code></li>
+<li>Bits <code>5 and 6 of o_led</code> are set to bits <code>4 and 5 of i_sw</code></li>
+</ul>
+<ul>
+<li>Concatenate bits together</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">4</span> : <span style="color:#bd93f9">0</span> ] <span style="color:#ff79c6">=</span> { <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">2</span> : <span style="color:#bd93f9">0</span> ] , <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">7</span> : <span style="color:#bd93f9">6</span> ] } ;
+</span></span></code></pre></div><ul>
+<li>The <code>{.,.}</code> operator composes a new bit vector from other vectors</li>
+</ul>
+<h3 id="internal-signals">Internal Signals</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">wire</span> [<span style="color:#50fa7b">8</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">w_internal</span>
+</span></span></code></pre></div><ul>
+<li>Internal wires are neither <code>input nor output</code></li>
+<li>These wires can now be used in logic</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">w_internal</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">9</span> ’ <span style="color:#8be9fd;font-style:italic">h87</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> <span style="color:#8be9fd;font-style:italic">ˆ</span> <span style="color:#8be9fd;font-style:italic">w_internal</span> ;
+</span></span></code></pre></div><h3 id="literals">Literals</h3>
+<p>A Verilog literal is defined as</p>
+<ul>
+<li>
+<p>A width</p>
+</li>
+<li>
+<p>apostrophe (')</p>
+</li>
+<li>
+<p>An optional sign indication, s</p>
+<ul>
+<li>Defaults to unsigned</li>
+</ul>
+</li>
+<li>
+<p>A numeric type</p>
+<ul>
+<li>h (hex)</li>
+<li>d (decimal)</li>
+<li>o (octal)</li>
+<li>b (binary)</li>
+<li>sd (signed decimal)</li>
+</ul>
+</li>
+<li>
+<p>The value: a series of digits, possibly containing underscores Underscores can be very useful for longer numbers</p>
+</li>
+</ul>
+<h3 id="operators">Operators</h3>
+<p>
+  <img src="/img/operator.png" alt="">
+
+</p>
+<h3 id="schematic-1">Schematic</h3>
+<p>
+  <img src="/img/schematic.png" alt="">
+
+</p>
+<ul>
+<li>Note
+<ul>
+<li>9`h87=010000111</li>
+<li>A ^ 0 = A</li>
+</ul>
+</li>
+</ul>
+<h3 id="circular-logic">Circular Logic</h3>
+<ul>
+<li>Avoid circular logic!
+
+  <img src="/img/circular_logic.png" alt="">
+
+</li>
+</ul>
+<h3 id="dual-assignment">Dual Assignment</h3>
+<ul>
+<li>You are designing hardware: <code>A value can only be set once</code></li>
+<li>This is an error:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> <span style="color:#ff79c6">|</span> <span style="color:#bd93f9">9</span> ’ <span style="color:#8be9fd;font-style:italic">h87</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span> ;
+</span></span></code></pre></div><h3 id="multiplexer">Multiplexer</h3>
+<p>
+  <img src="/img/multiplexer.png" alt="">
+
+</p>
+<h3 id="parity-check">Parity check</h3>
+<p>
+  <img src="/img/parity_check.png" alt="">
+
+</p>
+<ul>
+<li>This form of XOR is a reduction operator
+<ul>
+<li>It XORs all the word’s bits togethe</li>
+<li>Other reduction operators include | and &amp;</li>
+</ul>
+</li>
+</ul>
+<p>Error Correction Code (ECC) creation logic is very similar</p>
+<h3 id="interrupt-detector">Interrupt detector</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">inpu</span> <span style="color:#8be9fd;font-style:italic">t</span> <span style="color:#8be9fd;font-style:italic">wire</span> [<span style="color:#50fa7b">7</span> : <span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">i_irq_source</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">output</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">o_irq</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_irq</span> <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">|</span> <span style="color:#8be9fd;font-style:italic">i_irq_source</span> ;
+</span></span></code></pre></div><ul>
+<li><code>i_irq_source</code> contains <code>eight interrupt sources</code></li>
+<li><code>o_irq</code> is <code>true</code> if <code>any</code> interrupt source is <code>true</code></li>
+</ul>
+<h3 id="cpu-stall-determination">CPU stall determination</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">dcd_stall</span> <span style="color:#ff79c6">=</span> ( <span style="color:#8be9fd;font-style:italic">dcd_valid</span>)<span style="color:#ff79c6">&amp;&amp;</span>(<span style="color:#8be9fd;font-style:italic">op_stall</span> ) ;
+</span></span></code></pre></div><p>the decode stage must stall if</p>
+<ul>
+<li>It has produced a valid result, and</li>
+<li>The next stage, read operands, is stalled for some reason. Read operands might be stalled if the ALU is stalled</li>
+</ul>
+<h3 id="determining-if-theres-a-phase-error-in-a-phase-lock-loop">Determining if there’s a phase error in a phase lock loop</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">phase_err</span> <span style="color:#ff79c6">=</span> ( <span style="color:#8be9fd;font-style:italic">output_phase</span> <span style="color:#ff79c6">!=</span> <span style="color:#8be9fd;font-style:italic">input_phase</span> ) ;
+</span></span></code></pre></div><p>&ndash;&gt; the loop will adjust if there are any errors</p>
+<h2 id="other-references">Other References</h2>
+<ul>
+<li><a href="https://community.intel.com/t5/FPGA-Wiki/DECA/ta-p/735458">https://community.intel.com/t5/FPGA-Wiki/DECA/ta-p/735458</a></li>
+<li><a href="https://github.com/DECAfpga">https://github.com/DECAfpga</a></li>
+<li><a href="https://github.com/olofk/corescore/tree/master/data">https://github.com/olofk/corescore/tree/master/data</a></li>
+<li><a href="https://github.com/DECAfpga/DECA_board/tree/main/Litex">https://github.com/DECAfpga/DECA_board/tree/main/Litex</a></li>
+<li><a href="https://zipcpu.com/tutorial/lsn-01-wires.pdf">https://zipcpu.com/tutorial/lsn-01-wires.pdf</a></li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-04-verilog-formal-verification-and-verilator-beginner-tutorial/" data-toggle="tooltip" data-placement="top" title="Verilog, Formal Verification and Verilator Beginner Tutorial">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-05-registers-and-blinky/" data-toggle="tooltip" data-placement="top" title="Registers and blinky">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>

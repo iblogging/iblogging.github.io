@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="DDR3 SDRAM Test by Nios II" />
+    <meta property="og:title" content="DDR3 SDRAM Test by Nios II" />
+    <meta property="twitter:title" content="DDR3 SDRAM Test by Nios II" />
+    
+
+    
+    <meta name="description" content="DDR3 SDRAM Test by Nios II">
+    <meta property="og:description" content="DDR3 SDRAM Test by Nios II" />
+    <meta property="twitter:description" content="DDR3 SDRAM Test by Nios II" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>DDR3 SDRAM Test by Nios II | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-08-ddr3-sdram-test-by-nios-ii/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>DDR3 SDRAM Test by Nios II</h1>
+                    <h2 class="subheading">DDR3</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Friday, October 7, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>DDR3 SDRAM Test by Nios II</td>
+</tr>
+<tr>
+<td>Main Source</td>
+<td><a href="https://community.intel.com/t5/FPGA-Wiki/DECA/ta-p/735458">DDR3 SDRAM Test by Nios II</a></td>
+</tr>
+</tbody>
+</table>
+<p>Other references:</p>
+<ul>
+<li><a href="https://www.intel.com/content/www/us/en/programmable/customertraining/ILT/PDF/A-MNL-ISDMI-ALL-12-0-v1.pdf">https://www.intel.com/content/www/us/en/programmable/customertraining/ILT/PDF/A-MNL-ISDMI-ALL-12-0-v1.pdf</a></li>
+</ul>
+<p>Many applications use a high performance RAM, such as a DDR3 SDRAM, to provide temporary
+storage. This post show:</p>
+<ul>
+<li>how the Altera’s “DDR3 SDRAM Controller with UniPHY” IP is used to  access a DDR3-SDRAM, and</li>
+<li>how the Nios II processor is used to read and write the SDRAM for hardware verification.</li>
+</ul>
+<h2 id="system-block-diagram">System Block Diagram</h2>
+<p>
+  <img src="/img/ddr3-qsys1.png" alt="">
+
+</p>
+<ul>
+<li>The DDR3 IP generates one 300 MHz clock as SDRAM’s data clock and one half-rate system clock 150 MHz for those host controllers, e.g. Nios II processor, accessing the SDRAM</li>
+<li>In the QSYS, Nios II and the On-Chip Memory are designed running with the 125 MHz clock, and the Nios II program is running in the on-chip memory.</li>
+<li>Test flows:
+<ul>
+<li>The Nios II program writes test patterns into the whole 512 MB of SDRAM</li>
+<li>it calls Nios II system function, alt_dache_flush_all, to make sure all data has been written to SDRAM</li>
+<li>it reads data from SDRAM for data verification</li>
+</ul>
+</li>
+</ul>
+<h2 id="altera-ddr3-sdram-controller-with-uniphy">Altera DDR3 SDRAM Controller with UniPHY</h2>
+<ul>
+<li>Create correct pin assignments for DDR3.</li>
+<li>Setup correct parameters in DDR3 controller dialog.</li>
+<li>Perform “Analysis and Synthesis” by clicking Quartus menu: Process-&gt;Start-&gt;Start Analysis &amp; Synthesis.</li>
+<li>Run the TCL files generated by DDR3 IP by clicking Quartus menu: Tools-&gt;TCL Scripts</li>
+</ul>
+<h2 id="ddr-memory-interfaces">DDR Memory Interfaces</h2>
+<p>
+  <img src="/img/ddr01.png" alt="">
+
+</p>
+<p>
+  <img src="/img/ddr-write.png" alt="">
+
+</p>
+<p>
+  <img src="/img/ddr-read.png" alt="">
+
+</p>
+<p>
+  <img src="/img/mm-interfaces.png" alt="">
+
+</p>
+<p>DDR Memory Interface Blocks:</p>
+<ul>
+<li>User logic
+<ul>
+<li>Generates data to be written to memory</li>
+<li>Receives data read from memory</li>
+</ul>
+</li>
+<li>Memory controller
+<ul>
+<li>Type:
+<ul>
+<li>soft or</li>
+<li>hard</li>
+</ul>
+</li>
+<li>Initiator of read and write commands</li>
+<li>Instantiates PHY if used</li>
+</ul>
+</li>
+<li>UniPHY
+<ul>
+<li>Type:
+<ul>
+<li>soft or</li>
+<li>hard</li>
+</ul>
+</li>
+<li>Instantiated by Altera HPCII or can be added separately</li>
+<li>Read data/write data/address/command path</li>
+<li>Clock and reset management</li>
+<li>Automatic calibration during memory initialization Automatic calibration during memory initialization</li>
+</ul>
+</li>
+<li>I/O logic to external memory</li>
+</ul>
+<h2 id="flexible-system-interface">Flexible System Interface</h2>
+<ul>
+<li>Avalon interface
+<ul>
+<li>Avalon®-ST ( g) g streaming) for user logic access to controller</li>
+<li>Avalon-MM (memory mapped) slave interface for access to configuration and status register (CSR)</li>
+</ul>
+</li>
+</ul>
+<h2 id="uniphy">UniPHY</h2>
+<p>
+  <img src="/img/uniphy.png" alt="">
+
+</p>
+<h2 id="qsys-systems">Qsys Systems</h2>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-05-finite-state-machine/" data-toggle="tooltip" data-placement="top" title="Finite State Machine">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/" data-toggle="tooltip" data-placement="top" title="Intro to Vivado for Software Engineers">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>

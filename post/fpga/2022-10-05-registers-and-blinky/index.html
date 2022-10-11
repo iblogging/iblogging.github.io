@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    
+    <meta property="og:site_name" content="My second brain">
+    <meta property="og:type" content="article">
+
+    
+    <meta property="og:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg">
+    <meta property="twitter:image" content="https://iblogging.github.io/img/home-bg-jeep.jpg" />
+    
+
+    
+    <meta name="title" content="Registers and blinky" />
+    <meta property="og:title" content="Registers and blinky" />
+    <meta property="twitter:title" content="Registers and blinky" />
+    
+
+    
+    <meta name="description" content="Registers and blinky">
+    <meta property="og:description" content="Registers and blinky" />
+    <meta property="twitter:description" content="Registers and blinky" />
+    
+
+    
+    <meta property="twitter:card" content="summary" />
+    
+    
+
+    <meta name="keyword"  content="Lap,Lap Blog, PaaS, Istio, Kubernetes, Metal Models, Microservice">
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+    <title>Registers and blinky | Lap Blog</title>
+
+    <link rel="canonical" href="/post/fpga/2022-10-05-registers-and-blinky/">
+
+    
+    
+    
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    
+    <link rel="stylesheet" href="/css/hugo-theme-cleanwhite.min.css">
+
+    
+    <link rel="stylesheet" href="/css/zanshang.css">
+
+    
+    <link href="https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@5.15.1/css/all.css" rel="stylesheet" type="text/css">
+
+    
+    
+
+    
+    <script src="/js/jquery.min.js"></script>
+
+    
+    <script src="/js/bootstrap.min.js"></script>
+
+    
+    <script src="/js/hux-blog.min.js"></script>
+
+    
+    <script src="/js/lazysizes.min.js"></script>
+
+    
+    
+</head>
+
+
+
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+
+    <div class="container-fluid">
+        
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My second brain</a>
+        </div>
+
+        
+        
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">All Posts</a>
+                    </li>
+                    
+                        
+                        <li>
+                            <a href="/categories/fpga">fpga</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/linux">linux</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/mental-models">mental-models</a>
+                        </li>
+                        
+                    
+                    
+		    
+                        <li><a href="/archive/">ARCHIVE</a></li>
+                    
+                        <li><a href="/notes/">NOTES</a></li>
+                    
+                        <li><a href="/about/">ABOUT</a></li>
+                    
+
+                    
+		    <li>
+                        <a href="/search"><i class="fa fa-search"></i></a>
+		    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+</nav>
+<script>
+    
+    
+    
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        
+            $navbar.className = " ";
+            
+            setTimeout(function(){
+                
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/img/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/fpga" title="FPGA">
+                            FPGA
+                        </a>
+                        
+                        <a class="tag" href="/tags/rtl" title="RTL">
+                            RTL
+                        </a>
+                        
+                    </div>
+                    <h1>Registers and blinky</h1>
+                    <h2 class="subheading">Verilog, Formal Verification and Verilator Beginner Tutorial</h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                Lap
+                             
+                            on 
+                            Wednesday, October 5, 2022
+                            
+                            
+                            
+                            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+<article>
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                
+                <h2 id="learning-sources">Learning sources</h2>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subject</td>
+<td>Registers and blinky</td>
+</tr>
+<tr>
+<td>Main Source</td>
+<td><a href="https://zipcpu.com/tutorial/lsn-02-regs.pdf">Registers and blinky</a></td>
+</tr>
+<tr>
+<td>Author</td>
+<td><a href="https://twitter.com/zipcpu">Daniel E. Gisselquist</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="registers">Registers</h2>
+<ul>
+<li>Why use registers?
+<ul>
+<li>Wires have no memory</li>
+<li>Only registers can hold state (data)</li>
+</ul>
+</li>
+<li>Two basic types, both set with an <code>always</code>
+<ul>
+<li>
+<p>Combinatorial:</p>
+<ul>
+<li><code>Like wires</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( ∗ )
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">B</span> ;
+</span></span></code></pre></div><ul>
+<li>This form can be easier to read when the logic becomes complex</li>
+</ul>
+</li>
+<li>
+<p>Synchronous:</p>
+<ul>
+<li><code>Only changes values on a clock</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#50fa7b">B</span> ;
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h2 id="combinatorial-regs">Combinatorial Regs</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( ∗ )
+</span></span><span style="display:flex;"><span>   <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">9</span><span style="color:#f1fa8c">&#39;h87 ;
+</span></span></span></code></pre></div><ul>
+<li>Registers can only be assigned in <code>always</code> blocks</li>
+<li>Always blocks may consist of one statement, or</li>
+<li>Many statements between a <code>begin and end pair</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span>(∗)
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">A</span> <span style="color:#8be9fd;font-style:italic">ˆ</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">7</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span>( <span style="color:#8be9fd;font-style:italic">i_reset</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">end</span>
+</span></span></code></pre></div><ul>
+<li>Looks like software</li>
+<li>Acts like you would expect in a simulator</li>
+<li>Takes no time at all in hardware</li>
+<li>The hardware acts as if all statements were done at once</li>
+</ul>
+<h2 id="latches-and-last-assignment-wins">Latches and Last Assignment Wins</h2>
+<p>
+  <img src="/img/latches.png" alt="">
+
+</p>
+<p>
+  <img src="/img/last-assignment-win.png" alt="">
+
+</p>
+<h2 id="flip-flops">Flip Flops</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">reg</span> [<span style="color:#50fa7b">9</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#50fa7b">A</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">&#39;b1 ;
+</span></span></span></code></pre></div><ul>
+<li>Any registers set within an <code>always @(posedge i_clk)</code> block will transitions to their new values on the next clock edge only
+<ul>
+<li>Only a bonafide clock edge should be used</li>
+<li>Do not transition on anything you create in logic</li>
+</ul>
+</li>
+</ul>
+<h3 id="non-blocking">Non-Blocking</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">5</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span> ’ <span style="color:#8be9fd;font-style:italic">b1</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">end</span>
+</span></span></code></pre></div><ul>
+<li>Assume, A starts with 0</li>
+<li>The assignment only takes place on the clock edge</li>
+<li><strong>Last assignment wins</strong>
+&ndash;&gt; <code>A is set to 1, then 2 on the next clock, 3 on the clock after</code></li>
+</ul>
+<h3 id="blocking">Blocking</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">5</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">&#39;b1 ;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">end
+</span></span></span></code></pre></div><ul>
+<li>the assignment only takes place on the clock edge</li>
+<li>It appears as though it took several steps</li>
+<li>A is set to 6</li>
+</ul>
+<h3 id="other-examples">other examples</h3>
+<ul>
+<li>Assume A=0 before the clock tick</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#bd93f9">5</span> ; <span style="color:#6272a4">// I g n o r e d !
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#50fa7b">A</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span> ’ <span style="color:#8be9fd;font-style:italic">b1</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">B</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#50fa7b">A</span> ;
+</span></span></code></pre></div><ul>
+<li>A will be set to 1, and B will be set to 0</li>
+<li>On the next clock, A will be set to 2 and B to 1, etc.</li>
+</ul>
+<h2 id="all-in-parallel">All in Parallel</h2>
+<ul>
+<li>A design may contain multiple always blocks</li>
+<li>The <code>hardware</code> will execute <code>all</code> at once</li>
+<li>The <code>simulator</code> will execute <code>one</code> at a time</li>
+</ul>
+<p><em><strong>Rules: When using the simulator</strong></em></p>
+<ul>
+<li>Make sure your design can be synthesized</li>
+<li>Make sure it fits within your chosen device
+<ul>
+<li>This is not a simulator task</li>
+<li>Requires using the synthesizer periodically</li>
+</ul>
+</li>
+<li>Make sure it maintains an appropriate clock rate</li>
+</ul>
+<h2 id="feedback">Feedback</h2>
+<ul>
+<li><code>Wires</code> in a <code>loop</code> created <code>circular</code> logic</li>
+<li>Clocked <code>registers</code> in a <code>loop</code> creates <code>feedback</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">err</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_actual</span> <span style="color:#ff79c6">-</span>  <span style="color:#8be9fd;font-style:italic">o_command</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">begin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">o_command</span><span style="color:#ff79c6">&lt;=</span><span style="color:#8be9fd;font-style:italic">o_command</span> <span style="color:#ff79c6">+</span> (<span style="color:#8be9fd;font-style:italic">err</span> <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#bd93f9">5</span> ) ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">end</span>
+</span></span></code></pre></div><h2 id="blinky">Blinky</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#ff79c6">module</span> <span style="color:#8be9fd;font-style:italic">blinky</span> ( <span style="color:#8be9fd;font-style:italic">i_clk</span> , <span style="color:#8be9fd;font-style:italic">o_led</span> ) ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">output</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">o_led</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">reg</span> [<span style="color:#50fa7b">26</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">counter</span> ;
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">initial</span> <span style="color:#8be9fd;font-style:italic">counter</span> <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span> ;
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">always</span> <span style="color:#ff79c6">@</span> ( <span style="color:#8be9fd;font-style:italic">posedge</span> <span style="color:#8be9fd;font-style:italic">i_clk</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">counter</span> <span style="color:#ff79c6">&lt;=</span> <span style="color:#8be9fd;font-style:italic">counter</span> <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">&#39;b1 ;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    assign o_led = counter [ 26 ] ;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">endmodule
+</span></span></span></code></pre></div><ul>
+<li>The LED should blink at a steady rate</li>
+<li>Rate is determined by the 26 above</li>
+</ul>
+<h2 id="trace-generation">Trace Generation</h2>
+<ul>
+<li>writing to a trace file on every clock
+<ul>
+<li>Add the <code>--trace</code> option to the Verilator command line</li>
+<li></li>
+</ul>
+</li>
+</ul>
+
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/fpga/2022-10-04-wires-and-combinatorial-logic/" data-toggle="tooltip" data-placement="top" title="Wires, and combinatorial logic">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-05-finite-state-machine/" data-toggle="tooltip" data-placement="top" title="Finite State Machine">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
+                
+
+
+
+
+<script src="https://utteranc.es/client.js"
+        repo="iblogging/iblogging.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+            </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
+            
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">TAGS</a></h5>
+                    <div class="tags">
+                        
+                        
+                        
+                        <a href="/tags/book" title="book">
+                            book
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/critical-thinking" title="critical-thinking">
+                            critical-thinking
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/fpga" title="fpga">
+                            fpga
+                        </a>
+                        
+                        
+                        
+                        
+                        
+                        <a href="/tags/mental-models" title="mental-models">
+                            mental-models
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/questioning" title="questioning">
+                            questioning
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/risc-v" title="risc-v">
+                            risc-v
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/rtl" title="rtl">
+                            rtl
+                        </a>
+                        
+                        
+                        
+                        <a href="/tags/verilog" title="verilog">
+                            verilog
+                        </a>
+                        
+                        
+                    </div>
+                </section>
+                
+
+                
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">                  
+                    
+                    <li>
+                        <a href="mailto:lapngodoan@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fas fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+		           
+                    
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+            
+            
+            
+           
+                   <li>
+                       <a href='' rel="alternate" type="application/rss+xml" title="My second brain" >
+                           <span class="fa-stack fa-lg">
+                               <i class="fas fa-circle fa-stack-2x"></i>
+                               <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+                           </span>
+                       </a>
+                   </li>
+            
+             </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+
+<script>
+    function loadAsync(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+
+
+
+
+<script>
+    
+    if($('#tag_cloud').length !== 0){
+        loadAsync("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+
+<script>
+    loadAsync("https://cdn.jsdelivr.net/npm/fastclick@1.0.6/lib/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    function generateCatalog(selector) {
+
+        
+        
+        
+        
+            _containerSelector = 'div.post-container'
+        
+
+        
+        var P = $(_containerSelector), a, n, t, l, i, c;
+        a = P.find('h1,h2,h3,h4,h5,h6');
+
+        
+        $(selector).html('')
+
+        
+        a.each(function () {
+            n = $(this).prop('tagName').toLowerCase();
+            i = "#" + $(this).prop('id');
+            t = $(this).text();
+            c = $('<a href="' + i + '" rel="nofollow">' + t + '</a>');
+            l = $('<li class="' + n + '_nav"></li>').append(c);
+            $(selector).append(l);
+        });
+        return true;
+    }
+
+    generateCatalog(".catalog-body");
+
+    
+    $(".catalog-toggle").click((function (e) {
+        e.preventDefault();
+        $('.side-catalog').toggleClass("fold")
+    }))
+
+    
+
+
+    loadAsync("\/js\/jquery.nav.js", function () {
+        $('.catalog-body').onePageNav({
+            currentClass: "active",
+            changeHash: !1,
+            easing: "swing",
+            filter: "",
+            scrollSpeed: 700,
+            scrollOffset: 0,
+            scrollThreshold: .2,
+            begin: null,
+            end: null,
+            scrollChange: null,
+            padding: 80
+        });
+    });
+</script>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/jmnote/plantuml-encoder@1.2.4/dist/plantuml-encoder.min.js" integrity="sha256-Qsk2KRBCN5qVZX7B+8+2IvQl1Aqc723qV1tBCQaVoqo=" crossorigin="anonymous"></script>
+<script>
+(function(){
+  let plantumlPrefix = "language-plantuml";
+  Array.prototype.forEach.call(document.querySelectorAll("[class^=" + plantumlPrefix + "]"), function(code){
+    let image = document.createElement("IMG");
+    image.loading = 'lazy'; 
+    image.src = 'http://www.plantuml.com/plantuml/svg/~1' + plantumlEncoder.encode(code.innerText);
+    code.parentNode.parentNode.insertBefore(image, code.parentNode);
+    code.parentNode.style.display = 'none';
+  });
+})();
+</script>
+
+
+<style>
+.markmap > svg {
+  width: 100%;
+  height: 800px;
+}
+</style>
+<script>
+(function($) {
+    var needMarkmap = false;
+    $('.language-markmap').parent().replaceWith(function() {
+        needMarkmap = true;
+        return $('<div class="markmap">').text($(this).text());
+    });
+
+    const { markmap } = window;
+    if(needMarkmap) {
+        markmap.autoLoader.renderAll();
+    }
+
+})(jQuery);
+
+
+window.markmap = {
+  autoLoader: {
+      manual: true,
+      onReady() {
+        const { autoLoader, builtInPlugins } = window.markmap;
+        autoLoader.transformPlugins = builtInPlugins.filter(plugin => plugin.name !== 'prism');
+      },
+  },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNGWSCFDTD"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-RNGWSCFDTD');
+</script>
+
+</body>
+</html>

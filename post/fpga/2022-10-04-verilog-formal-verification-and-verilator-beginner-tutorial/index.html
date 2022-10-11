@@ -241,201 +241,12 @@
 </tr>
 <tr>
 <td>Author</td>
-<td><a href="https://twitter.com/zipcpu">Zip CPU</a></td>
+<td><a href="https://twitter.com/zipcpu">Daniel E. Gisselquist</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="1-wires-and-combinatorial-logic">1. Wires, and combinatorial logic</h2>
-<h3 id="first-design">First design</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#ff79c6">module</span> <span style="color:#8be9fd;font-style:italic">thruwire</span> ( <span style="color:#8be9fd;font-style:italic">i_sw</span> , <span style="color:#8be9fd;font-style:italic">o_led</span> ) ;
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">input</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> ;
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">output</span> <span style="color:#8be9fd;font-style:italic">wire</span> <span style="color:#8be9fd;font-style:italic">o_led</span> ;
-</span></span><span style="display:flex;"><span>    <span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> ;
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">endmodule</span>
-</span></span></code></pre></div><ul>
-<li>
-<p>This module declares two ports,</p>
-<ul>
-<li>i_sw and</li>
-<li>o_led</li>
-</ul>
-</li>
-<li>
-<p>Our one piece of logic sets <code>o_led</code> to be the same as <code>i_sw</code></p>
-</li>
-</ul>
-<h3 id="schematic">Schematic</h3>
-<p>
-  <img src="/img/schematic-simple-design.png" alt="">
-
-</p>
-<ul>
-<li>
-<p>A very similar design would make a good first serial port test
-
-  <img src="/img/loop-back.png" alt="">
-
-</p>
-</li>
-<li>
-<p>Your circuit board should pass this test before you try to implement your own serial port within it</p>
-</li>
-<li>
-<p>For many boards, this may look more familiar
-
-  <img src="/img/fpga-uart.png" alt="">
-
-</p>
-<ul>
-<li>FTDI FT2232H provides access to both
-<ul>
-<li>UART (i.e. serial port), and</li>
-<li>JTAG, to load your design into the FPGA in the first place</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="constraints">Constraints</h3>
-<ul>
-<li>Constraint File: maps your ports to the pins</li>
-</ul>
-<pre tabindex="0"><code class="language-markmap" data-lang="markmap">- Constraint File
-    + PCF
-        + Arachne-PNR
-        + NextPNR
-    + UCF
-        + ISE
-    + XDC
-        + Vivado for newer Xilinx designs
-    + QSF
-        + Quartus for Intel Altera chips
-</code></pre><ul>
-<li>Todo
-<ul>
-<li>Comment-out pins you aren’t using</li>
-<li>Rename pins to match your Verilog</li>
-</ul>
-</li>
-</ul>
-<h3 id="build-design">Build design</h3>
-<h3 id="simulation">Simulation</h3>
-<p>Simulation is an important part of design</p>
-<table>
-<thead>
-<tr>
-<th>Simulation</th>
-<th>Hardware</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Can trace all signals</td>
-<td>Can only see some signals</td>
-</tr>
-<tr>
-<td>Extended tests cost GB</td>
-<td>Extended tests are simple</td>
-</tr>
-<tr>
-<td>Easy to debug</td>
-<td>Very hard to debug</td>
-</tr>
-</tbody>
-</table>
-<p>Because hardware is so hard to debug, simulation is vital:</p>
-<ul>
-<li>A successful complex project &hellip;requires simulation!</li>
-</ul>
-<h3 id="verilator">Verilator</h3>
-<ul>
-<li>Build design using Verilator
-<ul>
-<li>Verilator compiles <strong>Verilog into C++</strong> placed into obj_dir/</li>
-<li>The make command then builds this <strong>converted C++ file</strong> into a <strong>shared object file</strong> we can now use</li>
-</ul>
-</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt install verilator -y
-</span></span><span style="display:flex;"><span>verilator - Wall - cc thruwire . v
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">cd</span> obj_dir /
-</span></span><span style="display:flex;"><span>make -f Vthruwire . mk
-</span></span></code></pre></div><h3 id="verilator-driver">Verilator Driver</h3>
-<p>You’ll need a main simulation driver too.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdio.h&gt;</span><span style="color:#ff79c6">
-</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&lt;stdlib.h&gt;</span><span style="color:#ff79c6">
-</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&#34;Vthruwire.h&#34;</span><span style="color:#ff79c6">
-</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6">#include</span> <span style="color:#ff79c6">&#34;verilated.h&#34;</span><span style="color:#ff79c6">
-</span></span></span><span style="display:flex;"><span><span style="color:#ff79c6"></span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd">int</span> <span style="color:#50fa7b">main</span>(<span style="color:#8be9fd">int</span> argc, <span style="color:#8be9fd">char</span> <span style="color:#ff79c6">**</span>argv) {
-</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Call commandArgs first!
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Verilated<span style="color:#ff79c6">::</span>commandArgs(argc, argv);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Instantiate our design
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	Vthruwire <span style="color:#ff79c6">*</span>tb <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">new</span> Vthruwire;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Now run the design thru 20 timesteps
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	tb<span style="color:#ff79c6">-&gt;</span>i_sw <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span>(<span style="color:#8be9fd">int</span> k<span style="color:#ff79c6">=</span><span style="color:#bd93f9">0</span>; k<span style="color:#ff79c6">&lt;</span><span style="color:#bd93f9">20</span>; k<span style="color:#ff79c6">++</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#6272a4">// We&#39;ll set the switch input
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		<span style="color:#6272a4">// to the LSB of our counter
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		tb<span style="color:#ff79c6">-&gt;</span>i_sw <span style="color:#ff79c6">=</span> k<span style="color:#ff79c6">&amp;</span><span style="color:#bd93f9">1</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		tb<span style="color:#ff79c6">-&gt;</span>eval();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#6272a4">// Now let&#39;s print our results
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>		printf(<span style="color:#f1fa8c">&#34;k = %2d, &#34;</span>, k);
-</span></span><span style="display:flex;"><span>		printf(<span style="color:#f1fa8c">&#34;sw = %d, &#34;</span>, tb<span style="color:#ff79c6">-&gt;</span>i_sw);
-</span></span><span style="display:flex;"><span>		printf(<span style="color:#f1fa8c">&#34;led = %d</span><span style="color:#f1fa8c">\n</span><span style="color:#f1fa8c">&#34;</span>, tb<span style="color:#ff79c6">-&gt;</span>o_led);
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li>Build all</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>make
-</span></span></code></pre></div><ul>
-<li>Run simulation</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>./thruwire
-</span></span></code></pre></div><h3 id="good-habits">Good habits</h3>
-<pre tabindex="0"><code class="language-markmap" data-lang="markmap">#### Good habits
-- Make `default nettype none` the first line of your Verilog file
-    + Otherwise mis-spelled identifiers will be quietly turned into wires
-- Fix any errors when you verilator `-Wall` your design
--  Run your design in a simulator
-    + Attempt to recreate any hardware bugs . . . in the simulator
-</code></pre><h3 id="bus-signals">Bus Signals</h3>
-<ul>
-<li>We can also declare values consisting of many bits.</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">input</span>	<span style="color:#8be9fd;font-style:italic">wire</span>	[<span style="color:#50fa7b">8</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">i_sw</span>;
-</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">output</span>	<span style="color:#8be9fd;font-style:italic">wire</span>	[<span style="color:#50fa7b">8</span>:<span style="color:#f1fa8c">0</span>] <span style="color:#8be9fd;font-style:italic">o_led</span>;
-</span></span></code></pre></div><ul>
-<li>This defines:
-<ul>
-<li>i_sw to be 9-input wires, and</li>
-<li>o_led to be 9-output wires</li>
-</ul>
-</li>
-</ul>
-<h3 id="bit-select">Bit Select</h3>
-<ul>
-<li>Select bits of interest from a bus</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">7</span> ] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">0</span> ] ;
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">6</span> : <span style="color:#bd93f9">5</span> ] <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">5</span> : <span style="color:#bd93f9">4</span> ] ;
-</span></span></code></pre></div><ul>
-<li>Bit <code>7 of o_led</code> is set to bit <code>0 of i_sw</code></li>
-<li>Bits <code>5 and 6 of o_led</code> are set to bits <code>4 and 5 of i_sw</code></li>
-</ul>
-<ul>
-<li>Concatenate bits together</li>
-</ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-v" data-lang="v"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">assign</span> <span style="color:#8be9fd;font-style:italic">o_led</span> [ <span style="color:#bd93f9">4</span> : <span style="color:#bd93f9">0</span> ] <span style="color:#ff79c6">=</span> { <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">2</span> : <span style="color:#bd93f9">0</span> ] , <span style="color:#8be9fd;font-style:italic">i_sw</span> [ <span style="color:#bd93f9">7</span> : <span style="color:#bd93f9">6</span> ] } ;
-</span></span></code></pre></div><ul>
-<li>The <code>{.,.}</code> operator composes a new bit vector from other vectors</li>
-</ul>
-<h2 id="2-registers-and-blinky">2. Registers and blinky</h2>
+<h2 id="1-wires-and-combinatorial-logicpostfpga2022-10-04-wires-and-combinatorial-logic"><a href="/post/fpga/2022-10-04-wires-and-combinatorial-logic/">1. Wires, and combinatorial logic</a></h2>
+<h2 id="2-registers-and-blinkypostfpga2022-10-05-registers-and-blinky"><a href="/post/fpga/2022-10-05-registers-and-blinky/">2. Registers and blinky</a></h2>
 <h2 id="3-finite-state-machines">3. Finite state machines</h2>
 <h2 id="4-building-a-wishbone-slave">4. Building a Wishbone Slave</h2>
 <h2 id="5-building-hello-world-using-a-serial-port-transmitter">5. Building hello world, using a serial port transmitter</h2>
@@ -444,26 +255,7 @@
 <h2 id="8-using-fpga-block-ram">8. Using FPGA block RAM</h2>
 <h2 id="9-building-the-serial-port-receiver">9. Building the serial port receiver</h2>
 <h2 id="10-building-a-fifo-for-our-serial-port">10. Building a FIFO for our serial port</h2>
-<h2 id="other-references">Other References</h2>
-<ul>
-<li><a href="https://community.intel.com/t5/FPGA-Wiki/DECA/ta-p/735458">https://community.intel.com/t5/FPGA-Wiki/DECA/ta-p/735458</a></li>
-<li><a href="https://github.com/DECAfpga">https://github.com/DECAfpga</a></li>
-<li><a href="https://github.com/olofk/corescore/tree/master/data">https://github.com/olofk/corescore/tree/master/data</a></li>
-<li><a href="https://github.com/DECAfpga/DECA_board/tree/main/Litex">https://github.com/DECAfpga/DECA_board/tree/main/Litex</a></li>
-<li><a href="https://zipcpu.com/tutorial/lsn-01-wires.pdf">https://zipcpu.com/tutorial/lsn-01-wires.pdf</a></li>
-</ul>
-<div id="adobe-dc-view" style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
-</div>
-<script src="https://documentcloud.adobe.com/view-sdk/viewer.js"></script>
-<script type="text/javascript">
-	document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
-		var adobeDCView = new AdobeDC.View({clientId: "3948c8f2317143e78e00a466b99ed9a2", divId: "adobe-dc-view"});
-		adobeDCView.previewFile({
-			content:{location: {url: "https:\/\/iblogging.github.io\/pdf\/lsn-01-wires.pdf"}},
-			metaData:{fileName: "lsn-01-wires.pdf"}
-		}, {embedMode: "IN_LINE"});
-	});
-</script>
+
 
                 
                 <hr>
@@ -474,6 +266,11 @@
                             Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/post/fpga/2022-10-04-wires-and-combinatorial-logic/" data-toggle="tooltip" data-placement="top" title="Wires, and combinatorial logic">Next
+                            Post &rarr;</a>
+                    </li>
                     
                 </ul>
                 

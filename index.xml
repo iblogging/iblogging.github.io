@@ -6,15 +6,67 @@
     <description>Recent content on My second brain</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Oct 2022 19:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Oct 2022 09:00:00 +0000</lastBuildDate><atom:link href="https://iblogging.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Intro to Vivado for Software Engineers</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</link>
+      <pubDate>Mon, 10 Oct 2022 09:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-11-intro-to-vivado-for-software-engineers/</guid>
+      <description>Learning sources Attribute Detail Subject Intro to Vivado for Software Engineers Main Source Intro to Vivado for Software Engineers Author Neil Turley Other references:
+https://digilent.com/reference/programmable-logic/guides/vivado-xdc-file Source Files two types of source files:
+HDL: defines the logic constraints: pin locations provided by board provider as xdc file Tips: Search for xdc file Intel FPGA: qsf file Contrains xdc example: top.xdc set_property -dict { PACKAGE_PIN E3 IOSTANDARD LVCMOS33 } [get_ports { clk100mhz }]; create_clock -add -name sys_clk_pin -period 10.</description>
+    </item>
+    
+    <item>
+      <title>DDR3 SDRAM Test by Nios II</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-08-ddr3-sdram-test-by-nios-ii/</link>
+      <pubDate>Fri, 07 Oct 2022 09:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-08-ddr3-sdram-test-by-nios-ii/</guid>
+      <description>Learning sources Attribute Detail Subject DDR3 SDRAM Test by Nios II Main Source DDR3 SDRAM Test by Nios II Other references:
+https://www.intel.com/content/www/us/en/programmable/customertraining/ILT/PDF/A-MNL-ISDMI-ALL-12-0-v1.pdf Many applications use a high performance RAM, such as a DDR3 SDRAM, to provide temporary storage. This post show:
+how the Altera’s “DDR3 SDRAM Controller with UniPHY” IP is used to access a DDR3-SDRAM, and how the Nios II processor is used to read and write the SDRAM for hardware verification.</description>
+    </item>
+    
+    <item>
+      <title>Finite State Machine</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-05-finite-state-machine/</link>
+      <pubDate>Wed, 05 Oct 2022 16:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-05-finite-state-machine/</guid>
+      <description>Learning sources Attribute Detail Subject Finite State Machine Main Source Finite State Machine Author Daniel E. Gisselquist A finite state machine consists of Inputs State Variable Finite means there are a limited number of states Outputs Two classical FSM forms Mealy Moore Two implementation approaches One process Two process Mealy Outputs depend upon the current state inputs always @ ( ∗ ) if (!i_display_enable ) o_led = 0 ; else case ( led_index ) 4&amp;#39;h1 : o_led = 8&amp;#39;h01 ; 4&amp;#39;h2 : o_led = 8&amp;#39;h02 ; 4&amp;#39;h3 : o_led = 8&amp;#39;h04 ; 4&amp;#39;h4 : o_led = 8&amp;#39;h08 ; // .</description>
+    </item>
+    
+    <item>
+      <title>Registers and blinky</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-05-registers-and-blinky/</link>
+      <pubDate>Wed, 05 Oct 2022 09:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-05-registers-and-blinky/</guid>
+      <description>Learning sources Attribute Detail Subject Registers and blinky Main Source Registers and blinky Author Daniel E. Gisselquist Registers Why use registers? Wires have no memory Only registers can hold state (data) Two basic types, both set with an always Combinatorial:
+Like wires always @ ( ∗ ) A = B ; This form can be easier to read when the logic becomes complex Synchronous:
+Only changes values on a clock always @ ( posedge i_clk ) A &amp;lt;= B ; Combinatorial Regs always @ ( ∗ ) A = 9&amp;#39;h87 ; Registers can only be assigned in always blocks Always blocks may consist of one statement, or Many statements between a begin and end pair always @(∗) begin o_led = A ˆ i_sw ; o_led = o_led + 7 ; if( i_reset) o_led = 0 ; end Looks like software Acts like you would expect in a simulator Takes no time at all in hardware The hardware acts as if all statements were done at once Latches and Last Assignment Wins Flip Flops reg [9:0] A ; always @ ( posedge i_clk ) A &amp;lt;= A + 1&amp;#39;b1 ; Any registers set within an always @(posedge i_clk) block will transitions to their new values on the next clock edge only Only a bonafide clock edge should be used Do not transition on anything you create in logic Non-Blocking always @ ( posedge i_clk ) begin A &amp;lt;= 5 ; A &amp;lt;= A + 1 ’ b1 ; end Assume, A starts with 0 The assignment only takes place on the clock edge Last assignment wins &amp;ndash;&amp;gt; A is set to 1, then 2 on the next clock, 3 on the clock after Blocking always @ ( posedge i_clk ) begin A = 5 ; A = A + 1&amp;#39;b1 ; end the assignment only takes place on the clock edge It appears as though it took several steps A is set to 6 other examples Assume A=0 before the clock tick always @ ( posedge i_clk ) begin A &amp;lt;= 5 ; // I g n o r e d !</description>
+    </item>
+    
+    <item>
+      <title>Wires, and combinatorial logic</title>
+      <link>https://iblogging.github.io/post/fpga/2022-10-04-wires-and-combinatorial-logic/</link>
+      <pubDate>Tue, 04 Oct 2022 20:00:00 +0000</pubDate>
+      
+      <guid>https://iblogging.github.io/post/fpga/2022-10-04-wires-and-combinatorial-logic/</guid>
+      <description>Learning sources Attribute Detail Subject Wires, and combinatorial logic Main Source Wires, and combinatorial logic Author Daniel E. Gisselquist First design module thruwire ( i_sw , o_led ) ; input wire i_sw ; output wire o_led ; assign o_led = i_sw ; endmodule This module declares two ports,
+i_sw and o_led Our one piece of logic sets o_led to be the same as i_sw
+Schematic A very similar design would make a good first serial port test Your circuit board should pass this test before you try to implement your own serial port within it</description>
+    </item>
+    
     <item>
       <title>Verilog, Formal Verification and Verilator Beginner Tutorial</title>
       <link>https://iblogging.github.io/post/fpga/2022-10-04-verilog-formal-verification-and-verilator-beginner-tutorial/</link>
       <pubDate>Tue, 04 Oct 2022 19:00:00 +0000</pubDate>
       
       <guid>https://iblogging.github.io/post/fpga/2022-10-04-verilog-formal-verification-and-verilator-beginner-tutorial/</guid>
-      <description>Learning sources Attribute Detail Subject Verilog, Formal Verification and Verilator Beginner Tutorial Main Source Verilog, Formal Verification and Verilator Beginner Tutorial Author Zip CPU 1. Wires, and combinatorial logic First design module thruwire ( i_sw , o_led ) ; input wire i_sw ; output wire o_led ; assign o_led = i_sw ; endmodule This module declares two ports,
-i_sw and o_led Our one piece of logic sets o_led to be the same as i_sw</description>
+      <description>Learning sources Attribute Detail Subject Verilog, Formal Verification and Verilator Beginner Tutorial Main Source Verilog, Formal Verification and Verilator Beginner Tutorial Author Daniel E. Gisselquist 1. Wires, and combinatorial logic 2. Registers and blinky 3. Finite state machines 4. Building a Wishbone Slave 5. Building hello world, using a serial port transmitter 6. Transmitting 32-bit data over the serial port 7. Buttons: 2FF synchronizers, and debouncing 8. Using FPGA block RAM 9.</description>
     </item>
     
     <item>
